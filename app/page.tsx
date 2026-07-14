@@ -10,6 +10,7 @@ import { SignatureBoba } from "@/sections/SignatureBoba";
 import { SignatureCookies } from "@/sections/SignatureCookies";
 import { Frozen } from "@/sections/Frozen";
 import { Bakery } from "@/sections/Bakery";
+import { DubaiStory } from "@/sections/DubaiStory";
 import { Gallery } from "@/sections/Gallery";
 import { Numbers } from "@/sections/Numbers";
 import { Testimonials } from "@/sections/Testimonials";
@@ -35,6 +36,7 @@ export default function Home() {
         <SignatureCookies />
         <Frozen />
         <Bakery />
+        <DubaiStory />
         <Gallery />
         <Numbers />
         <Testimonials />

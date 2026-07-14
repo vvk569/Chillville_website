@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -14,6 +14,8 @@ type Props = {
   /** Darkening overlay for text legibility over the image. */
   overlay?: boolean;
   priority?: boolean;
+  /** Called when every source has failed to load. */
+  onExhausted?: () => void;
 };
 
 /**
@@ -29,10 +31,16 @@ export function Photo({
   imgClassName,
   overlay = true,
   priority = false,
+  onExhausted,
 }: Props) {
   const [idx, setIdx] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const exhausted = idx >= sources.length;
+
+  useEffect(() => {
+    if (exhausted) onExhausted?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [exhausted]);
 
   return (
     <div

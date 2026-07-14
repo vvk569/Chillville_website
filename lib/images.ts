@@ -23,7 +23,9 @@ export const IMG = {
   shake: [] as string[],
   donuts: [] as string[],
   croissants: [] as string[],
-  dubai: [] as string[],
+  // Real photo — put your file at /public/images/dubai.jpg and it shows here.
+  // If the file is missing, the 3D assembly is shown automatically.
+  dubai: ["/images/dubai.jpg"] as string[],
   storefront: [] as string[],
 };
 

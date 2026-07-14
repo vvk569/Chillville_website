@@ -1,12 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { collection } from "@/lib/data";
+import { IMG, IMG_ACCENT } from "@/lib/images";
 import { Heading } from "@/components/ui/Heading";
 import { Reveal } from "@/components/ui/Reveal";
+import { ProductVisual } from "@/components/three/ProductVisual";
 import type { RecipeKey } from "@/components/three/recipes";
-
-const AssembleProduct = dynamic(() => import("@/components/three/AssembleProduct"), { ssr: false });
 
 // map collection items to their assembly recipes
 const recipeFor: Record<string, RecipeKey> = {
@@ -36,14 +35,19 @@ export function Bakery() {
           </Reveal>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
-          {collection.map((c) => (
+        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">
+          {collection.filter((c) => c.id !== "dubai").map((c) => (
             <Reveal key={c.id} variant="blur">
               <div
                 className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border border-white/10 shadow-card"
                 style={{ background: `radial-gradient(circle at 50% 28%, ${c.accent}22, #0b0a08 78%)` }}
               >
-                <AssembleProduct recipe={recipeFor[c.id]} />
+                <ProductVisual
+                  recipe={recipeFor[c.id]}
+                  sources={IMG[c.id as keyof typeof IMG] ?? []}
+                  accent={IMG_ACCENT[c.id as keyof typeof IMG]}
+                  alt={c.name}
+                />
 
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-charcoal-800 via-charcoal-800/70 to-transparent p-7 pt-20">
                   <span className="font-display text-sm text-cream/40">{c.index}</span>

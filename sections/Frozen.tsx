@@ -1,16 +1,21 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { iceCream, shake } from "@/lib/data";
+import { IMG, IMG_ACCENT } from "@/lib/images";
 import { Heading } from "@/components/ui/Heading";
 import { Reveal } from "@/components/ui/Reveal";
+import { ProductVisual } from "@/components/three/ProductVisual";
 import type { RecipeKey } from "@/components/three/recipes";
 
-const AssembleProduct = dynamic(() => import("@/components/three/AssembleProduct"), { ssr: false });
-
-const cards: { data: typeof iceCream; recipe: RecipeKey; glow: string }[] = [
-  { data: iceCream, recipe: "iceCream", glow: "bg-matcha/15" },
-  { data: shake, recipe: "shake", glow: "bg-coral/15" },
+const cards: {
+  data: typeof iceCream;
+  recipe: RecipeKey;
+  glow: string;
+  sources: readonly string[];
+  accent: string;
+}[] = [
+  { data: iceCream, recipe: "iceCream", glow: "bg-matcha/15", sources: IMG.iceCream, accent: IMG_ACCENT.iceCream },
+  { data: shake, recipe: "shake", glow: "bg-coral/15", sources: IMG.shake, accent: IMG_ACCENT.shake },
 ];
 
 export function Frozen() {
@@ -35,11 +40,11 @@ export function Frozen() {
         </div>
 
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">
-          {cards.map(({ data, recipe, glow }) => (
+          {cards.map(({ data, recipe, glow, sources, accent }) => (
             <Reveal key={data.title} variant="blur">
               <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border border-white/10 shadow-card bg-[radial-gradient(circle_at_50%_30%,#181510,#0a0908)]">
                 <div className={`pointer-events-none absolute left-1/2 top-1/4 h-44 w-44 -translate-x-1/2 rounded-full blur-3xl ${glow}`} />
-                <AssembleProduct recipe={recipe} />
+                <ProductVisual recipe={recipe} sources={sources} accent={accent} alt={data.title.replace("\n", " ")} />
 
                 {/* scrim + copy */}
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-charcoal via-charcoal/70 to-transparent p-7 pt-24">

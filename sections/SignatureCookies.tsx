@@ -1,12 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useRef } from "react";
 import { cookies } from "@/lib/data";
+import { IMG, IMG_ACCENT } from "@/lib/images";
 import { Heading } from "@/components/ui/Heading";
 import { Reveal } from "@/components/ui/Reveal";
-
-const AssembleProduct = dynamic(() => import("@/components/three/AssembleProduct"), { ssr: false });
+import { ProductVisual } from "@/components/three/ProductVisual";
 
 export function SignatureCookies() {
   const ref = useRef<HTMLDivElement>(null);
@@ -20,7 +19,7 @@ export function SignatureCookies() {
         <Reveal variant="blur" className="lg:col-span-6">
           <div className="relative aspect-[5/4] w-full overflow-hidden rounded-[2rem] border border-white/10 shadow-card bg-[radial-gradient(circle_at_50%_35%,#211711,#0b0a08)]">
             <div className="pointer-events-none absolute left-1/2 top-1/3 h-40 w-40 -translate-x-1/2 rounded-full bg-coral/15 blur-3xl" />
-            <AssembleProduct recipe="cookie" />
+            <ProductVisual recipe="cookie" sources={IMG.cookies} accent={IMG_ACCENT.cookies} alt="Molten chocolate-chip cookies" />
             <div className="absolute bottom-5 left-5 z-10 rounded-full border border-white/15 bg-black/40 px-4 py-2 text-[11px] uppercase tracking-luxe text-cream/80 backdrop-blur">
               Watch it come together · ${cookies.price}
             </div>

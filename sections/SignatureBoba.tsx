@@ -1,13 +1,12 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { boba } from "@/lib/data";
+import { IMG, IMG_ACCENT } from "@/lib/images";
 import { Heading } from "@/components/ui/Heading";
 import { Reveal } from "@/components/ui/Reveal";
-
-const AssembleProduct = dynamic(() => import("@/components/three/AssembleProduct"), { ssr: false });
+import { ProductVisual } from "@/components/three/ProductVisual";
 
 export function SignatureBoba() {
   const ref = useRef<HTMLDivElement>(null);
@@ -58,7 +57,7 @@ export function SignatureBoba() {
         <Reveal variant="blur" className="order-1 lg:order-2">
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border border-white/10 shadow-card bg-[radial-gradient(circle_at_50%_35%,#1c150d,#0b0a08)]">
             <div className="pointer-events-none absolute left-1/2 top-1/3 h-40 w-40 -translate-x-1/2 rounded-full bg-caramel/20 blur-3xl" />
-            <AssembleProduct recipe="boba" />
+            <ProductVisual recipe="boba" sources={IMG.boba} accent={IMG_ACCENT.boba} alt="Brown-sugar boba" />
             <div className="absolute bottom-5 left-5 z-10 rounded-full border border-white/15 bg-black/40 px-4 py-2 text-[11px] uppercase tracking-luxe text-cream/80 backdrop-blur">
               Assembled to order · ${boba.price}
             </div>
