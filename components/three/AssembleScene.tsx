@@ -77,8 +77,15 @@ export function AssembleScene({
         lerp(starts[i][1], fr[1], pe),
         lerp(starts[i][2], fr[2], pe)
       );
-      const s = lerp(0.35, part.scale ?? 1, pe);
-      m.scale.setScalar(s);
+      if (part.scaleVec) {
+        m.scale.set(
+          lerp(0.35, part.scaleVec[0], pe),
+          lerp(0.35, part.scaleVec[1], pe),
+          lerp(0.35, part.scaleVec[2], pe)
+        );
+      } else {
+        m.scale.setScalar(lerp(0.35, part.scale ?? 1, pe));
+      }
     });
 
     if (group.current) {
@@ -98,7 +105,7 @@ export function AssembleScene({
       <directionalLight position={[-5, 2, -3]} intensity={0.8} color="#8fce74" />
       <pointLight position={[0, 1, 5]} intensity={1.3} color="#ff7a59" />
 
-      <group ref={group} rotation={recipe.tilt}>
+      <group ref={group} rotation={recipe.tilt} scale={recipe.scale ?? 1}>
         {recipe.parts.map((part, i) => (
           <mesh
             key={i}

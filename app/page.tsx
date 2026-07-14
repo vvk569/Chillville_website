@@ -9,9 +9,8 @@ import { Manifesto } from "@/sections/Manifesto";
 import { SignatureBoba } from "@/sections/SignatureBoba";
 import { SignatureCookies } from "@/sections/SignatureCookies";
 import { Frozen } from "@/sections/Frozen";
-import { Collection } from "@/sections/Collection";
+import { Bakery } from "@/sections/Bakery";
 import { Gallery } from "@/sections/Gallery";
-import { Craft } from "@/sections/Craft";
 import { Numbers } from "@/sections/Numbers";
 import { Testimonials } from "@/sections/Testimonials";
 import { Visit } from "@/sections/Visit";
@@ -35,9 +34,8 @@ export default function Home() {
         <SignatureBoba />
         <SignatureCookies />
         <Frozen />
-        <Collection />
+        <Bakery />
         <Gallery />
-        <Craft />
         <Numbers />
         <Testimonials />
         <Visit />
