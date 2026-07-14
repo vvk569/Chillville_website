@@ -1,41 +1,40 @@
 /**
  * Central image registry — the ONE place to manage photography.
  *
- * Photos load directly in the visitor's browser from a keyword stock-photo
- * service (chosen for reliability: this build environment can't reach curated
- * stock hosts to verify URLs). Each slot is an array of candidate URLs tried in
- * order; if they all fail, the <Photo> component shows a branded gradient
- * instead of a broken image.
+ * NOTE ON PLACEHOLDERS
+ * This build environment can't reach stock-photo hosts (Unsplash/Pexels/etc are
+ * blocked by network policy), and keyword photo services returned irrelevant,
+ * low-quality images. So every slot below is EMPTY on purpose — the <Photo>
+ * component renders a clean, on-brand gradient placeholder instead of a random
+ * or broken image.
  *
- * ── To use YOUR OWN photos ──────────────────────────────────────────────
- *   1. Drop files into /public/images (e.g. boba.jpg, cookies.jpg)
- *   2. Replace a slot below with a local path, e.g.  boba: ["/images/boba.jpg"]
- * Nothing else needs to change.
- * ────────────────────────────────────────────────────────────────────────
+ * ── Drop in your OWN photos (recommended, looks best) ─────────────────────
+ *   1. Put files in /public/images  (e.g. boba.jpg, cookies.jpg, icecream.jpg)
+ *   2. Point the slot at them:        boba: ["/images/boba.jpg"],
+ * You can also paste any hosted image URL(s). Multiple entries are tried in
+ * order; the gradient shows only if none load.
+ * ──────────────────────────────────────────────────────────────────────────
  */
 
-const flick = (tags: string, lock: number, w = 1100, h = 1400) =>
-  `https://loremflickr.com/${w}/${h}/${tags}?lock=${lock}`;
-
 export const IMG = {
-  boba: [flick("bubbletea", 21), flick("boba", 5)],
-  cookies: [flick("cookie", 32), flick("cookies", 7)],
-  iceCream: [flick("icecream", 43), flick("gelato", 9)],
-  shake: [flick("milkshake", 54), flick("smoothie", 11)],
-  donuts: [flick("donut", 65, 1000, 1200), flick("doughnut", 3, 1000, 1200)],
-  croissants: [flick("croissant", 76, 1000, 1200), flick("pastry", 4, 1000, 1200)],
-  dubai: [flick("chocolate", 87, 1000, 1200), flick("chocolatebar", 6, 1000, 1200)],
-  storefront: [flick("bakery", 98, 1600, 1200), flick("cafe", 12, 1600, 1200)],
-} as const;
+  boba: [] as string[],
+  cookies: [] as string[],
+  iceCream: [] as string[],
+  shake: [] as string[],
+  donuts: [] as string[],
+  croissants: [] as string[],
+  dubai: [] as string[],
+  storefront: [] as string[],
+};
 
-/** Accent colors used for each slot's gradient fallback (brand palette). */
+/** Accent colors used for each slot's gradient placeholder (brand palette). */
 export const IMG_ACCENT: Record<keyof typeof IMG, string> = {
-  boba: "#c9a26b",
+  boba: "#e3ab6b",
   cookies: "#a4713f",
-  iceCream: "#d9b486",
-  shake: "#c58f6a",
-  donuts: "#d9b486",
+  iceCream: "#8fce74",
+  shake: "#ff7a59",
+  donuts: "#e3ab6b",
   croissants: "#c7a978",
-  dubai: "#8fae7b",
-  storefront: "#c9a26b",
+  dubai: "#8fce74",
+  storefront: "#ff7a59",
 };
