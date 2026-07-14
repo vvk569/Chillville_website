@@ -19,7 +19,7 @@ export function Heading({ text, className, delay = 0 }: Props) {
   const lines = text.split("\n");
   return (
     <motion.h2
-      className={cn("font-display leading-[0.98] text-cream", className)}
+      className={cn("font-display font-bold leading-[0.98] tracking-tight text-cream", className)}
       variants={stagger(0.12, delay)}
       initial="hidden"
       whileInView="show"

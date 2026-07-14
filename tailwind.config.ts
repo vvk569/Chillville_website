@@ -16,15 +16,18 @@ const config: Config = {
           600: "#1a1611",
         },
         cream: {
-          DEFAULT: "#f2e8d8",
+          DEFAULT: "#f6eee2",
           dim: "#cabfae",
         },
+        sand: "#f3ead9",
         chocolate: {
           DEFAULT: "#3a2418",
           light: "#5a3825",
         },
-        caramel: "#c9a26b",
-        matcha: "#8fae7b",
+        caramel: "#e3ab6b",
+        matcha: "#8fce74",
+        coral: "#ff7a59",
+        grape: "#7c6cff",
       },
       fontFamily: {
         display: ["var(--font-display)", "Georgia", "serif"],

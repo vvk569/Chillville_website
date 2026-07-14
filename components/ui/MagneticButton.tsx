@@ -39,7 +39,7 @@ export function MagneticButton({ href, children, variant = "solid", className }:
       className={cn(
         "group relative inline-flex items-center gap-3 overflow-hidden rounded-full px-8 py-4 text-sm tracking-wide2 transition-[transform] duration-500 ease-expo",
         variant === "solid"
-          ? "bg-cream text-charcoal"
+          ? "bg-gradient-to-r from-coral to-caramel text-charcoal font-semibold"
           : "border border-cream/25 text-cream",
         className
       )}
@@ -49,7 +49,7 @@ export function MagneticButton({ href, children, variant = "solid", className }:
       <span
         className={cn(
           "absolute inset-0 z-0 origin-bottom scale-y-0 transition-transform duration-500 ease-expo group-hover:scale-y-100",
-          variant === "solid" ? "bg-caramel" : "bg-cream/[0.06]"
+          variant === "solid" ? "bg-cream" : "bg-cream/[0.06]"
         )}
       />
     </motion.a>

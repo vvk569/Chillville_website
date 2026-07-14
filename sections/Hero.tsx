@@ -48,6 +48,9 @@ export function Hero() {
     >
       {/* cinematic gradient stage */}
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(120%_100%_at_70%_20%,#1c160f_0%,#0a0a0a_60%)]" />
+      {/* vibrant ambient blobs */}
+      <div className="pointer-events-none absolute -left-20 top-1/4 -z-10 h-[42vh] w-[42vh] rounded-full bg-matcha/20 blur-[130px]" />
+      <div className="pointer-events-none absolute -right-16 bottom-10 -z-10 h-[38vh] w-[38vh] rounded-full bg-coral/20 blur-[130px]" />
 
       {/* 3D layer */}
       <div className="absolute inset-0 z-0">
@@ -87,7 +90,7 @@ export function Hero() {
           </span>
         </motion.div>
 
-        <h1 className="font-display text-[15vw] leading-[0.86] tracking-[-0.02em] text-cream sm:text-[11vw] lg:text-[8.5vw]">
+        <h1 className="font-display font-extrabold text-[15vw] leading-[0.86] tracking-[-0.03em] text-cream sm:text-[11vw] lg:text-[8.5vw]">
           <span className="clip-line">
             <motion.span variants={line} className="block">
               Freshly Baked.
@@ -99,7 +102,10 @@ export function Hero() {
             </motion.span>
           </span>
           <span className="clip-line">
-            <motion.span variants={line} className="block italic text-caramel">
+            <motion.span
+              variants={line}
+              className="block bg-gradient-to-r from-coral via-caramel to-matcha bg-clip-text text-transparent"
+            >
               Pure Indulgence.
             </motion.span>
           </span>
