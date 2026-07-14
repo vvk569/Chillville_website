@@ -3,9 +3,11 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { cookies } from "@/lib/data";
+import { IMG, IMG_ACCENT } from "@/lib/images";
 import { Heading } from "@/components/ui/Heading";
 import { Reveal } from "@/components/ui/Reveal";
-import { CookieStack } from "@/components/visuals/CookieStack";
+import { Photo } from "@/components/ui/Photo";
+import { Tilt3D } from "@/components/ui/Tilt3D";
 
 export function SignatureCookies() {
   const ref = useRef<HTMLDivElement>(null);
@@ -13,8 +15,7 @@ export function SignatureCookies() {
     target: ref,
     offset: ["start end", "end start"],
   });
-  const yVisual = useTransform(scrollYProgress, [0, 1], ["-10%", "14%"]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [8, -8]);
+  const yVisual = useTransform(scrollYProgress, [0, 1], ["-8%", "12%"]);
 
   return (
     <section
@@ -22,19 +23,26 @@ export function SignatureCookies() {
       ref={ref}
       className="relative overflow-hidden bg-charcoal-800 py-28 sm:py-40"
     >
-      {/* warm floor glow */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-chocolate/25 to-transparent" />
 
       <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-16 px-6 sm:px-10 lg:grid-cols-12">
-        {/* visual */}
-        <motion.div
-          style={{ y: yVisual, rotate }}
-          className="flex justify-center lg:col-span-6"
-        >
-          <div className="animate-drift-slow">
-            <CookieStack />
-          </div>
-        </motion.div>
+        {/* photograph */}
+        <Reveal variant="blur" className="lg:col-span-6">
+          <motion.div style={{ y: yVisual }}>
+            <Tilt3D className="group aspect-[5/4] w-full overflow-hidden rounded-[2rem] border border-white/10 shadow-card">
+              <Photo
+                sources={IMG.cookies}
+                accent={IMG_ACCENT.cookies}
+                alt="Molten-centre chocolate chunk cookies"
+                className="absolute inset-0 h-full w-full"
+                imgClassName="group-hover:scale-[1.06]"
+              />
+              <div className="absolute bottom-5 left-5 z-10 rounded-full border border-white/15 bg-black/40 px-4 py-2 text-[11px] uppercase tracking-luxe text-cream/80 backdrop-blur [transform:translateZ(60px)]">
+                Baked to order · ${cookies.price}
+              </div>
+            </Tilt3D>
+          </motion.div>
+        </Reveal>
 
         {/* copy */}
         <div className="lg:col-span-6 lg:pl-10">

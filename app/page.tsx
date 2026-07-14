@@ -8,6 +8,7 @@ import { Hero } from "@/sections/Hero";
 import { Manifesto } from "@/sections/Manifesto";
 import { SignatureBoba } from "@/sections/SignatureBoba";
 import { SignatureCookies } from "@/sections/SignatureCookies";
+import { Frozen } from "@/sections/Frozen";
 import { Collection } from "@/sections/Collection";
 import { Gallery } from "@/sections/Gallery";
 import { Craft } from "@/sections/Craft";
@@ -33,6 +34,7 @@ export default function Home() {
         <Manifesto />
         <SignatureBoba />
         <SignatureCookies />
+        <Frozen />
         <Collection />
         <Gallery />
         <Craft />

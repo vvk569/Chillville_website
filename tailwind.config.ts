@@ -37,6 +37,9 @@ const config: Config = {
       maxWidth: {
         content: "1240px",
       },
+      boxShadow: {
+        card: "0 40px 90px -50px rgba(0,0,0,0.9)",
+      },
       transitionTimingFunction: {
         expo: "cubic-bezier(0.16, 1, 0.3, 1)",
         smooth: "cubic-bezier(0.65, 0, 0.35, 1)",

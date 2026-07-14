@@ -6,8 +6,8 @@
 export const nav = [
   { label: "Boba", href: "#boba" },
   { label: "Cookies", href: "#cookies" },
-  { label: "Collection", href: "#collection" },
-  { label: "Craft", href: "#craft" },
+  { label: "Ice Cream", href: "#frozen" },
+  { label: "Menu", href: "#collection" },
   { label: "Visit", href: "#visit" },
 ];
 
@@ -44,15 +44,42 @@ export type LineupItem = {
   tag: string;
   note: string;
   accent: string;
+  img: string; // key into lib/images.ts IMG
 };
 
 export const lineup: LineupItem[] = [
-  { id: "boba", index: "01", name: "Boba", tag: "Hand-shaken", note: "Brown-sugar pearls, cooked hourly, poured over a cold oat-milk cloud.", accent: "#c9a26b" },
-  { id: "cookies", index: "02", name: "Cookies", tag: "Molten centre", note: "72-hour dough, browned butter, shards of 64% Valrhona.", accent: "#a4713f" },
-  { id: "donuts", index: "03", name: "Donuts", tag: "Glazed to glass", note: "Brioche rings, fried to order, lacquered in seasonal glazes.", accent: "#d9b486" },
-  { id: "croissants", index: "04", name: "Croissants", tag: "108 layers", note: "French T55, cultured butter, a three-day lamination.", accent: "#c7a978" },
-  { id: "dubai", index: "05", name: "Dubai Chocolate", tag: "24k finish", note: "Crisp kunafa and pistachio cream in single-origin couverture.", accent: "#8fae7b" },
+  { id: "boba", index: "01", name: "Boba", tag: "Hand-shaken", note: "Brown-sugar pearls, cooked hourly, poured over a cold oat-milk cloud.", accent: "#c9a26b", img: "boba" },
+  { id: "cookies", index: "02", name: "Cookies", tag: "Molten centre", note: "72-hour dough, browned butter, shards of 64% Valrhona.", accent: "#a4713f", img: "cookies" },
+  { id: "icecream", index: "03", name: "Ice Cream", tag: "Slow-churned", note: "Overnight custard bases, churned to order. Dense, glossy, seasonal.", accent: "#d9b486", img: "iceCream" },
+  { id: "shakes", index: "04", name: "Shakes", tag: "Thick & loaded", note: "House ice cream blended thick, crowned with a cookie or donut.", accent: "#c58f6a", img: "shake" },
+  { id: "donuts", index: "05", name: "Donuts", tag: "Glazed to glass", note: "Brioche rings, fried to order, lacquered in seasonal glazes.", accent: "#d9b486", img: "donuts" },
+  { id: "croissants", index: "06", name: "Croissants", tag: "108 layers", note: "French T55, cultured butter, a three-day lamination.", accent: "#c7a978", img: "croissants" },
+  { id: "dubai", index: "07", name: "Dubai Chocolate", tag: "24k finish", note: "Crisp kunafa and pistachio cream in single-origin couverture.", accent: "#8fae7b", img: "dubai" },
 ];
+
+export const iceCream = {
+  eyebrow: "Churned In-House",
+  title: "Slow-churned,\nsmall batch.",
+  body: "Custard bases steeped overnight and churned to order — Madagascar vanilla bean, burnt-caramel, black-sesame, roasted pistachio. Dense, glossy, and never overrun with air.",
+  notes: [
+    { k: "Base", v: "Overnight-steeped custard" },
+    { k: "Dairy", v: "Jersey cream, 16% fat" },
+    { k: "Flavours", v: "Rotating, seasonal" },
+  ],
+  price: "6",
+};
+
+export const shake = {
+  eyebrow: "Thick & Loaded",
+  title: "Shakes worth\nthe brain-freeze.",
+  body: "Our own ice cream blended thick with fresh milk, crowned with whipped cream, a warm cookie or donut, and a drizzle of house sauce. A dessert and a drink in one glass.",
+  notes: [
+    { k: "Made with", v: "House ice cream" },
+    { k: "Topped", v: "Cookie / donut / boba" },
+    { k: "Sauces", v: "Burnt honey · pistachio · cocoa" },
+  ],
+  price: "9",
+};
 
 export type Collection = {
   id: string;

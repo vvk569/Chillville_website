@@ -4,6 +4,8 @@ import { useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect";
 import { lineup } from "@/lib/data";
+import { IMG } from "@/lib/images";
+import { Photo } from "@/components/ui/Photo";
 
 /**
  * A pinned, horizontally-scrolling menu gallery. Vertical scroll drives the
@@ -68,7 +70,7 @@ export function Gallery() {
             <span className="italic text-caramel">lineup.</span>
           </h2>
           <p className="mt-6 max-w-xs text-sm leading-relaxed text-cream/50">
-            Five crafts, one obsession. Scroll sideways through the collection.
+            Seven cravings, one obsession. Scroll sideways through the menu.
           </p>
         </div>
 
@@ -76,12 +78,18 @@ export function Gallery() {
           <article
             key={item.id}
             className="group relative flex h-[62vh] w-[80vw] shrink-0 overflow-hidden rounded-[2rem] border border-white/10 sm:w-[34vw]"
-            style={{
-              background: `radial-gradient(120% 80% at 50% 0%, ${item.accent}2e, transparent 60%), linear-gradient(180deg,#161009,#0a0a0a)`,
-            }}
           >
+            {/* photograph */}
+            <Photo
+              sources={IMG[item.img as keyof typeof IMG]}
+              accent={item.accent}
+              alt={`${item.name} — ${item.tag}`}
+              className="absolute inset-0 h-full w-full"
+              imgClassName="group-hover:scale-[1.06]"
+            />
+
             {/* index watermark */}
-            <span className="pointer-events-none absolute -right-4 -top-6 select-none font-display text-[10rem] leading-none text-white/[0.04]">
+            <span className="pointer-events-none absolute -right-4 -top-6 z-10 select-none font-display text-[10rem] leading-none text-white/10">
               {item.index}
             </span>
 

@@ -2,37 +2,37 @@
 
 import { FiMapPin, FiPhone, FiClock } from "react-icons/fi";
 import { store } from "@/lib/data";
+import { IMG, IMG_ACCENT } from "@/lib/images";
 import { Heading } from "@/components/ui/Heading";
 import { Reveal } from "@/components/ui/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { Photo } from "@/components/ui/Photo";
+import { Tilt3D } from "@/components/ui/Tilt3D";
 
 export function Visit() {
   return (
     <section id="visit" className="relative bg-charcoal-800 py-28 sm:py-40">
       <div className="mx-auto max-w-content px-6 sm:px-10">
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
-          {/* storefront / map panel */}
+          {/* storefront photo */}
           <Reveal variant="blur">
-            <div
-              className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-white/10 sm:aspect-[4/3] lg:aspect-[4/5]"
-              style={{
-                background:
-                  "radial-gradient(90% 70% at 30% 20%, rgba(201,162,107,0.22), transparent 55%), linear-gradient(160deg,#1a140d,#0a0a0a 75%)",
-              }}
-            >
-              {/* abstract facade */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                <span className="font-display text-3xl tracking-wide2 text-cream">
+            <Tilt3D max={6} className="aspect-[4/5] overflow-hidden rounded-3xl border border-white/10 shadow-card sm:aspect-[4/3] lg:aspect-[4/5]">
+              <Photo
+                sources={IMG.storefront}
+                accent={IMG_ACCENT.storefront}
+                alt="Chillville bakery & boba storefront interior"
+                className="absolute inset-0 h-full w-full"
+              />
+              <div className="absolute left-5 top-5 z-10">
+                <span className="font-display text-2xl tracking-wide2 text-cream drop-shadow">
                   Chillville
                 </span>
-                <span className="text-[10px] uppercase tracking-luxe text-caramel">
+                <div className="text-[10px] uppercase tracking-luxe text-caramel">
                   Flagship · Arts District
-                </span>
+                </div>
               </div>
-              {/* faux street grid */}
-              <div className="absolute inset-0 opacity-[0.06] [background:repeating-linear-gradient(0deg,transparent_0_38px,#f2e8d8_38px_39px),repeating-linear-gradient(90deg,transparent_0_38px,#f2e8d8_38px_39px)]" />
               {/* location pill */}
-              <div className="absolute inset-x-4 bottom-4 flex items-center justify-between rounded-2xl border border-white/10 bg-black/50 px-5 py-4 backdrop-blur-xl">
+              <div className="absolute inset-x-4 bottom-4 z-10 flex items-center justify-between rounded-2xl border border-white/10 bg-black/50 px-5 py-4 backdrop-blur-xl">
                 <span className="flex items-center gap-2 text-sm text-cream/80">
                   <FiMapPin className="text-caramel" /> {store.address}
                 </span>
@@ -45,7 +45,7 @@ export function Visit() {
                   Map
                 </a>
               </div>
-            </div>
+            </Tilt3D>
           </Reveal>
 
           {/* details */}
