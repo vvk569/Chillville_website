@@ -44,7 +44,7 @@ export function DubaiStoryScene({ progress }: { progress: MutableRefObject<numbe
         const y = Math.acos(1 - (2 * (i + 0.5)) / KUNAFA);
         return {
           dir: new THREE.Vector3(Math.sin(y) * Math.cos(a), Math.cos(y) * 0.7, Math.sin(y) * Math.sin(a)),
-          gather: new THREE.Vector3((Math.random() - 0.5) * 1.35, 0.14, (Math.random() - 0.5) * 0.82),
+          gather: new THREE.Vector3((Math.random() - 0.5) * 1.3, 0.05, (Math.random() - 0.5) * 0.8),
           len: 0.32 + Math.random() * 0.4,
           spin: new THREE.Vector3(Math.random(), Math.random(), Math.random()),
         };
@@ -68,12 +68,12 @@ export function DubaiStoryScene({ progress }: { progress: MutableRefObject<numbe
     const pts: THREE.Vector3[] = [];
     for (let i = 0; i <= 60; i++) {
       const t = i / 60;
-      const ang = t * Math.PI * 4;
-      const r = 0.75 * (1 - t * 0.5);
-      pts.push(new THREE.Vector3(Math.cos(ang) * r, 1.4 - t * 1.2, Math.sin(ang) * r));
+      const ang = t * Math.PI * 3;
+      const r = 0.7 * (1 - t * 0.45);
+      pts.push(new THREE.Vector3(Math.cos(ang) * r, 1.5 - t * 1.35, Math.sin(ang) * r));
     }
     const curve = new THREE.CatmullRomCurve3(pts);
-    return new THREE.TubeGeometry(curve, 140, 0.07, 10, false);
+    return new THREE.TubeGeometry(curve, 150, 0.1, 12, false);
   }, []);
   const ribbonIndexCount = (ribbonGeo.index?.count ?? 0);
 
@@ -93,12 +93,17 @@ export function DubaiStoryScene({ progress }: { progress: MutableRefObject<numbe
       const d = kData[i];
       const burst = d.dir.clone().multiplyScalar(1.2 + ph1 * 1.9);
       const pos = burst.lerp(d.gather, ph2);
-      pos.y -= ph3 * 0.06;
+      pos.y -= ph3 * 0.04;
       m.position.copy(pos);
       const appear = phase(p, 0.02, 0.12);
-      const s = appear * (1 - ph3 * 0.9);
+      const s = appear * (1 - ph3); // fully hidden once the chocolate coats it
       m.scale.setScalar(Math.max(0.0001, s));
-      m.rotation.set(d.spin.x + t * 0.4, d.spin.y + t * 0.3, d.spin.z);
+      // tumble while flying, then lie flat as it settles onto the paste
+      m.rotation.set(
+        lerp(d.spin.x + t * 0.4, Math.PI / 2, ph2),
+        lerp(d.spin.y + t * 0.3, d.spin.y, ph2),
+        lerp(d.spin.z, i % 2 ? 0.35 : -0.35, ph2)
+      );
     });
 
     // pistachios: burst in, then shrink into the paste
@@ -131,10 +136,10 @@ export function DubaiStoryScene({ progress }: { progress: MutableRefObject<numbe
       mat.opacity = 1 - phase(p, 0.78, 0.94);
     }
 
-    // chocolate top layer forms over the paste (act 3 → 4)
+    // chocolate top layer visibly coats the paste during the pour (act 3)
     if (chocTop.current) {
-      const grow = Math.max(0.0001, Math.max(ph3, ph4));
-      chocTop.current.scale.set(grow, Math.max(0.0001, phase(p, 0.55, 0.85)), grow);
+      const cover = Math.max(0.0001, phase(p, 0.5, 0.72));
+      chocTop.current.scale.setScalar(cover);
     }
 
     // gold + pistachio drizzle in act 4
