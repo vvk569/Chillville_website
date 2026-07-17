@@ -105,6 +105,17 @@ html.lenis body {
   border-color: rgba(201, 162, 107, 0.9);
 }
 
+/* "living photo" — a slow cinematic zoom/drift so a still feels like video */
+@keyframes live-zoom {
+  0% { transform: scale(1.04) translate3d(0, 0, 0); }
+  50% { transform: scale(1.11) translate3d(-1.4%, -1%, 0); }
+  100% { transform: scale(1.04) translate3d(0, 0, 0); }
+}
+.live-zoom {
+  animation: live-zoom 14s ease-in-out infinite;
+  will-change: transform;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

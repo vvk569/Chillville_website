@@ -5,6 +5,7 @@ import { useFrame } from "@react-three/fiber";
 import { ContactShadows } from "@react-three/drei";
 import * as THREE from "three";
 import { Recipe, Part } from "./recipes";
+import { StudioEnv } from "./StudioEnv";
 import { useMousePosition } from "@/hooks/useMousePosition";
 
 function geometry(part: Part) {
@@ -91,19 +92,21 @@ export function AssembleScene({
     if (group.current) {
       const t = state.clock.elapsedTime;
       // idle drift + subtle cursor parallax
-      group.current.rotation.y = t * 0.14 + pointer.current.x * 0.25;
-      group.current.rotation.x = recipe.tilt[0] + Math.sin(t * 0.4) * 0.04 - pointer.current.y * 0.12;
+      // slow, elegant idle drift + gentle cursor parallax (eased)
+      group.current.rotation.y = t * 0.08 + pointer.current.x * 0.16;
+      group.current.rotation.x = recipe.tilt[0] + Math.sin(t * 0.3) * 0.03 - pointer.current.y * 0.08;
       group.current.rotation.z = recipe.tilt[2];
-      group.current.position.y = Math.sin(t * 0.5) * 0.06;
+      group.current.position.y = Math.sin(t * 0.4) * 0.05;
     }
   });
 
   return (
     <>
-      <ambientLight intensity={0.7} />
-      <directionalLight position={[4, 6, 5]} intensity={2.3} color="#ffe6c2" castShadow shadow-mapSize={[1024, 1024]} />
-      <directionalLight position={[-5, 2, -3]} intensity={0.8} color="#8fce74" />
-      <pointLight position={[0, 1, 5]} intensity={1.3} color="#ff7a59" />
+      <StudioEnv />
+      <ambientLight intensity={0.4} />
+      <directionalLight position={[4, 6, 5]} intensity={2.0} color="#ffe6c2" castShadow shadow-mapSize={[2048, 2048]} shadow-bias={-0.0002} />
+      <directionalLight position={[-5, 2, -3]} intensity={0.6} color="#8fce74" />
+      <pointLight position={[0, 1, 5]} intensity={0.9} color="#ff7a59" />
 
       <group ref={group} rotation={recipe.tilt} scale={recipe.scale ?? 1}>
         {recipe.parts.map((part, i) => (
@@ -120,6 +123,7 @@ export function AssembleScene({
               color={part.color}
               roughness={part.rough ?? 0.5}
               metalness={part.metal ?? 0}
+              envMapIntensity={1.15}
               transparent={part.opacity !== undefined}
               opacity={part.opacity ?? 1}
               side={part.opacity !== undefined ? THREE.DoubleSide : THREE.FrontSide}
@@ -128,7 +132,7 @@ export function AssembleScene({
         ))}
       </group>
 
-      <ContactShadows position={[0, -2, 0]} opacity={0.5} scale={12} blur={2.6} far={4} />
+      <ContactShadows position={[0, -2, 0]} opacity={0.55} scale={12} blur={3} far={4} resolution={512} />
     </>
   );
 }
