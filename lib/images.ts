@@ -23,9 +23,22 @@ export const IMG = {
   shake: exts("shake"),
   donuts: exts("donuts"),
   croissants: exts("croissants"),
-  dubai: exts("dubai"),
+  // the Dubai/kunafa bar — looks for kunafa.* first, then dubai.*
+  dubai: [...exts("kunafa"), ...exts("dubai")],
   storefront: exts("storefront"),
 };
+
+/**
+ * Optional looping product videos. Drop a short (~2s), silent, looping clip at
+ * the path below and it plays instead of the still image (great for a hero
+ * product like the kunafa bar). If absent, the still photo shows with a subtle
+ * "living" motion instead.
+ *   -> save your clip at /public/videos/kunafa.mp4  (or .webm)
+ */
+export const VIDEO = {
+  dubai: ["/videos/kunafa.mp4", "/videos/kunafa.webm"],
+};
+
 
 /** Accent colors used for each slot's gradient fallback (brand palette). */
 export const IMG_ACCENT: Record<keyof typeof IMG, string> = {

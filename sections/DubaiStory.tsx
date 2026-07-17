@@ -4,8 +4,8 @@ import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect";
-import { IMG, IMG_ACCENT } from "@/lib/images";
-import { Photo } from "@/components/ui/Photo";
+import { IMG, IMG_ACCENT, VIDEO } from "@/lib/images";
+import { LivePhoto } from "@/components/ui/LivePhoto";
 
 const DubaiStoryCanvas = dynamic(() => import("@/components/three/DubaiStoryCanvas"), { ssr: false });
 
@@ -52,9 +52,17 @@ export function DubaiStory() {
           <DubaiStoryCanvas progress={progress} />
         </div>
 
-        {/* cross-dissolve to the real photo */}
-        <div ref={photo} className="pointer-events-none absolute inset-0 z-[2] opacity-0" style={{ transition: "opacity 0.1s linear" }}>
-          <Photo sources={IMG.dubai} accent={IMG_ACCENT.dubai} alt="Dubai pistachio-kunafa chocolate bar" className="absolute inset-0 h-full w-full" overlay />
+        {/* cross-dissolve to the real kunafa video/photo */}
+        <div ref={photo} className="pointer-events-none absolute inset-0 z-[2] overflow-hidden opacity-0" style={{ transition: "opacity 0.1s linear" }}>
+          <LivePhoto
+            video={VIDEO.dubai}
+            image={IMG.dubai}
+            accent={IMG_ACCENT.dubai}
+            alt="Dubai pistachio-kunafa chocolate bar"
+            className="absolute inset-0"
+          />
+          {/* legibility scrim over the media */}
+          <div className="absolute inset-0 bg-gradient-to-t from-charcoal/75 via-charcoal/10 to-transparent" />
         </div>
 
         <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-charcoal via-charcoal/10 to-transparent" />
