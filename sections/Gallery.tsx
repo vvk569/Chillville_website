@@ -1,129 +1,77 @@
 "use client";
 
-import { useRef } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
-import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect";
 import { lineup } from "@/lib/data";
 import { IMG } from "@/lib/images";
+import { Heading } from "@/components/ui/Heading";
+import { Reveal } from "@/components/ui/Reveal";
 import { Photo } from "@/components/ui/Photo";
 
-/**
- * A pinned, horizontally-scrolling menu gallery. Vertical scroll drives the
- * track sideways, introducing a fresh spatial rhythm mid-page.
- */
+// hand-picked span pattern for a bento-style photo mosaic
+const spanById: Record<string, string> = {
+  dubai: "col-span-2 row-span-2",
+  boba: "col-span-2 row-span-1",
+  cookies: "col-span-1 row-span-1",
+  icecream: "col-span-1 row-span-1",
+  shakes: "col-span-2 row-span-1",
+  donuts: "col-span-1 row-span-1",
+  croissants: "col-span-1 row-span-1",
+};
+
+// render order tuned for visual rhythm, independent of the menu's order
+const order = ["dubai", "boba", "cookies", "icecream", "shakes", "donuts", "croissants"];
+const tiles = order
+  .map((id) => lineup.find((i) => i.id === id))
+  .filter((i): i is (typeof lineup)[number] => Boolean(i));
+
 export function Gallery() {
-  const root = useRef<HTMLDivElement>(null);
-  const track = useRef<HTMLDivElement>(null);
-
-  useIsomorphicLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const el = track.current!;
-      const distance = () => el.scrollWidth - window.innerWidth;
-
-      const tween = gsap.to(el, {
-        x: () => -distance(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: root.current,
-          pin: true,
-          scrub: 1,
-          end: () => "+=" + distance(),
-          invalidateOnRefresh: true,
-        },
-      });
-
-      // subtle parallax on each panel's caption as it crosses the viewport
-      gsap.utils.toArray<HTMLElement>(".panel-caption").forEach((cap) => {
-        gsap.fromTo(
-          cap,
-          { y: 40 },
-          {
-            y: -40,
-            ease: "none",
-            scrollTrigger: {
-              trigger: cap,
-              containerAnimation: tween,
-              start: "left right",
-              end: "right left",
-              scrub: true,
-            },
-          }
-        );
-      });
-    }, root);
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section ref={root} className="relative overflow-hidden bg-charcoal-800">
-      {/* heading rail */}
-      <div className="pointer-events-none absolute left-6 top-10 z-10 sm:left-10">
-        <span className="text-[11px] uppercase tracking-luxe text-caramel">The Menu</span>
-      </div>
+    <section id="gallery" className="relative overflow-hidden bg-charcoal py-28 sm:py-40">
+      <div className="pointer-events-none absolute left-1/2 top-0 h-[50vh] w-[50vh] -translate-x-1/2 rounded-full bg-matcha/[0.05] blur-[150px]" />
 
-      <div ref={track} className="flex h-screen items-center gap-6 pl-6 pr-[10vw] sm:gap-10 sm:pl-10">
-        {/* intro panel */}
-        <div className="flex h-[62vh] w-[78vw] shrink-0 flex-col justify-end sm:w-[42vw]">
-          <h2 className="font-display text-5xl leading-[0.95] text-cream sm:text-7xl">
-            The full
-            <br />
-            <span className="italic text-caramel">lineup.</span>
-          </h2>
-          <p className="mt-6 max-w-xs text-sm leading-relaxed text-cream/50">
-            Seven cravings, one obsession. Scroll sideways through the menu.
-          </p>
+      <div className="relative mx-auto max-w-content px-6 sm:px-10">
+        <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+          <div>
+            <Reveal>
+              <span className="text-[11px] uppercase tracking-luxe text-caramel">Gallery</span>
+            </Reveal>
+            <Heading text={"Shot on\nthe pass."} className="mt-6 text-5xl sm:text-6xl" />
+          </div>
+          <Reveal delay={0.1}>
+            <p className="max-w-xs text-sm leading-relaxed text-cream/50">
+              A close look at what leaves the counter — no filters, just good
+              light and better ingredients.
+            </p>
+          </Reveal>
         </div>
 
-        {lineup.map((item) => (
-          <article
-            key={item.id}
-            className="group relative flex h-[62vh] w-[80vw] shrink-0 overflow-hidden rounded-[2rem] border border-white/10 sm:w-[34vw]"
-          >
-            {/* photograph */}
-            <Photo
-              sources={IMG[item.img as keyof typeof IMG]}
-              accent={item.accent}
-              alt={`${item.name} — ${item.tag}`}
-              className="absolute inset-0 h-full w-full"
-              imgClassName="group-hover:scale-[1.06]"
-            />
-
-            {/* index watermark */}
-            <span className="pointer-events-none absolute -right-4 -top-6 z-10 select-none font-display text-[10rem] leading-none text-white/10">
-              {item.index}
-            </span>
-
-            <div className="panel-caption relative z-10 mt-auto p-8">
-              <span
-                className="text-[10px] uppercase tracking-luxe"
-                style={{ color: item.accent }}
+        <div className="mt-16 grid grid-flow-dense auto-rows-[150px] grid-cols-2 gap-4 sm:auto-rows-[190px] sm:grid-cols-4 sm:gap-5">
+          {tiles.map((item, i) => (
+            <Reveal key={item.id} variant="blur" delay={(i % 4) * 0.06} className={spanById[item.id]}>
+              <a
+                href="#specials"
+                className="group relative block h-full w-full overflow-hidden rounded-2xl border border-white/10"
               >
-                {item.tag}
-              </span>
-              <h3 className="mt-3 font-display text-4xl text-cream sm:text-5xl">
-                {item.name}
-              </h3>
-              <p className="mt-4 max-w-xs text-sm leading-relaxed text-cream/55">
-                {item.note}
-              </p>
-            </div>
-
-            {/* hover sheen */}
-            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100">
-              <div className="absolute -inset-x-1/2 top-0 h-full w-1/3 -skew-x-12 bg-white/[0.04] blur-2xl" />
-            </div>
-          </article>
-        ))}
-
-        {/* end cue */}
-        <div className="flex h-[62vh] w-[60vw] shrink-0 items-center sm:w-[24vw]">
-          <a
-            href="#visit"
-            className="group flex items-center gap-3 font-display text-3xl text-cream sm:text-4xl"
-          >
-            <span className="italic text-caramel">Taste it</span>
-            <span className="transition-transform duration-500 group-hover:translate-x-2">→</span>
-          </a>
+                <Photo
+                  sources={IMG[item.img as keyof typeof IMG]}
+                  accent={item.accent}
+                  alt={`${item.name} — ${item.tag}`}
+                  className="absolute inset-0 h-full w-full"
+                  imgClassName="group-hover:scale-[1.08]"
+                />
+                <div className="pointer-events-none absolute bottom-0 left-0 z-10 p-4 sm:p-5">
+                  <span
+                    className="text-[9px] uppercase tracking-luxe"
+                    style={{ color: item.accent }}
+                  >
+                    {item.tag}
+                  </span>
+                  <h3 className="mt-1 font-display text-lg font-bold text-cream sm:text-xl">
+                    {item.name}
+                  </h3>
+                </div>
+              </a>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

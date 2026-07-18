@@ -22,8 +22,8 @@ lighting and typography — not paragraphs.
   cookies separate and the boba shifts perspective as you scroll.
 - **Boba & Cookies as heroes** — each gets a full art-directed showcase with
   parallax visuals, notes and pricing.
-- **Editorial collection list** (Donuts · Croissants · Dubai Chocolate) with an
-  accent glow that follows the hovered row — no repetitive cards.
+- **Full menu grid & gallery mosaic** — the seven-item lineup gets a clean
+  photographic grid in Our Menu, then a bento-style mosaic in the Gallery.
 - **Tasteful micro-interactions** — custom two-part cursor, magnetic buttons,
   line-by-line headline reveals, a hairline scroll-progress bar, film grain and
   vignette.
@@ -32,16 +32,20 @@ lighting and typography — not paragraphs.
 
 ### Section flow
 
-1. Hero — 3D boba + orbiting cookies
-2. Manifesto — progressive word reveal, evolving gradient
-3. Signature Boba — cinematic showcase
-4. Signature Cookies — cinematic showcase
-5. Collection — editorial interactive list
-6. Craft — pinned, scroll-driven 3D scene
-7. Why Chillville — animated statistics
-8. Testimonials — animated slider
-9. Visit — storefront, hours, map, CTAs
-10. Footer — socials, contact, newsletter
+A premium 8-section structure, each reachable from the smooth-scrolling nav:
+
+1. **Home** — 3D boba + orbiting cookies
+2. **About Us** — progressive word-reveal ethos statement + a pinned,
+   scroll-driven 3D craft narrative
+3. **Our Menu** — the full seven-item lineup in a photographic grid
+4. **Signature Specials** — Boba, Cookies and the Dubai chocolate bar, each a
+   full cinematic showcase
+5. **Why Chillville** — animated statistics + guest testimonials slider
+6. **Gallery** — a bento-style photo mosaic of the full menu
+7. **Visit Us** — storefront, hours, map, CTAs
+8. **Contact Us** — details, socials, and a message form
+
+Closed out by a **Footer** — socials, contact, newsletter.
 
 ---
 

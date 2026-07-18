@@ -5,16 +5,18 @@ import { ScrollProgress } from "@/components/ScrollProgress";
 import { Navbar } from "@/components/Navbar";
 
 import { Hero } from "@/sections/Hero";
-import { Manifesto } from "@/sections/Manifesto";
+import { About } from "@/sections/About";
+import { Craft } from "@/sections/Craft";
+import { Menu } from "@/sections/Menu";
+import { SignatureSpecialsIntro } from "@/sections/SignatureSpecials";
 import { SignatureBoba } from "@/sections/SignatureBoba";
 import { SignatureCookies } from "@/sections/SignatureCookies";
-import { Frozen } from "@/sections/Frozen";
-import { Bakery } from "@/sections/Bakery";
 import { DubaiStory } from "@/sections/DubaiStory";
-import { Gallery } from "@/sections/Gallery";
 import { Numbers } from "@/sections/Numbers";
 import { Testimonials } from "@/sections/Testimonials";
+import { Gallery } from "@/sections/Gallery";
 import { Visit } from "@/sections/Visit";
+import { Contact } from "@/sections/Contact";
 import { Footer } from "@/sections/Footer";
 
 export default function Home() {
@@ -30,17 +32,39 @@ export default function Home() {
       <div className="film-grain" aria-hidden />
 
       <main className="relative">
+        {/* 1. Home */}
         <Hero />
-        <Manifesto />
-        <SignatureBoba />
-        <SignatureCookies />
-        <Frozen />
-        <Bakery />
-        <DubaiStory />
+
+        {/* 2. About Us */}
+        <About />
+        <Craft />
+
+        {/* 3. Our Menu */}
+        <Menu />
+
+        {/* 4. Signature Specials */}
+        <div id="specials">
+          <SignatureSpecialsIntro />
+          <SignatureBoba />
+          <SignatureCookies />
+          <DubaiStory />
+        </div>
+
+        {/* 5. Why Chillville */}
+        <div id="why">
+          <Numbers />
+          <Testimonials />
+        </div>
+
+        {/* 6. Gallery */}
         <Gallery />
-        <Numbers />
-        <Testimonials />
+
+        {/* 7. Visit Us */}
         <Visit />
+
+        {/* 8. Contact Us */}
+        <Contact />
+
         <Footer />
       </main>
     </SmoothScroll>
