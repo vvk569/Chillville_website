@@ -4,12 +4,41 @@
  */
 
 export const nav = [
-  { label: "Boba", href: "#boba" },
-  { label: "Cookies", href: "#cookies" },
-  { label: "Ice Cream", href: "#frozen" },
-  { label: "Menu", href: "#collection" },
+  { label: "About", href: "#about" },
+  { label: "Menu", href: "#menu" },
+  { label: "Specials", href: "#specials" },
+  { label: "Why Us", href: "#why" },
+  { label: "Gallery", href: "#gallery" },
   { label: "Visit", href: "#visit" },
+  { label: "Contact", href: "#contact" },
 ];
+
+/** About Us — the ethos statement + a short founding note. */
+export const about = {
+  eyebrow: "About Us",
+  lead: "Started in the Arts District, Chillville set out to prove everyday indulgence deserves the same reverence as couture — one slow-poured boba and one molten cookie at a time.",
+};
+
+/** Our Menu — section intro copy for the full lineup grid. */
+export const menuIntro = {
+  eyebrow: "Our Menu",
+  title: "Seven cravings,\none obsession.",
+  body: "From hand-shaken boba to laminated pastry and 24k chocolate — everything is made from scratch, to order, every single day.",
+};
+
+/** Signature Specials — section intro copy above the cinematic showcases. */
+export const specialsIntro = {
+  eyebrow: "Signature Specials",
+  title: "The three\neveryone talks about.",
+  body: "Brown-sugar boba, a molten cookie, and the viral Dubai chocolate bar — the pieces we built this whole place around.",
+};
+
+/** Contact Us — section intro + form copy. */
+export const contact = {
+  eyebrow: "Contact Us",
+  title: "Say hello,\nor just come by.",
+  body: "Questions about catering, private events, or today's seasonal flavor? We read every message.",
+};
 
 /** The two heroes of the menu get full cinematic showcases. */
 export const boba = {

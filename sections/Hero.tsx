@@ -118,7 +118,7 @@ export function Hero() {
           </motion.p>
 
           <motion.div variants={soft} className="flex flex-wrap items-center gap-4">
-            <MagneticButton href="#boba">
+            <MagneticButton href="#menu">
               Explore Menu <FiArrowDownRight />
             </MagneticButton>
             <MagneticButton href="#visit" variant="outline">
