@@ -13,6 +13,23 @@ const priceById: Record<string, string> = {
   shakes: shake.price,
 };
 
+// hand-picked span pattern for a bento-style photo mosaic
+const spanById: Record<string, string> = {
+  dubai: "col-span-2 row-span-2",
+  boba: "col-span-2 row-span-1",
+  cookies: "col-span-1 row-span-1",
+  icecream: "col-span-1 row-span-1",
+  shakes: "col-span-2 row-span-1",
+  donuts: "col-span-1 row-span-1",
+  croissants: "col-span-1 row-span-1",
+};
+
+// render order tuned for visual rhythm, independent of the lineup's data order
+const order = ["dubai", "boba", "cookies", "icecream", "shakes", "donuts", "croissants"];
+const tiles = order
+  .map((id) => lineup.find((i) => i.id === id))
+  .filter((i): i is (typeof lineup)[number] => Boolean(i));
+
 export function Menu() {
   return (
     <section id="menu" className="relative overflow-hidden bg-charcoal-800 py-28 sm:py-40">
@@ -31,14 +48,14 @@ export function Menu() {
           </Reveal>
         </div>
 
-        <div className="mt-16 grid grid-cols-2 gap-5 sm:gap-6 md:grid-cols-4">
-          {lineup.map((item, i) => {
+        <div className="mt-16 grid grid-flow-dense auto-rows-[210px] grid-cols-2 gap-4 sm:auto-rows-[260px] sm:grid-cols-4 sm:gap-5">
+          {tiles.map((item, i) => {
             const price = priceById[item.id];
             return (
-              <Reveal key={item.id} variant="blur" delay={(i % 4) * 0.06}>
+              <Reveal key={item.id} variant="blur" delay={(i % 4) * 0.06} className={spanById[item.id]}>
                 <a
                   href="#specials"
-                  className="group relative block aspect-[3/4] w-full overflow-hidden rounded-[1.5rem] border border-white/10 shadow-card"
+                  className="group relative block h-full w-full overflow-hidden rounded-[1.5rem] border border-white/10 shadow-card"
                 >
                   <Photo
                     sources={IMG[item.img as keyof typeof IMG]}
@@ -52,7 +69,7 @@ export function Menu() {
                     {item.index}
                   </span>
 
-                  <div className="relative z-10 mt-auto flex h-full flex-col justify-end p-5">
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 p-5">
                     <span
                       className="text-[9px] uppercase tracking-luxe"
                       style={{ color: item.accent }}
@@ -63,7 +80,7 @@ export function Menu() {
                       {item.name}
                     </h3>
                     {price && (
-                      <span className="mt-2 font-display text-sm font-semibold text-caramel">
+                      <span className="mt-2 block font-display text-sm font-semibold text-caramel">
                         From ${price}
                       </span>
                     )}

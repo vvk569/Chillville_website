@@ -22,8 +22,8 @@ lighting and typography — not paragraphs.
   cookies separate and the boba shifts perspective as you scroll.
 - **Boba & Cookies as heroes** — each gets a full art-directed showcase with
   parallax visuals, notes and pricing.
-- **Full menu grid & gallery mosaic** — the seven-item lineup gets a clean
-  photographic grid in Our Menu, then a bento-style mosaic in the Gallery.
+- **Bento-style menu mosaic** — the full seven-item lineup laid out as a
+  photographic bento grid in Our Menu, no separate gallery needed.
 - **Tasteful micro-interactions** — custom two-part cursor, magnetic buttons,
   line-by-line headline reveals, a hairline scroll-progress bar, film grain and
   vignette.
@@ -32,18 +32,17 @@ lighting and typography — not paragraphs.
 
 ### Section flow
 
-A premium 8-section structure, each reachable from the smooth-scrolling nav:
+A premium 7-section structure, each reachable from the smooth-scrolling nav:
 
 1. **Home** — 3D boba + orbiting cookies
 2. **About Us** — progressive word-reveal ethos statement + a pinned,
    scroll-driven 3D craft narrative
-3. **Our Menu** — the full seven-item lineup in a photographic grid
+3. **Our Menu** — the full seven-item lineup as a bento-style photo mosaic
 4. **Signature Specials** — Boba, Cookies and the Dubai chocolate bar, each a
    full cinematic showcase
 5. **Why Chillville** — animated statistics + guest testimonials slider
-6. **Gallery** — a bento-style photo mosaic of the full menu
-7. **Visit Us** — storefront, hours, map, CTAs
-8. **Contact Us** — details, socials, and a message form
+6. **Visit Us** — storefront, hours, map, CTAs
+7. **Contact Us** — details, socials, and a message form
 
 Closed out by a **Footer** — socials, contact, newsletter.
 
