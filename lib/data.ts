@@ -8,7 +8,6 @@ export const nav = [
   { label: "Menu", href: "#menu" },
   { label: "Specials", href: "#specials" },
   { label: "Why Us", href: "#why" },
-  { label: "Gallery", href: "#gallery" },
   { label: "Visit", href: "#visit" },
   { label: "Contact", href: "#contact" },
 ];

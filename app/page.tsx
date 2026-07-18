@@ -14,7 +14,6 @@ import { SignatureCookies } from "@/sections/SignatureCookies";
 import { DubaiStory } from "@/sections/DubaiStory";
 import { Numbers } from "@/sections/Numbers";
 import { Testimonials } from "@/sections/Testimonials";
-import { Gallery } from "@/sections/Gallery";
 import { Visit } from "@/sections/Visit";
 import { Contact } from "@/sections/Contact";
 import { Footer } from "@/sections/Footer";
@@ -56,13 +55,10 @@ export default function Home() {
           <Testimonials />
         </div>
 
-        {/* 6. Gallery */}
-        <Gallery />
-
-        {/* 7. Visit Us */}
+        {/* 6. Visit Us */}
         <Visit />
 
-        {/* 8. Contact Us */}
+        {/* 7. Contact Us */}
         <Contact />
 
         <Footer />

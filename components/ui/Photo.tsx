@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -42,6 +42,12 @@ export function Photo({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [exhausted]);
 
+  // A cached image can finish loading before this ref/onLoad attaches, so
+  // the "load" event never fires — check `.complete` the moment it mounts.
+  const imgRef = useCallback((img: HTMLImageElement | null) => {
+    if (img?.complete && img.naturalWidth > 0) setLoaded(true);
+  }, []);
+
   return (
     <div
       className={cn("relative overflow-hidden bg-charcoal-800", className)}
@@ -52,6 +58,7 @@ export function Photo({
       {!exhausted && (
         <img
           key={sources[idx]}
+          ref={imgRef}
           src={sources[idx]}
           alt={alt}
           loading={priority ? "eager" : "lazy"}
