@@ -1,16 +1,13 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import { FiArrowDownRight } from "react-icons/fi";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { ImageTrail } from "@/components/ui/image-trail";
+import { Photo } from "@/components/ui/Photo";
+import { IMG, IMG_ACCENT } from "@/lib/images";
 import { EASE_EXPO } from "@/lib/motion";
-
-const HeroCanvas = dynamic(() => import("@/components/three/HeroCanvas"), {
-  ssr: false,
-});
 
 // brand-themed tiles that trail the cursor across the hero
 const trailTiles = [
@@ -52,13 +49,25 @@ export function Hero() {
       <div className="pointer-events-none absolute -left-20 top-1/4 -z-10 h-[42vh] w-[42vh] rounded-full bg-matcha/20 blur-[130px]" />
       <div className="pointer-events-none absolute -right-16 bottom-10 -z-10 h-[38vh] w-[38vh] rounded-full bg-coral/20 blur-[130px]" />
 
-      {/* 3D layer */}
+      {/* photographic backdrop — a real shot, drifting slowly so it feels alive */}
       <div className="absolute inset-0 z-0">
-        <HeroCanvas />
+        <Photo
+          sources={IMG.hero}
+          accent={IMG_ACCENT.hero}
+          alt="Freshly poured brown-sugar boba on the Chillville counter"
+          priority
+          overlay={false}
+          className="h-full w-full"
+          imgClassName="live-zoom"
+        />
       </div>
 
-      {/* legibility veil */}
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-charcoal/30 via-transparent to-charcoal" />
+      {/* legibility veils — enough to carry the headline, light enough to keep
+          the photograph readable. Copy spans the full width on mobile, so it
+          needs a flat scrim there and a directional one from sm up. */}
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-charcoal/70 sm:hidden" />
+      <div className="pointer-events-none absolute inset-0 z-[1] hidden bg-gradient-to-r from-charcoal/85 via-charcoal/45 to-charcoal/20 sm:block" />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-charcoal/40 via-transparent to-charcoal" />
 
       {/* brand-themed cursor image-trail (sits above the veil, below the copy) */}
       <div className="pointer-events-none absolute inset-0 z-[2]">

@@ -42,10 +42,13 @@ export function Photo({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [exhausted]);
 
-  // A cached image can finish loading before this ref/onLoad attaches, so
-  // the "load" event never fires — check `.complete` the moment it mounts.
+  // The browser can settle an image (from cache, or a 404) before React
+  // attaches onLoad/onError, so neither event ever fires. Resolve it directly
+  // the moment the element mounts: `complete` with no intrinsic width = failed.
   const imgRef = useCallback((img: HTMLImageElement | null) => {
-    if (img?.complete && img.naturalWidth > 0) setLoaded(true);
+    if (!img?.complete) return;
+    if (img.naturalWidth > 0) setLoaded(true);
+    else setIdx((i) => i + 1);
   }, []);
 
   return (
