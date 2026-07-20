@@ -17,6 +17,9 @@ const exts = (name: string) =>
   [".jpg", ".jpeg", ".png", ".webp"].map((e) => `/images/${name}${e}`);
 
 export const IMG = {
+  // the full-bleed hero backdrop — drop a wide, dark, atmospheric shot at
+  // /public/images/hero.jpg to override; falls back to the boba photo.
+  hero: [...exts("hero"), ...exts("boba")],
   boba: exts("boba"),
   cookies: exts("cookies"),
   iceCream: exts("icecream"),
@@ -42,6 +45,7 @@ export const VIDEO = {
 
 /** Accent colors used for each slot's gradient fallback (brand palette). */
 export const IMG_ACCENT: Record<keyof typeof IMG, string> = {
+  hero: "#e3ab6b",
   boba: "#e3ab6b",
   cookies: "#a4713f",
   iceCream: "#d9b486",
