@@ -1,6 +1,6 @@
 # Chillville Bakery & Boba
 
-A cinematic, **immersive 3D web experience** for Chillville Bakery & Boba —
+A cinematic, **immersive web experience** for Chillville Bakery & Boba —
 handcrafted boba and small-batch bakery, art-directed to feel like an Apple
 keynote crossed with a luxury dessert boutique. Not a bakery template.
 
@@ -13,36 +13,34 @@ keynote crossed with a luxury dessert boutique. Not a bakery template.
 A single-page, scroll-driven luxury experience. The story is carried by motion,
 lighting and typography — not paragraphs.
 
-- **Cinematic 3D hero** — a physically-lit boba cup (glass transmission,
-  studio reflections) with cookies orbiting slowly and a soft cursor-parallax
-  rig. Motion is deliberately subtle: the cup sways only a few degrees.
-- **Scroll storytelling** — GSAP ScrollTrigger + Lenis drive every scene:
-  a progressive word-reveal manifesto with an evolving gradient, parallax
-  product showcases, animated counters, and a **pinned 3D craft scene** where
-  cookies separate and the boba shifts perspective as you scroll.
-- **Boba & Cookies as heroes** — each gets a full art-directed showcase with
-  parallax visuals, notes and pricing.
+- **Cinematic photographic hero** — a full-bleed, slowly-drifting product shot
+  under layered scrims, with a soft cursor image-trail. The headline reveals
+  line-by-line; motion is deliberately restrained.
+- **Signature product showcases** — Boba, Cookies and the Dubai bar share one
+  premium, numbered showcase treatment (large framed imagery + spec-driven
+  copy), alternating sides so they read as one intentional set, not cards.
 - **Bento-style menu mosaic** — the full seven-item lineup laid out as a
   photographic bento grid in Our Menu, no separate gallery needed.
+- **Cohesive warm-dark palette** — every section shares the header's charcoal +
+  caramel/cream aesthetic, alternating charcoal shades for quiet definition.
 - **Tasteful micro-interactions** — custom two-part cursor, magnetic buttons,
   line-by-line headline reveals, a hairline scroll-progress bar, film grain and
   vignette.
-- **Refined motion language** — one shared set of expo-eased, slow, soft
+- **Refined motion language** — one shared set of expo-eased, soft, subtle
   transitions (no bounce, no over-rotation). Respects `prefers-reduced-motion`.
 
 ### Section flow
 
 A premium 7-section structure, each reachable from the smooth-scrolling nav:
 
-1. **Home** — 3D boba + orbiting cookies
-2. **About Us** — progressive word-reveal ethos statement + a pinned,
-   scroll-driven 3D craft narrative
+1. **Home** — full-bleed photographic hero
+2. **About** — progressive word-reveal ethos statement
 3. **Our Menu** — the full seven-item lineup as a bento-style photo mosaic
-4. **Signature Specials** — Boba, Cookies and the Dubai chocolate bar, each a
-   full cinematic showcase
+4. **Signature Specials** — Boba, Cookies and the Dubai bar, each a full
+   numbered showcase
 5. **Why Chillville** — animated statistics + guest testimonials slider
-6. **Visit Us** — storefront, hours, map, CTAs
-7. **Contact Us** — details, socials, and a message form
+6. **Visit** — storefront, hours, map, CTAs
+7. **Contact** — details, socials, and a message form
 
 Closed out by a **Footer** — socials, contact, newsletter.
 

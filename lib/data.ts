@@ -64,6 +64,18 @@ export const cookies = {
   price: "5",
 };
 
+export const dubai = {
+  eyebrow: "The Viral Bar, Elevated",
+  title: "Kunafa, pistachio,\nedible gold.",
+  body: "Crisp shredded kunafa and silk-smooth pistachio cream, sealed in single-origin couverture and finished with 24k gold. Built from scratch, in small batches, the way it should be.",
+  notes: [
+    { k: "Pastry", v: "Shredded kunafa, toasted golden" },
+    { k: "Filling", v: "Roasted pistachio cream" },
+    { k: "Finish", v: "Single-origin couverture · 24k" },
+  ],
+  price: "14",
+};
+
 /** The full lineup, used by the pinned horizontal gallery. */
 export type LineupItem = {
   id: string;

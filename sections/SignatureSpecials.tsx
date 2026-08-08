@@ -19,7 +19,7 @@ export function SignatureSpecialsIntro() {
           className="mx-auto mt-6 max-w-2xl text-5xl sm:text-6xl md:text-7xl"
         />
         <Reveal delay={0.1}>
-          <p className="mx-auto mt-6 max-w-md text-sm leading-relaxed text-cream/50">
+          <p className="mx-auto mt-7 max-w-lg text-pretty text-[15px] leading-relaxed text-cream/60 sm:text-base">
             {specialsIntro.body}
           </p>
         </Reveal>

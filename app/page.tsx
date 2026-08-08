@@ -6,12 +6,11 @@ import { Navbar } from "@/components/Navbar";
 
 import { Hero } from "@/sections/Hero";
 import { About } from "@/sections/About";
-import { Craft } from "@/sections/Craft";
 import { Menu } from "@/sections/Menu";
 import { SignatureSpecialsIntro } from "@/sections/SignatureSpecials";
 import { SignatureBoba } from "@/sections/SignatureBoba";
 import { SignatureCookies } from "@/sections/SignatureCookies";
-import { DubaiStory } from "@/sections/DubaiStory";
+import { Specials } from "@/sections/Specials";
 import { Numbers } from "@/sections/Numbers";
 import { Testimonials } from "@/sections/Testimonials";
 import { Visit } from "@/sections/Visit";
@@ -34,19 +33,18 @@ export default function Home() {
         {/* 1. Home */}
         <Hero />
 
-        {/* 2. About Us */}
+        {/* 2. About */}
         <About />
-        <Craft />
 
         {/* 3. Our Menu */}
         <Menu />
 
-        {/* 4. Signature Specials */}
+        {/* 4. Signature Specials — Boba, Cookies & the Dubai bar */}
         <div id="specials">
           <SignatureSpecialsIntro />
           <SignatureBoba />
           <SignatureCookies />
-          <DubaiStory />
+          <Specials />
         </div>
 
         {/* 5. Why Chillville */}
@@ -55,10 +53,10 @@ export default function Home() {
           <Testimonials />
         </div>
 
-        {/* 6. Visit Us */}
+        {/* 6. Visit */}
         <Visit />
 
-        {/* 7. Contact Us */}
+        {/* 7. Contact */}
         <Contact />
 
         <Footer />
