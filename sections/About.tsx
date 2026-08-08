@@ -13,17 +13,13 @@ export function About() {
 
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // progressive word reveal, scrubbed to scroll
+      // words illuminate once, in a soft cascade — reliable, not scrubbed
       gsap.to(".manifesto-word", {
         opacity: 1,
-        stagger: 0.3,
-        ease: "none",
-        scrollTrigger: {
-          trigger: root.current,
-          start: "top 70%",
-          end: "bottom 70%",
-          scrub: true,
-        },
+        duration: 0.9,
+        stagger: 0.06,
+        ease: "power2.out",
+        scrollTrigger: { trigger: root.current, start: "top 62%" },
       });
 
       // background gradient slowly warms as you pass through
@@ -36,7 +32,7 @@ export function About() {
           scrollTrigger: {
             trigger: root.current,
             start: "top bottom",
-            end: "bottom top",
+            end: "center center",
             scrub: true,
           },
         }

@@ -39,7 +39,7 @@ export function Menu() {
         <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
           <div>
             <Reveal>
-              <span className="text-[11px] uppercase tracking-luxe text-coral">{menuIntro.eyebrow}</span>
+              <span className="text-[11px] uppercase tracking-luxe text-caramel">{menuIntro.eyebrow}</span>
             </Reveal>
             <Heading text={menuIntro.title} className="mt-6 text-5xl sm:text-6xl" />
           </div>

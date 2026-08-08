@@ -14,7 +14,7 @@ export function SignatureBoba() {
   const yGhost = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
 
   return (
-    <section id="boba" ref={ref} className="relative overflow-hidden bg-charcoal py-28 sm:py-40">
+    <section id="boba" ref={ref} className="relative overflow-hidden bg-charcoal pb-28 pt-16 sm:pb-40 sm:pt-24">
       <motion.span
         style={{ y: yGhost }}
         aria-hidden

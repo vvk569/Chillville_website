@@ -6,8 +6,8 @@ import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect";
 import { stats } from "@/lib/data";
 import { Reveal } from "@/components/ui/Reveal";
 
-// playful per-stat accent colors
-const COLORS = ["#ff7a59", "#8fce74", "#e3ab6b", "#7c6cff"];
+// warm, cohesive accents — dark enough to read cleanly on the light sand
+const COLORS = ["#b45309", "#9a3412", "#a16207", "#7c2d12"];
 
 export function Numbers() {
   const root = useRef<HTMLDivElement>(null);
@@ -34,7 +34,7 @@ export function Numbers() {
       <div className="mx-auto max-w-content px-6 sm:px-10">
         <div className="max-w-3xl">
           <Reveal>
-            <span className="text-[11px] uppercase tracking-luxe text-coral">
+            <span className="text-[11px] uppercase tracking-luxe text-[#b45309]">
               Why Chillville
             </span>
           </Reveal>

@@ -14,10 +14,10 @@ export function SignatureCookies() {
     <section id="cookies" ref={ref} className="relative overflow-hidden bg-charcoal-800 py-28 sm:py-40">
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-chocolate/25 to-transparent" />
 
-      <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-16 px-6 sm:px-10 lg:grid-cols-12">
+      <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-16 px-6 sm:px-10 lg:grid-cols-2">
         {/* assembling 3D product */}
-        <Reveal variant="blur" className="lg:col-span-6">
-          <div className="relative aspect-[5/4] w-full overflow-hidden rounded-[2rem] border border-white/10 shadow-card bg-[radial-gradient(circle_at_50%_35%,#211711,#0b0a08)]">
+        <Reveal variant="blur" className="order-1">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border border-white/10 shadow-card bg-[radial-gradient(circle_at_50%_35%,#211711,#0b0a08)]">
             <div className="pointer-events-none absolute left-1/2 top-1/3 h-40 w-40 -translate-x-1/2 rounded-full bg-coral/15 blur-3xl" />
             <ProductVisual recipe="cookie" sources={IMG.cookies} accent={IMG_ACCENT.cookies} alt="Molten chocolate-chip cookies" />
             <div className="absolute bottom-5 left-5 z-10 rounded-full border border-white/15 bg-black/40 px-4 py-2 text-[11px] uppercase tracking-luxe text-cream/80 backdrop-blur">
@@ -27,7 +27,7 @@ export function SignatureCookies() {
         </Reveal>
 
         {/* copy */}
-        <div className="lg:col-span-6 lg:pl-10">
+        <div className="order-2">
           <Reveal>
             <span className="text-[11px] uppercase tracking-luxe text-caramel">{cookies.eyebrow}</span>
           </Reveal>

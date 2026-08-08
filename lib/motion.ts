@@ -14,22 +14,22 @@ export const transition = {
 
 /** Fade + rise, revealed once when scrolled into view. */
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 22 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 1.1, ease: EASE_EXPO },
+    transition: { duration: 0.9, ease: EASE_EXPO },
   },
 };
 
 /** Gentle blur-in for imagery and large blocks. */
 export const blurIn: Variants = {
-  hidden: { opacity: 0, filter: "blur(14px)", scale: 1.02 },
+  hidden: { opacity: 0, filter: "blur(10px)", scale: 1.015 },
   show: {
     opacity: 1,
     filter: "blur(0px)",
     scale: 1,
-    transition: { duration: 1.4, ease: EASE_EXPO },
+    transition: { duration: 1.1, ease: EASE_EXPO },
   },
 };
 
