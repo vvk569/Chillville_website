@@ -5,8 +5,6 @@ import { motion } from "framer-motion";
 import { FiArrowDownRight } from "react-icons/fi";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { ImageTrail } from "@/components/ui/image-trail";
-import { Photo } from "@/components/ui/Photo";
-import { IMG, IMG_ACCENT } from "@/lib/images";
 import { EASE_EXPO } from "@/lib/motion";
 
 // brand-themed tiles that trail the cursor across the hero
@@ -49,17 +47,23 @@ export function Hero() {
       <div className="pointer-events-none absolute -left-20 top-1/4 -z-10 h-[42vh] w-[42vh] rounded-full bg-matcha/20 blur-[130px]" />
       <div className="pointer-events-none absolute -right-16 bottom-10 -z-10 h-[38vh] w-[38vh] rounded-full bg-coral/20 blur-[130px]" />
 
-      {/* photographic backdrop — a real shot, drifting slowly so it feels alive */}
-      <div className="absolute inset-0 z-0">
-        <Photo
-          sources={IMG.hero}
-          accent={IMG_ACCENT.hero}
-          alt="Freshly poured brown-sugar boba on the Chillville counter"
-          priority
-          overlay={false}
-          className="h-full w-full"
-          imgClassName="live-zoom"
-        />
+      {/* cinematic Kunafa video backdrop — covers the hero without stretching;
+          the poster shows instantly and remains as the fallback if the video
+          is slow to load or unsupported. */}
+      <div className="absolute inset-0 z-0 bg-charcoal">
+        <video
+          className="h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster="/images/kunafa.jpg"
+          aria-hidden="true"
+          tabIndex={-1}
+        >
+          <source src="/videos/kunafa.mp4" type="video/mp4" />
+        </video>
       </div>
 
       {/* legibility veils — enough to carry the headline, light enough to keep
