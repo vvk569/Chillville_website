@@ -1,14 +1,41 @@
 "use client";
 
 import { useRef } from "react";
+import type { IconType } from "react-icons";
+import { PiOvenLight } from "react-icons/pi";
+import { IoPeopleOutline } from "react-icons/io5";
 import { gsap } from "@/lib/gsap";
 import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect";
-import { stats } from "@/lib/data";
 import { Heading } from "@/components/ui/Heading";
 import { Reveal } from "@/components/ui/Reveal";
 
-// a restrained echo of the hero's coral → caramel → matcha gradient
-const COLORS = ["#ff7a59", "#e3ab6b", "#8fce74", "#e3ab6b"];
+type Card = {
+  value: number;
+  suffix: string;
+  label: string;
+  desc: string;
+  Icon: IconType;
+  /** 100% carries the coral→caramel gradient; 5★ stays solid gold. */
+  gradient?: boolean;
+};
+
+const cards: Card[] = [
+  {
+    value: 100,
+    suffix: "%",
+    label: "Baked fresh daily",
+    desc: "Every item is baked fresh every day using premium ingredients for unmatched taste.",
+    Icon: PiOvenLight,
+    gradient: true,
+  },
+  {
+    value: 5,
+    suffix: "★",
+    label: "Guest rating",
+    desc: "Loved by thousands of customers for our quality, taste, and experience.",
+    Icon: IoPeopleOutline,
+  },
+];
 
 export function Numbers() {
   const root = useRef<HTMLDivElement>(null);
@@ -44,20 +71,27 @@ export function Numbers() {
           <Heading text={"Small batch.\nBig obsession."} className="mt-6 text-4xl sm:text-6xl" />
         </div>
 
-        <div className="mt-12 grid grid-cols-2 gap-5 sm:gap-6 md:mt-16 md:grid-cols-4">
-          {stats.map((s, i) => (
-            <Reveal key={s.label} delay={i * 0.08}>
-              <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-7 transition-transform duration-500 ease-expo hover:-translate-y-1">
-                <div
-                  className="flex items-start font-display text-6xl font-bold sm:text-7xl"
-                  style={{ color: COLORS[i % COLORS.length] }}
-                >
-                  <span data-count={s.value}>0</span>
-                  <span>{s.suffix}</span>
+        <div className="mt-12 grid grid-cols-1 gap-5 sm:gap-6 md:mt-16 md:grid-cols-2">
+          {cards.map((c, i) => (
+            <Reveal key={c.label} delay={i * 0.1} className="h-full">
+              <div className="flex h-full items-center gap-6 rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-8 transition-transform duration-500 ease-expo hover:-translate-y-1 sm:p-10">
+                <div className="min-w-0 flex-1">
+                  <div
+                    className={`flex items-start font-display text-6xl font-bold leading-none sm:text-7xl ${
+                      c.gradient
+                        ? "bg-gradient-to-br from-[#ff7a59] to-[#e3ab6b] bg-clip-text text-transparent"
+                        : "text-caramel"
+                    }`}
+                  >
+                    <span data-count={c.value}>0</span>
+                    <span>{c.suffix}</span>
+                  </div>
+                  <p className="mt-5 text-xs font-medium uppercase tracking-wide2 text-cream/45">
+                    {c.label}
+                  </p>
+                  <p className="mt-3 max-w-xs text-sm leading-relaxed text-cream/60">{c.desc}</p>
                 </div>
-                <p className="mt-4 text-xs font-medium uppercase tracking-wide2 text-cream/45">
-                  {s.label}
-                </p>
+                <c.Icon aria-hidden className="shrink-0 text-caramel/55" size={72} />
               </div>
             </Reveal>
           ))}
