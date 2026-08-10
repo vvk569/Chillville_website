@@ -32,7 +32,7 @@ const tiles = order
 
 export function Menu() {
   return (
-    <section id="menu" className="relative overflow-hidden bg-charcoal-800 py-28 sm:py-40">
+    <section id="menu" className="relative overflow-hidden bg-charcoal-800 pt-28 pb-14 sm:pt-40 sm:pb-20">
       <div className="pointer-events-none absolute left-1/2 top-1/3 h-[50vh] w-[50vh] -translate-x-1/2 rounded-full bg-caramel/[0.05] blur-[150px]" />
 
       <div className="relative mx-auto max-w-content px-6 sm:px-10">
@@ -51,6 +51,12 @@ export function Menu() {
         <div className="mt-16 grid grid-flow-dense auto-rows-[210px] grid-cols-2 gap-4 sm:auto-rows-[260px] sm:grid-cols-4 sm:gap-5">
           {tiles.map((item, i) => {
             const price = priceById[item.id];
+            // Dubai: use the clean product photo (dubai.*), not the kunafa video
+            // thumbnail (which has a play icon baked in). Scoped to this tile only.
+            const sources =
+              item.id === "dubai"
+                ? IMG.dubai.filter((s) => !s.includes("kunafa"))
+                : IMG[item.img as keyof typeof IMG];
             return (
               <Reveal key={item.id} variant="blur" delay={(i % 4) * 0.06} className={spanById[item.id]}>
                 <a
@@ -58,7 +64,7 @@ export function Menu() {
                   className="group relative block h-full w-full overflow-hidden rounded-[1.5rem] border border-white/10 shadow-card"
                 >
                   <Photo
-                    sources={IMG[item.img as keyof typeof IMG]}
+                    sources={sources}
                     accent={item.accent}
                     alt={`${item.name} — ${item.tag}`}
                     className="absolute inset-0 h-full w-full"

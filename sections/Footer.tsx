@@ -24,16 +24,16 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative overflow-hidden border-t border-white/10 bg-charcoal pt-24">
-      {/* oversized marquee wordmark */}
-      <div className="pointer-events-none select-none overflow-hidden py-6">
+    <footer className="relative overflow-hidden border-t border-white/10 bg-charcoal pb-10 pt-16 sm:pb-12 sm:pt-20">
+      {/* oversized wordmark — a faint branded backdrop behind the footer content */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-6 select-none overflow-hidden">
         <div className="animate-marquee whitespace-nowrap font-display text-[16vw] leading-none text-white/[0.028]">
           Chillville · Bakery · Boba · Chillville · Bakery · Boba ·&nbsp;
         </div>
       </div>
 
-      <div className="mx-auto max-w-content px-6 pb-12 sm:px-10">
-        <div className="grid grid-cols-1 gap-14 md:grid-cols-12">
+      <div className="relative mx-auto max-w-content px-6 sm:px-10">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12">
           {/* newsletter */}
           <div className="md:col-span-6">
             <h3 className="font-display text-3xl text-cream sm:text-4xl">
@@ -101,7 +101,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-[11px] uppercase tracking-wide2 text-cream/35 sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-[11px] uppercase tracking-wide2 text-cream/35 sm:flex-row">
           <p>© {new Date().getFullYear()} Chillville Bakery &amp; Boba</p>
           <p>Crafted with obsession in Los Angeles</p>
         </div>

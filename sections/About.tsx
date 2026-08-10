@@ -45,7 +45,7 @@ export function About() {
     <section
       id="about"
       ref={root}
-      className="relative flex min-h-[100svh] flex-col items-center justify-center py-32"
+      className="relative flex flex-col items-center justify-center py-24 sm:py-32"
     >
       <div className="pointer-events-none absolute left-1/2 top-1/2 -z-0 h-[60vh] w-[60vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-caramel/[0.06] blur-[140px]" />
       <div className="relative mx-auto max-w-5xl px-6 text-center sm:px-10">

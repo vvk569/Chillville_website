@@ -31,7 +31,7 @@ export function Numbers() {
   }, []);
 
   return (
-    <section ref={root} className="relative overflow-hidden bg-charcoal-800 py-28 sm:py-40">
+    <section ref={root} className="relative overflow-hidden bg-charcoal-800 py-20 sm:py-28">
       <div className="pointer-events-none absolute left-1/2 top-0 h-[46vh] w-[46vh] -translate-x-1/2 rounded-full bg-caramel/[0.05] blur-[150px]" />
 
       <div className="relative mx-auto max-w-content px-6 sm:px-10">
@@ -44,7 +44,7 @@ export function Numbers() {
           <Heading text={"Small batch.\nBig obsession."} className="mt-6 text-4xl sm:text-6xl" />
         </div>
 
-        <div className="mt-16 grid grid-cols-2 gap-5 sm:gap-6 md:mt-20 md:grid-cols-4">
+        <div className="mt-12 grid grid-cols-2 gap-5 sm:gap-6 md:mt-16 md:grid-cols-4">
           {stats.map((s, i) => (
             <Reveal key={s.label} delay={i * 0.08}>
               <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-7 transition-transform duration-500 ease-expo hover:-translate-y-1">

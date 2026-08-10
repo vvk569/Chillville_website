@@ -7,7 +7,7 @@ import { Reveal } from "@/components/ui/Reveal";
 /** Shared intro header that sits above the three cinematic showcases. */
 export function SignatureSpecialsIntro() {
   return (
-    <div className="relative overflow-hidden bg-charcoal pt-28 sm:pt-40">
+    <div className="relative overflow-hidden bg-charcoal pt-16 sm:pt-24">
       <div className="mx-auto max-w-content px-6 text-center sm:px-10">
         <Reveal>
           <span className="text-[11px] uppercase tracking-luxe text-caramel">

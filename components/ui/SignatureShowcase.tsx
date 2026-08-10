@@ -54,7 +54,7 @@ export function SignatureShowcase({
   const yGhost = useTransform(scrollYProgress, [0, 1], ["6%", "-6%"]);
 
   return (
-    <section id={id} ref={ref} className={`relative overflow-hidden ${bg} py-20 sm:py-28`}>
+    <section id={id} ref={ref} className={`relative overflow-hidden ${bg} py-14 sm:py-20`}>
       {/* oversized faint product name */}
       <motion.span
         style={{ y: yGhost }}
@@ -76,7 +76,7 @@ export function SignatureShowcase({
         {/* media */}
         <Reveal variant="blur" className={reverse ? "lg:order-2" : "lg:order-1"}>
           <div
-            className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.75rem] border border-white/10 shadow-card"
+            className="relative aspect-[5/4] w-full overflow-hidden rounded-[1.75rem] border border-white/10 shadow-card"
             style={{ background: `radial-gradient(circle at 50% 30%, ${accent}1f, #0b0a08 80%)` }}
           >
             {media}
