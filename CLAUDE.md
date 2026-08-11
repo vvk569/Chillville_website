@@ -56,4 +56,4 @@ Process (manual, not automated):
 - Memory files under `~/.claude/projects/.../memory/` persist automatically; no periodic "sync" needed. Committing at natural checkpoints is the most durable context of all.
 
 ## Current baseline
-- `main` history is attributed to Mounika. Latest reference point at time of writing: **c33c8ae** (Why Chillville reduced to two stat cards); **032f07b** added this CLAUDE.md. Update this line when the baseline meaningfully advances.
+- `main` history is attributed to Mounika, in sync with origin/main at **c2adbd5** (gitignore `.claude/launch.json`). Notable recent points: **b28abd7** shared the session-continuity hooks via committed `settings.json` (hooks are now confirmed firing — SessionStart injects git state, PreCompact logs a breadcrumb); **032f07b** added this CLAUDE.md. Update this line when the baseline meaningfully advances.
