@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/session-context.sh\"",
+            "timeout": 10,
+            "statusMessage": "Loading git state"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/precompact-log.sh\"",
+            "timeout": 10,
+            "statusMessage": "Saving pre-compact breadcrumb"
+          }
+        ]
+      }
+    ]
+  }
+}
