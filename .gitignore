@@ -160,3 +160,4 @@ __pycache__/
 # Claude Code — local, machine-specific
 .claude/settings.local.json
 .claude/session-log.md
+.claude/launch.json
