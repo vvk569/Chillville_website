@@ -156,3 +156,7 @@ next-env.d.ts
 # Python bytecode
 __pycache__/
 *.pyc
+
+# Claude Code — local, machine-specific
+.claude/settings.local.json
+.claude/session-log.md

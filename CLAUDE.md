@@ -44,5 +44,16 @@ Section flow: **Hero → About → Menu → Signature Specials (Boba · Cookies 
 - Offline bundle: `~/Chillville_backup_20260811_001507.bundle` (all refs) — safety net, keep it.
 - Branch `backup-before-restore-75a82ae` → the removed marquee/horizontal-card-scroll work (75a82ae), kept for reference.
 
+## Session continuity (hooks & process)
+Two hooks reduce context loss across sessions and compaction (configured in **`.claude/settings.local.json`** — personal/untracked/gitignored; scripts in `.claude/hooks/`):
+- **SessionStart** → `.claude/hooks/session-context.sh` injects live git state (branch, HEAD, sync vs origin, uncommitted files, recent commits) at the top of every new/resumed/post-compaction session.
+- **PreCompact** → `.claude/hooks/precompact-log.sh` appends a timestamped breadcrumb (HEAD, branch, uncommitted files) to **`.claude/session-log.md`** (untracked) right before compaction, so exact state is recoverable.
+
+Activation note: because no settings file existed when these were first added, the settings watcher may not pick them up until the user opens `/hooks` once or restarts Claude Code. To make the hooks apply to *all* collaborators (not just this machine), move the `hooks` block from `.claude/settings.local.json` into the committed `.claude/settings.json`.
+
+Process (manual, not automated):
+- **At session end, run "update CLAUDE.md"** — I'll bump the baseline SHA below and add a short what's-done / what's-next note.
+- Memory files under `~/.claude/projects/.../memory/` persist automatically; no periodic "sync" needed. Committing at natural checkpoints is the most durable context of all.
+
 ## Current baseline
-- `main` history is attributed to Mounika. Latest reference point at time of writing: **c33c8ae** (Why Chillville reduced to two stat cards). Update this line when the baseline meaningfully advances.
+- `main` history is attributed to Mounika. Latest reference point at time of writing: **c33c8ae** (Why Chillville reduced to two stat cards); **032f07b** added this CLAUDE.md. Update this line when the baseline meaningfully advances.
