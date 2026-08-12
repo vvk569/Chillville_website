@@ -112,12 +112,12 @@ export function Navbar() {
                 onMouseEnter={openDropdown}
                 onMouseLeave={closeDropdownSoon}
               >
-                <button
-                  type="button"
+                <a
+                  href={sectionHref(l.href)}
                   aria-haspopup="true"
                   aria-expanded={menuOpen}
                   aria-controls="menu-dropdown"
-                  onClick={() => setMenuOpen((v) => !v)}
+                  onClick={() => setMenuOpen(false)}
                   onFocus={openDropdown}
                   className="group relative flex items-center gap-1.5 text-xs uppercase tracking-wide2 text-cream/70 transition-colors hover:text-cream"
                 >
@@ -129,7 +129,7 @@ export function Navbar() {
                     )}
                   />
                   <span className="absolute -bottom-1 left-0 h-px w-0 bg-caramel transition-all duration-500 ease-expo group-hover:w-full" />
-                </button>
+                </a>
 
                 <AnimatePresence>
                   {menuOpen && (
