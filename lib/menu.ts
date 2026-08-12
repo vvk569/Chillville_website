@@ -1,23 +1,23 @@
 /**
- * Menu categories — the source of truth for the MENU dropdown links and the
- * `/menu/[category]` pages. Products are temporary dummy items (placeholders)
- * until real catalog data + photography are wired in.
+ * Menu categories — the single source of truth for the MENU dropdown and the
+ * `/menu/[category]` pages.
+ *
+ * Product NAMES are taken verbatim from the client's Excel
+ * ("Menu List for Website & App.xlsx") and are the only real data we have.
+ * The Excel has no prices, descriptions or ingredients, so the pages show the
+ * name plus a placeholder ingredients line and a placeholder image; real
+ * ingredients/photos will be supplied later. Prices are intentionally omitted.
  */
 
 export type MenuProduct = {
-  name: string;
-  description: string;
-  ingredients: string;
-  price: string; // dollars, without the "$" (rendered by the page)
+  name: string; // exact product name from the Excel
+  subCategory?: string; // real Excel sub-group (e.g. "Milk Teas"), when present
 };
 
 export type MenuCategory = {
   slug: string;
-  name: string; // short label used in the dropdown
-  tag: string; // short descriptor shown under the name in the dropdown
-  eyebrow: string; // small kicker above the page title
-  blurb: string; // one-line intro on the category page
-  accent: string; // warm accent used for the dot / placeholder tint
+  name: string; // label used in the dropdown and as the page title
+  accent: string; // warm accent used for the dot / placeholder tint (styling only)
   products: MenuProduct[];
 };
 
@@ -25,236 +25,136 @@ export const menuCategories: MenuCategory[] = [
   {
     slug: "boba",
     name: "Boba",
-    tag: "Hand-shaken",
-    eyebrow: "The Signature Pour",
-    blurb: "Pearls cooked fresh every hour, poured over a cold milk cloud.",
     accent: "#c9a26b",
     products: [
-      {
-        name: "Brown Sugar Boba",
-        description: "Muscovado pearls that tiger-stripe the glass, over an oat-milk cloud.",
-        ingredients: "Ceylon black tea · muscovado pearls · barista oat milk",
-        price: "8",
-      },
-      {
-        name: "Matcha Latte Boba",
-        description: "Ceremonial matcha whisked to order with chewy tapioca.",
-        ingredients: "Ceremonial matcha · tapioca pearls · whole milk",
-        price: "8",
-      },
-      {
-        name: "Taro Milk Tea",
-        description: "Stone-ground taro, silky, faintly floral and sweet.",
-        ingredients: "Fresh taro · black tea · condensed milk",
-        price: "7",
-      },
-      {
-        name: "Strawberry Oolong",
-        description: "Fresh strawberry purée over roasted oolong with popping boba.",
-        ingredients: "Roasted oolong · strawberry purée · popping boba",
-        price: "8",
-      },
-    ],
-  },
-  {
-    slug: "dubai-chocolates",
-    name: "Dubai Chocolates",
-    tag: "24k finish",
-    eyebrow: "The Viral Bar, Elevated",
-    blurb: "Crisp kunafa and pistachio cream sealed in single-origin couverture.",
-    accent: "#8fae7b",
-    products: [
-      {
-        name: "Classic Dubai Bar",
-        description: "The one everyone talks about — kunafa and pistachio, sealed in dark couverture.",
-        ingredients: "Shredded kunafa · pistachio cream · dark couverture",
-        price: "14",
-      },
-      {
-        name: "Pistachio Gold Bar",
-        description: "Our richest pistachio bar, finished with edible 24k gold leaf.",
-        ingredients: "Pistachio cream · toasted kunafa · 24k gold leaf",
-        price: "16",
-      },
-      {
-        name: "Milk Kunafa Bar",
-        description: "Creamy milk chocolate against shatter-crisp kunafa and tahini.",
-        ingredients: "Milk couverture · kunafa · tahini",
-        price: "13",
-      },
+      { name: "Royal Milk Tea", subCategory: "Milk Teas" },
+      { name: "Jasmine Green Tea", subCategory: "Milk Teas" },
+      { name: "Osmanthus Oolong", subCategory: "Milk Teas" },
+      { name: "Brown Sugar Boba", subCategory: "Milk Teas" },
+      { name: "Taro Milk Tea", subCategory: "Milk Teas" },
+      { name: "cookies and cream milk Tea", subCategory: "Milk Teas" },
+      { name: "Black sesame milk Tea", subCategory: "Milk Teas" },
+      { name: "Badam milk Tea", subCategory: "Milk Teas" },
+      { name: "Blue Pea Butterfly Tea", subCategory: "Milk Teas" },
+      { name: "Fruit Flavored juice", subCategory: "Fruit Teas" },
+      { name: "Fruit flavored Tea", subCategory: "Fruit Teas" },
+      { name: "Tropical Fruit Tea", subCategory: "Fruit Teas" },
+      { name: "Strawberry Fruit Tea", subCategory: "Fruit Teas" },
+      { name: "Mango Fruit Tea", subCategory: "Fruit Teas" },
+      { name: "Pineapple Fruit Tea", subCategory: "Fruit Teas" },
+      { name: "Matcha Latte", subCategory: "Matcha Varieties" },
+      { name: "Double Matcha Cloud", subCategory: "Matcha Varieties" },
+      { name: "Strawberry Matcha Latte", subCategory: "Matcha Varieties" },
+      { name: "Matcha Cheese Latte", subCategory: "Matcha Varieties" },
+      { name: "Matcha Red Bean Smoothie", subCategory: "Matcha Varieties" },
+      { name: "Coconut Matcha Cloud", subCategory: "Matcha Varieties" },
+      { name: "Mango Coco Pomelo", subCategory: "Pomelo Sago" },
+      { name: "Strawberry Kiwi Sago", subCategory: "Pomelo Sago" },
+      { name: "Berry Slush", subCategory: "Slushies" },
+      { name: "Tropical Slush", subCategory: "Slushies" },
+      { name: "Watermelon Slush", subCategory: "Slushies" },
     ],
   },
   {
     slug: "cookies",
     name: "Cookies",
-    tag: "Molten centre",
-    eyebrow: "Baked to Order",
-    blurb: "Three-day fermented dough, browned butter, pulled while the middle still flows.",
     accent: "#a4713f",
     products: [
-      {
-        name: "Molten Valrhona",
-        description: "72-hour dough with a molten 64% single-origin centre.",
-        ingredients: "72h dough · browned butter · Valrhona 64%",
-        price: "5",
-      },
-      {
-        name: "Double Chocolate",
-        description: "Deep cocoa dough packed with dark chocolate chunks and sea salt.",
-        ingredients: "Cocoa dough · dark chunks · flaked sea salt",
-        price: "5",
-      },
-      {
-        name: "Pistachio White",
-        description: "White chocolate folded through roasted pistachio.",
-        ingredients: "Cultured butter · white chocolate · pistachio",
-        price: "5",
-      },
-      {
-        name: "Biscoff Butter",
-        description: "Brown-butter dough with a caramelised Biscoff swirl.",
-        ingredients: "Brown butter · Biscoff spread · vanilla",
-        price: "5",
-      },
+      { name: "Classic Chocolate Chip", subCategory: "Regular" },
+      { name: "Pistachio Delight", subCategory: "Regular" },
+      { name: "Cookies & Cream", subCategory: "Regular" },
+      { name: "Rainbow Sprinkle", subCategory: "Regular" },
+      { name: "Red Velvet", subCategory: "Regular" },
+      { name: "M & M", subCategory: "Regular" },
+      { name: "ChillVille Walnut Luxe", subCategory: "ChillVille Royale" },
+      { name: "Nutella Lava Burst", subCategory: "ChillVille Royale" },
+      { name: "Biscoff Lava Bliss", subCategory: "ChillVille Royale" },
+      { name: "Dubai Chocolate", subCategory: "ChillVille Royale" },
+      { name: "Oreo Cream Bliss", subCategory: "ChillVille Royale" },
+      { name: "Red Velvet Cream Bliss", subCategory: "ChillVille Royale" },
     ],
   },
   {
     slug: "donuts",
     name: "Donuts",
-    tag: "Glazed to glass",
-    eyebrow: "Fried to Order",
-    blurb: "Brioche rings, fried the moment you order and lacquered in seasonal glazes.",
     accent: "#d9b486",
     products: [
-      {
-        name: "Glazed Brioche",
-        description: "The classic ring in a clean vanilla-glass glaze.",
-        ingredients: "Brioche dough · vanilla glaze",
-        price: "4",
-      },
-      {
-        name: "Pistachio Cream",
-        description: "Split and filled with slow-set pistachio custard.",
-        ingredients: "Brioche · pistachio custard · crushed pistachio",
-        price: "5",
-      },
-      {
-        name: "Chocolate Hazelnut",
-        description: "A molten gianduja centre under toasted hazelnut.",
-        ingredients: "Brioche · gianduja · toasted hazelnut",
-        price: "5",
-      },
+      { name: "Classic" },
+      { name: "Rainbow Sprinkles" },
+      { name: "Coconut Flakes" },
+      { name: "M & M" },
+      { name: "Oreo" },
+      { name: "Marshmallow" },
+      { name: "S'mores" },
+      { name: "Pretzel" },
+      { name: "Birthday cake" },
+      { name: "Strawberry Short cake" },
+      { name: "Blueberry Glaze" },
+      { name: "Cherry Glaze" },
+      { name: "Gummy bears" },
+      { name: "Cinammon Sugar" },
     ],
   },
   {
+    // Empty in the Excel — kept as a category per the client's list.
+    // Products / photos to be supplied later.
     slug: "ice-creams",
     name: "Ice Creams",
-    tag: "Slow-churned",
-    eyebrow: "Churned In-House",
-    blurb: "Custard bases steeped overnight and churned to order — dense and glossy.",
-    accent: "#d9b486",
-    products: [
-      {
-        name: "Madagascar Vanilla",
-        description: "Overnight custard flecked with real vanilla bean.",
-        ingredients: "Jersey cream · vanilla bean · egg yolk",
-        price: "6",
-      },
-      {
-        name: "Burnt Caramel",
-        description: "Deep, smoky caramel with a whisper of sea salt.",
-        ingredients: "Custard base · burnt caramel · sea salt",
-        price: "6",
-      },
-      {
-        name: "Black Sesame",
-        description: "Nutty, toasted and glossy — a house favourite.",
-        ingredients: "Custard base · black sesame paste",
-        price: "6",
-      },
-      {
-        name: "Roasted Pistachio",
-        description: "Slow-churned around real roasted pistachio paste.",
-        ingredients: "Custard base · pistachio paste",
-        price: "7",
-      },
-    ],
+    accent: "#cbb892",
+    products: [],
   },
   {
-    slug: "milkshakes",
-    name: "Milkshakes",
-    tag: "Thick & loaded",
-    eyebrow: "Blended Thick",
-    blurb: "Our own ice cream blended thick and crowned with the good stuff.",
+    slug: "ice-cream-shakes",
+    name: "Ice Cream Shakes",
     accent: "#c58f6a",
     products: [
-      {
-        name: "Cookie Dough Shake",
-        description: "Vanilla ice cream blended thick, crowned with a warm cookie.",
-        ingredients: "House vanilla ice cream · cookie · whipped cream",
-        price: "9",
-      },
-      {
-        name: "Dubai Chocolate Shake",
-        description: "Kunafa and pistachio blended into chocolate ice cream.",
-        ingredients: "Chocolate ice cream · kunafa · pistachio",
-        price: "11",
-      },
-      {
-        name: "Strawberry Donut Shake",
-        description: "Strawberry shake finished with a glazed donut on top.",
-        ingredients: "Strawberry ice cream · glazed donut · berry sauce",
-        price: "10",
-      },
+      { name: "Classic Vanilla Bean" },
+      { name: "Ultimate Chocolate Fudge" },
+      { name: "Cookies & Cream Dream" },
+      { name: "Nutella Hazelnut" },
+      { name: "Lotus Biscoff" },
+      { name: "Strawberry Cheesecake" },
+      { name: "Brownie Explosion" },
+      { name: "Peanut Butter Cup" },
+      { name: "Salted Caramel Pretzel" },
+      { name: "Mint Cookies" },
+      { name: "Dubai Chocolate Pistachio" },
+      { name: "ChillVille Cookie Monster" },
     ],
   },
   {
-    slug: "croissants-muffins",
-    name: "Croissants & Muffins",
-    tag: "108 layers",
-    eyebrow: "Laminated by Hand",
-    blurb: "French butter, a three-day lamination, and muffins baked every morning.",
+    slug: "muffins",
+    name: "Muffins",
     accent: "#c7a978",
     products: [
-      {
-        name: "Butter Croissant",
-        description: "108 honeycombed layers of cultured French butter.",
-        ingredients: "French T55 · cultured butter",
-        price: "5",
-      },
-      {
-        name: "Almond Croissant",
-        description: "Filled and topped with almond frangipane and flaked almonds.",
-        ingredients: "Croissant · frangipane · flaked almonds",
-        price: "6",
-      },
-      {
-        name: "Blueberry Muffin",
-        description: "Buttermilk crumb bursting with fresh blueberries.",
-        ingredients: "Buttermilk batter · fresh blueberries",
-        price: "5",
-      },
-      {
-        name: "Double Chocolate Muffin",
-        description: "Rich cocoa crumb studded with dark chocolate chunks.",
-        ingredients: "Cocoa batter · dark chocolate chunks",
-        price: "5",
-      },
+      { name: "Nutella Muffin" },
+      { name: "Triple Chocolate Muffin" },
+      { name: "Brown Butter Chocochip Muffin" },
+      { name: "Blueberry CreamCheese Muffin" },
+      { name: "Lemon Poppyseed Muffin" },
     ],
   },
 ];
 
-/** Featured/popular picks shown in the dropdown's "Chillville Favorites" band. */
+/**
+ * "Chillville Favorites" — one signature pick per non-empty category, shown as
+ * a highlighted band above the six categories in the dropdown. Names are real
+ * Excel items; Boba's pick ("Matcha Cheese Latte") was specified by the client,
+ * the rest are the branded / signature items and can be swapped on request.
+ * Ice Creams has no items yet, so it has no favorite.
+ */
 export type MenuFavorite = {
-  name: string;
-  note: string;
-  slug: string; // which category page it links to
+  name: string; // real Excel product name
+  note: string; // which category it belongs to
+  slug: string; // category page it links to
 };
 
 export const menuFavorites: MenuFavorite[] = [
-  { name: "Brown Sugar Boba", note: "Signature pour", slug: "boba" },
-  { name: "Dubai Chocolate", note: "24k finish", slug: "dubai-chocolates" },
-  { name: "Molten Cookie", note: "Baked to order", slug: "cookies" },
+  { name: "Matcha Cheese Latte", note: "Boba", slug: "boba" },
+  { name: "ChillVille Walnut Luxe", note: "Cookies", slug: "cookies" },
+  { name: "S'mores", note: "Donuts", slug: "donuts" },
+  { name: "ChillVille Cookie Monster", note: "Ice Cream Shakes", slug: "ice-cream-shakes" },
+  { name: "Triple Chocolate Muffin", note: "Muffins", slug: "muffins" },
 ];
 
 export function getCategory(slug: string): MenuCategory | undefined {

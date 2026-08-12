@@ -196,7 +196,9 @@ export function Navbar() {
                                     {c.name}
                                   </span>
                                   <span className="text-[11px] uppercase tracking-wide2 text-cream/40">
-                                    {c.tag}
+                                    {c.products.length > 0
+                                      ? `${c.products.length} items`
+                                      : "Coming soon"}
                                   </span>
                                 </span>
                               </Link>
@@ -329,7 +331,9 @@ export function Navbar() {
                                 />
                                 <span className="text-base">{c.name}</span>
                                 <span className="ml-auto text-[10px] uppercase tracking-wide2 text-cream/30">
-                                  {c.tag}
+                                  {c.products.length > 0
+                                    ? `${c.products.length} items`
+                                    : "Coming soon"}
                                 </span>
                               </Link>
                             </li>
