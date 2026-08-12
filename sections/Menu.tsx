@@ -1,17 +1,10 @@
 "use client";
 
-import { lineup, boba, cookies, iceCream, shake, menuIntro } from "@/lib/data";
+import { lineup, menuIntro } from "@/lib/data";
 import { IMG } from "@/lib/images";
 import { Heading } from "@/components/ui/Heading";
 import { Reveal } from "@/components/ui/Reveal";
 import { Photo } from "@/components/ui/Photo";
-
-const priceById: Record<string, string> = {
-  boba: boba.price,
-  cookies: cookies.price,
-  icecream: iceCream.price,
-  shakes: shake.price,
-};
 
 // hand-picked span pattern for a bento-style photo mosaic
 const spanById: Record<string, string> = {
@@ -50,7 +43,6 @@ export function Menu() {
 
         <div className="mt-16 grid grid-flow-dense auto-rows-[210px] grid-cols-2 gap-4 sm:auto-rows-[260px] sm:grid-cols-4 sm:gap-5">
           {tiles.map((item, i) => {
-            const price = priceById[item.id];
             // Dubai: use the clean product photo (dubai.*), not the kunafa video
             // thumbnail (which has a play icon baked in). Scoped to this tile only.
             const sources =
@@ -85,11 +77,6 @@ export function Menu() {
                     <h3 className="mt-2 font-display text-xl font-bold leading-tight text-cream sm:text-2xl">
                       {item.name}
                     </h3>
-                    {price && (
-                      <span className="mt-2 block font-display text-sm font-semibold text-caramel">
-                        From ${price}
-                      </span>
-                    )}
                   </div>
                 </a>
               </Reveal>
