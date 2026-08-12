@@ -91,16 +91,26 @@ export default async function CategoryPage({
                 {group.items.map((p) => (
                   <li key={p.name}>
                     <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cream/10 bg-cream/[0.02] p-3 transition-colors duration-500 hover:border-caramel/30">
-                      {/* Image placeholder */}
+                      {/* Product image (falls back to a placeholder) */}
                       <div
                         className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-xl border border-cream/10"
                         style={{
                           backgroundImage: `linear-gradient(135deg, ${cat.accent}22, transparent 60%), radial-gradient(120% 80% at 50% 0%, ${cat.accent}18, transparent 70%)`,
                         }}
                       >
-                        <span className="font-display text-[11px] uppercase tracking-luxe text-cream/35">
-                          Photo coming soon
-                        </span>
+                        {p.image ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={p.image}
+                            alt={p.name}
+                            loading="lazy"
+                            className="absolute inset-0 h-full w-full object-cover"
+                          />
+                        ) : (
+                          <span className="font-display text-[11px] uppercase tracking-luxe text-cream/35">
+                            Photo coming soon
+                          </span>
+                        )}
                       </div>
 
                       {/* Details */}

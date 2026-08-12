@@ -12,6 +12,7 @@
 export type MenuProduct = {
   name: string; // exact product name from the Excel
   subCategory?: string; // real Excel sub-group (e.g. "Milk Teas"), when present
+  image?: string; // path under /public to an existing product photo, when available
 };
 
 export type MenuCategory = {
@@ -27,20 +28,20 @@ export const menuCategories: MenuCategory[] = [
     name: "Boba",
     accent: "#c9a26b",
     products: [
-      { name: "Royal Milk Tea", subCategory: "Milk Teas" },
-      { name: "Jasmine Green Tea", subCategory: "Milk Teas" },
-      { name: "Osmanthus Oolong", subCategory: "Milk Teas" },
-      { name: "Brown Sugar Boba", subCategory: "Milk Teas" },
-      { name: "Taro Milk Tea", subCategory: "Milk Teas" },
-      { name: "cookies and cream milk Tea", subCategory: "Milk Teas" },
-      { name: "Black sesame milk Tea", subCategory: "Milk Teas" },
-      { name: "Badam milk Tea", subCategory: "Milk Teas" },
-      { name: "Blue Pea Butterfly Tea", subCategory: "Milk Teas" },
-      { name: "Fruit Flavored juice", subCategory: "Fruit Teas" },
-      { name: "Fruit flavored Tea", subCategory: "Fruit Teas" },
-      { name: "Tropical Fruit Tea", subCategory: "Fruit Teas" },
-      { name: "Strawberry Fruit Tea", subCategory: "Fruit Teas" },
-      { name: "Mango Fruit Tea", subCategory: "Fruit Teas" },
+      { name: "Royal Milk Tea", subCategory: "Milk Teas", image: "/images/Boba/milk_tea/Royal_Milk_Tea.jpg" },
+      { name: "Jasmine Green Tea", subCategory: "Milk Teas", image: "/images/Boba/milk_tea/Jasmine_Green_Tea_milk_tea-0.jpg" },
+      { name: "Osmanthus Oolong", subCategory: "Milk Teas", image: "/images/Boba/milk_tea/Osmanthus_Oolong_tea.jpg" },
+      { name: "Brown Sugar Boba", subCategory: "Milk Teas", image: "/images/Boba/milk_tea/Brown_Sugar_Boba.jpg" },
+      { name: "Taro Milk Tea", subCategory: "Milk Teas", image: "/images/Boba/milk_tea/Taro_Milk_Tea.jpg" },
+      { name: "cookies and cream milk Tea", subCategory: "Milk Teas", image: "/images/Boba/milk_tea/Cookies_and_Cream_Milk_Tea.jpg" },
+      { name: "Black sesame milk Tea", subCategory: "Milk Teas", image: "/images/Boba/milk_tea/Black_Sesame_Milk_Tea.jpg" },
+      { name: "Badam milk Tea", subCategory: "Milk Teas", image: "/images/Boba/milk_tea/Badam_Milk_Tea.jpg" },
+      { name: "Blue Pea Butterfly Tea", subCategory: "Milk Teas", image: "/images/Boba/milk_tea/Blue_Pea_Butterfly_Tea.jpg" },
+      { name: "Fruit Flavored juice", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/fruit_flavored_juice.jpg" },
+      { name: "Fruit flavored Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/fruit_flavored_tea.jpg" },
+      { name: "Tropical Fruit Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/tropical_fruit_tea.jpg" },
+      { name: "Strawberry Fruit Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/strawberry_fruit_tea.jpg" },
+      { name: "Mango Fruit Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/mango_fruit_tea.jpg" },
       { name: "Pineapple Fruit Tea", subCategory: "Fruit Teas" },
       { name: "Matcha Latte", subCategory: "Matcha Varieties" },
       { name: "Double Matcha Cloud", subCategory: "Matcha Varieties" },
