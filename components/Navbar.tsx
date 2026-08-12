@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { nav } from "@/lib/data";
 import { menuCategories, menuFavorites } from "@/lib/menu";
@@ -39,6 +40,11 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pathname = usePathname();
+
+  // Section links smooth-scroll on the homepage (Lenis intercepts "#..."),
+  // and navigate back to the homepage section from any other route.
+  const sectionHref = (hash: string) => (pathname === "/" ? hash : `/${hash}`);
 
   useEffect(() => {
     const onScroll = () => {
@@ -213,7 +219,7 @@ export function Navbar() {
             ) : (
               <li key={l.href}>
                 <a
-                  href={l.href}
+                  href={sectionHref(l.href)}
                   className="group relative text-xs uppercase tracking-wide2 text-cream/70 transition-colors hover:text-cream"
                 >
                   {l.label}
@@ -350,7 +356,7 @@ export function Navbar() {
                     transition={{ delay: 0.08 * i, duration: 0.6, ease: EASE_EXPO }}
                   >
                     <a
-                      href={l.href}
+                      href={sectionHref(l.href)}
                       onClick={() => setOpen(false)}
                       className="block border-b border-cream/10 py-5 font-display text-3xl text-cream"
                     >
