@@ -234,7 +234,7 @@ export function Navbar() {
           href="#visit"
           className="hidden rounded-full border border-cream/20 px-5 py-2 text-xs uppercase tracking-wide2 text-cream transition-colors duration-500 hover:border-caramel hover:text-caramel md:inline-block"
         >
-          Reserve
+          Order Online
         </a>
 
         <button

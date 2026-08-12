@@ -6,10 +6,7 @@
 export const nav = [
   { label: "About", href: "#about" },
   { label: "Menu", href: "#menu" },
-  { label: "Specials", href: "#specials" },
-  { label: "Why Us", href: "#why" },
   { label: "Visit", href: "#visit" },
-  { label: "Contact", href: "#contact" },
 ];
 
 /** About Us — the ethos statement + a short founding note. */
