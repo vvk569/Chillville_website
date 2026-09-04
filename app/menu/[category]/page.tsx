@@ -35,12 +35,84 @@ export default async function CategoryPage({
 
   // Group products by their Excel sub-section, preserving order. Categories
   // without sub-sections collapse into a single unlabelled group.
-  const groups: { sub?: string; items: MenuProduct[] }[] = [];
-  for (const p of cat.products) {
-    const last = groups[groups.length - 1];
-    if (last && last.sub === p.subCategory) last.items.push(p);
-    else groups.push({ sub: p.subCategory, items: [p] });
-  }
+  const groupBySub = (items: MenuProduct[]) => {
+    const groups: { sub?: string; items: MenuProduct[] }[] = [];
+    for (const p of items) {
+      const last = groups[groups.length - 1];
+      if (last && last.sub === p.subCategory) last.items.push(p);
+      else groups.push({ sub: p.subCategory, items: [p] });
+    }
+    return groups;
+  };
+
+  // Split into items that already have a final menu photo (top) and the rest
+  // (below a divider). Only Boba flags `matched` today, so every other category
+  // keeps a single group and shows no divider.
+  const matchedGroups = groupBySub(cat.products.filter((p) => p.matched));
+  const unmatchedGroups = groupBySub(cat.products.filter((p) => !p.matched));
+  const showDivider = matchedGroups.length > 0 && unmatchedGroups.length > 0;
+
+  const renderGroups = (
+    gs: { sub?: string; items: MenuProduct[] }[],
+    keyPrefix: string,
+  ) =>
+    gs.map((group, gi) => (
+      <section key={`${keyPrefix}-${group.sub ?? gi}`}>
+        {group.sub && (
+          // Prominent, premium section headings (Boba, Cookies, …).
+          <div className="mb-7">
+            <h2 className="font-display text-lg font-semibold uppercase tracking-wide2 text-caramel sm:text-xl">
+              {group.sub}
+            </h2>
+            <span
+              aria-hidden
+              className="mt-2.5 block h-0.5 w-10 rounded-full bg-caramel/50"
+            />
+          </div>
+        )}
+        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {group.items.map((p) => (
+            <li key={p.image ?? p.name}>
+              <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cream/10 bg-cream/[0.02] p-3 transition-colors duration-500 hover:border-caramel/30">
+                {/* Product image (falls back to a placeholder) */}
+                <div
+                  className={`relative flex items-center justify-center overflow-hidden rounded-xl border border-cream/10 ${
+                    p.fit === "contain" ? "aspect-[16/9]" : "aspect-[4/3]"
+                  }`}
+                  style={{
+                    backgroundImage: `linear-gradient(135deg, ${cat.accent}22, transparent 60%), radial-gradient(120% 80% at 50% 0%, ${cat.accent}18, transparent 70%)`,
+                  }}
+                >
+                  {p.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      loading="lazy"
+                      className={`absolute inset-0 h-full w-full ${
+                        p.fit === "contain" ? "object-contain p-2" : "object-cover"
+                      }`}
+                    />
+                  ) : (
+                    <span className="font-display text-[11px] uppercase tracking-luxe text-cream/35">
+                      Photo coming soon
+                    </span>
+                  )}
+                </div>
+
+                {/* Details */}
+                <div className="flex flex-1 flex-col px-1 pt-4">
+                  <h2 className="font-display text-lg text-cream">{p.name}</h2>
+                  <p className="mt-auto pt-4 text-[11px] uppercase tracking-wide2 text-cream/35">
+                    Ingredients coming soon
+                  </p>
+                </div>
+              </article>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ));
 
   return (
     <div className="mx-auto max-w-content px-6 pb-28 pt-32 sm:px-10 sm:pt-40">
@@ -63,7 +135,7 @@ export default async function CategoryPage({
       </header>
 
       {cat.products.length === 0 ? (
-        // Empty category (e.g. Ice Creams) — no items in the source yet.
+        // Empty category — no items in the source yet.
         <div className="mt-14 rounded-2xl border border-cream/10 bg-cream/[0.02] px-6 py-20 text-center">
           <p className="font-display text-xl text-cream/70">Menu coming soon</p>
           <p className="mt-2 text-sm text-cream/40">
@@ -73,59 +145,17 @@ export default async function CategoryPage({
       ) : (
         /* Products grouped by their Excel sub-section */
         <div className="mt-14 space-y-16">
-          {groups.map((group, gi) => (
-            <section key={group.sub ?? `group-${gi}`}>
-              {group.sub && (
-                // Prominent, premium section headings (Boba, Cookies, …).
-                <div className="mb-7">
-                  <h2 className="font-display text-lg font-semibold uppercase tracking-wide2 text-caramel sm:text-xl">
-                    {group.sub}
-                  </h2>
-                  <span
-                    aria-hidden
-                    className="mt-2.5 block h-0.5 w-10 rounded-full bg-caramel/50"
-                  />
-                </div>
-              )}
-              <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {group.items.map((p) => (
-                  <li key={p.name}>
-                    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cream/10 bg-cream/[0.02] p-3 transition-colors duration-500 hover:border-caramel/30">
-                      {/* Product image (falls back to a placeholder) */}
-                      <div
-                        className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-xl border border-cream/10"
-                        style={{
-                          backgroundImage: `linear-gradient(135deg, ${cat.accent}22, transparent 60%), radial-gradient(120% 80% at 50% 0%, ${cat.accent}18, transparent 70%)`,
-                        }}
-                      >
-                        {p.image ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={p.image}
-                            alt={p.name}
-                            loading="lazy"
-                            className="absolute inset-0 h-full w-full object-cover"
-                          />
-                        ) : (
-                          <span className="font-display text-[11px] uppercase tracking-luxe text-cream/35">
-                            Photo coming soon
-                          </span>
-                        )}
-                      </div>
+          {renderGroups(matchedGroups, "matched")}
 
-                      {/* Details */}
-                      <div className="flex flex-1 flex-col px-1 pt-4">
-                        <h2 className="font-display text-lg text-cream">{p.name}</h2>
-                        <p className="mt-auto pt-4 text-[11px] uppercase tracking-wide2 text-cream/35">
-                          Ingredients coming soon
-                        </p>
-                      </div>
-                    </article>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
+          {showDivider && (
+            // Small divider between photographed items and the rest.
+            <hr
+              aria-hidden
+              className="mx-auto h-px w-24 border-0 bg-cream/15"
+            />
+          )}
+
+          {renderGroups(unmatchedGroups, "unmatched")}
         </div>
       )}
     </div>
