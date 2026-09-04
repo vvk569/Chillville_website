@@ -46,6 +46,11 @@ export function Navbar() {
   // and navigate back to the homepage section from any other route.
   const sectionHref = (hash: string) => (pathname === "/" ? hash : `/${hash}`);
 
+  // A nav item is either a section anchor ("#about") or a real page route
+  // ("/about"). Routes navigate as-is; anchors go through sectionHref.
+  const linkHref = (href: string) =>
+    href.startsWith("#") ? sectionHref(href) : href;
+
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 60);
@@ -219,7 +224,7 @@ export function Navbar() {
             ) : (
               <li key={l.href}>
                 <a
-                  href={sectionHref(l.href)}
+                  href={linkHref(l.href)}
                   className="group relative text-xs uppercase tracking-wide2 text-cream/70 transition-colors hover:text-cream"
                 >
                   {l.label}
@@ -356,7 +361,7 @@ export function Navbar() {
                     transition={{ delay: 0.08 * i, duration: 0.6, ease: EASE_EXPO }}
                   >
                     <a
-                      href={sectionHref(l.href)}
+                      href={linkHref(l.href)}
                       onClick={() => setOpen(false)}
                       className="block border-b border-cream/10 py-5 font-display text-3xl text-cream"
                     >
