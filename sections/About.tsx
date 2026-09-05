@@ -1,67 +1,54 @@
 "use client";
 
-import { useRef } from "react";
-import { gsap } from "@/lib/gsap";
-import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect";
-import { about } from "@/lib/data";
+import { FiArrowRight } from "react-icons/fi";
+import { Reveal } from "@/components/ui/Reveal";
+import { MagneticButton } from "@/components/ui/MagneticButton";
 
-const statement =
-  "We treat everyday indulgence like couture. Every pour, every crumb, every layer is considered — until the ordinary feels rare.";
-
+/**
+ * Compact About preview on the homepage — a few verbatim lines from the About
+ * Us copy plus a link to the full /about page. The complete story lives on
+ * /about; this is only a teaser.
+ */
 export function About() {
-  const root = useRef<HTMLDivElement>(null);
-
-  useIsomorphicLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      // words illuminate once, in a soft cascade — reliable, not scrubbed
-      gsap.to(".manifesto-word", {
-        opacity: 1,
-        duration: 0.9,
-        stagger: 0.06,
-        ease: "power2.out",
-        scrollTrigger: { trigger: root.current, start: "top 62%" },
-      });
-
-      // background gradient slowly warms as you pass through
-      gsap.fromTo(
-        root.current,
-        { backgroundColor: "#0a0a0a" },
-        {
-          backgroundColor: "#140f09",
-          ease: "none",
-          scrollTrigger: {
-            trigger: root.current,
-            start: "top bottom",
-            end: "center center",
-            scrub: true,
-          },
-        }
-      );
-    }, root);
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section
-      id="about"
-      ref={root}
-      className="relative flex flex-col items-center justify-center py-24 sm:py-32"
-    >
-      <div className="pointer-events-none absolute left-1/2 top-1/2 -z-0 h-[60vh] w-[60vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-caramel/[0.06] blur-[140px]" />
-      <div className="relative mx-auto max-w-5xl px-6 text-center sm:px-10">
-        <span className="mb-10 inline-block text-[11px] uppercase tracking-luxe text-caramel">
-          {about.eyebrow}
-        </span>
-        <p className="font-display text-3xl leading-[1.25] text-cream sm:text-5xl md:text-[3.4rem] md:leading-[1.2]">
-          {statement.split(" ").map((w, i) => (
-            <span key={i} className="manifesto-word inline-block opacity-15">
-              {w}&nbsp;
-            </span>
-          ))}
-        </p>
-        <p className="relative mx-auto mt-10 max-w-xl text-pretty text-sm leading-relaxed text-cream/50 sm:text-base">
-          {about.lead}
-        </p>
+    <section id="about" className="relative overflow-x-clip py-24 sm:py-32">
+      {/* ambient warm glow, matching the About page */}
+      <div className="pointer-events-none absolute left-1/2 top-1/2 -z-0 h-[54vh] w-[54vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-caramel/[0.06] blur-[150px]" />
+
+      <div className="relative mx-auto max-w-3xl px-6 text-center sm:px-10">
+        <Reveal>
+          <span className="inline-block text-[11px] uppercase tracking-luxe text-caramel">
+            Our Story
+          </span>
+        </Reveal>
+
+        <Reveal delay={0.05}>
+          <h2 className="mt-6 font-display text-4xl font-extrabold leading-[1.05] text-cream sm:text-5xl md:text-[3.4rem]">
+            Welcome to ChillVille
+          </h2>
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <p className="mt-4 font-display text-xl text-caramel sm:text-2xl">
+            Sweet Treats. Good Vibes. Great Moments.
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.15}>
+          <p className="mx-auto mt-7 max-w-xl text-pretty text-base leading-relaxed text-cream/65 sm:text-lg">
+            ChillVille was created with a simple idea: the best treats should
+            come with a great experience.
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.2}>
+          <div className="mt-10">
+            <MagneticButton href="/about" variant="outline">
+              Read Our Story
+              <FiArrowRight aria-hidden className="transition-transform duration-500 ease-expo group-hover:translate-x-1" />
+            </MagneticButton>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

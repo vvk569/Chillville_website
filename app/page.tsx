@@ -5,6 +5,7 @@ import { ScrollProgress } from "@/components/ScrollProgress";
 import { Navbar } from "@/components/Navbar";
 
 import { Hero } from "@/sections/Hero";
+import { About } from "@/sections/About";
 import { Menu } from "@/sections/Menu";
 import { Visit } from "@/sections/Visit";
 import { Footer } from "@/sections/Footer";
@@ -25,10 +26,13 @@ export default function Home() {
         {/* 1. Home */}
         <Hero />
 
-        {/* 2. Our Menu */}
+        {/* 2. About (compact preview → /about) */}
+        <About />
+
+        {/* 3. Our Menu */}
         <Menu />
 
-        {/* 3. Visit */}
+        {/* 4. Visit */}
         <Visit />
 
         <Footer />
