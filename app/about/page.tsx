@@ -325,13 +325,21 @@ export default function AboutPage() {
               </Reveal>
             </div>
 
-            {/* wide image banner */}
+            {/* full-width food animation (replaces the static banner) — bare,
+                controls-free, muted autoplay loop; keeps its native aspect ratio */}
             <Reveal variant="blur" delay={0.1}>
-              <Frame
-                src="/menu%20pics/Donut/Donut_Sprinkle_Menu.jpg"
-                alt="Rainbow-sprinkle donuts on the ChillVille counter"
-                className="mt-9 aspect-[16/9] w-full sm:aspect-[21/9]"
-              />
+              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+              <video
+                className="mt-9 block w-full rounded-2xl"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-label="ChillVille food animation"
+              >
+                <source src="/videos/about-dessert-shop.mp4" type="video/mp4" />
+              </video>
             </Reveal>
 
             {/* invitations grid */}
