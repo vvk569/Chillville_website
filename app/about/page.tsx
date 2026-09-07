@@ -186,14 +186,25 @@ export default function AboutPage() {
           id="welcome"
           className="relative flex min-h-[82vh] items-end scroll-mt-24"
         >
-          {/* backdrop image + cinematic overlays */}
-          <div className="absolute inset-0 -z-10">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/cookies.jpg"
-              alt="A freshly baked ChillVille cookie"
+          {/* backdrop video + cinematic overlays — the food animation plays as a
+              full-bleed hero background (like the homepage kunafa/boba hero). The
+              cookies.jpg poster shows instantly and stays as the fallback if the
+              video is slow to load, unsupported, or on reduced-motion. */}
+          <div className="absolute inset-0 -z-10 bg-charcoal">
+            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+            <video
               className="h-full w-full object-cover"
-            />
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              poster="/images/cookies.jpg"
+              aria-hidden="true"
+              tabIndex={-1}
+            >
+              <source src="/videos/about-dessert-shop.mp4" type="video/mp4" />
+            </video>
             <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/70 to-charcoal/40" />
             <div className="absolute inset-0 bg-gradient-to-r from-charcoal/80 to-transparent" />
           </div>
@@ -309,60 +320,66 @@ export default function AboutPage() {
 
           <Divider />
 
-          {/* ══ 03 · More Than a Dessert Shop — banner + invitations ══════ */}
+          {/* ══ 03 · More Than a Dessert Shop — two-column: copy + animation ═ */}
           <section id="place" className="scroll-mt-24">
-            <div className="max-w-3xl">
-              <Reveal>
-                <Eyebrow index="03" label="The Place" />
-              </Reveal>
-              <Reveal delay={0.05}>
-                <SectionHeading>More Than a Dessert Shop</SectionHeading>
-              </Reveal>
-              <Reveal delay={0.1}>
-                <p className="mt-6 text-pretty text-base leading-relaxed text-cream/70 sm:text-lg">
-                  {gathering.intro}
-                </p>
-              </Reveal>
-            </div>
-
-            {/* full-width food animation (replaces the static banner) — bare,
-                controls-free, muted autoplay loop; keeps its native aspect ratio */}
-            <Reveal variant="blur" delay={0.1}>
-              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-              <video
-                className="mt-9 block w-full rounded-2xl"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-label="ChillVille food animation"
-              >
-                <source src="/videos/about-dessert-shop.mp4" type="video/mp4" />
-              </video>
-            </Reveal>
-
-            {/* invitations grid */}
-            <ul className="mt-9 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {gathering.lines.map((l, i) => (
-                <Reveal key={i} delay={0.08 + i * 0.06} as="li">
-                  <div className="group flex items-start gap-3 rounded-xl border border-cream/10 bg-cream/[0.02] px-5 py-4 transition-colors duration-500 hover:border-caramel/30">
-                    <FiArrowRight
-                      aria-hidden
-                      className="mt-1 shrink-0 text-caramel transition-transform duration-500 ease-expo group-hover:translate-x-1"
-                    />
-                    <span className="font-display text-base text-cream/90 sm:text-lg">
-                      {l}
-                    </span>
-                  </div>
+            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
+              {/* LEFT · copy + invitations */}
+              <div className="lg:col-span-7">
+                <Reveal>
+                  <Eyebrow index="03" label="The Place" />
                 </Reveal>
-              ))}
-            </ul>
-            <Reveal delay={0.18}>
-              <p className="mt-8 max-w-2xl text-pretty text-base leading-relaxed text-cream/70 sm:text-lg">
-                {gathering.outro}
-              </p>
-            </Reveal>
+                <Reveal delay={0.05}>
+                  <SectionHeading>More Than a Dessert Shop</SectionHeading>
+                </Reveal>
+                <Reveal delay={0.1}>
+                  <p className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-cream/70 sm:text-lg">
+                    {gathering.intro}
+                  </p>
+                </Reveal>
+
+                {/* invitations grid */}
+                <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {gathering.lines.map((l, i) => (
+                    <Reveal key={i} delay={0.08 + i * 0.06} as="li">
+                      <div className="group flex h-full items-start gap-3 rounded-xl border border-cream/10 bg-cream/[0.02] px-5 py-4 transition-colors duration-500 hover:border-caramel/30">
+                        <FiArrowRight
+                          aria-hidden
+                          className="mt-1 shrink-0 text-caramel transition-transform duration-500 ease-expo group-hover:translate-x-1"
+                        />
+                        <span className="font-display text-base text-cream/90 sm:text-lg">
+                          {l}
+                        </span>
+                      </div>
+                    </Reveal>
+                  ))}
+                </ul>
+                <Reveal delay={0.18}>
+                  <p className="mt-8 max-w-xl text-pretty text-base leading-relaxed text-cream/70 sm:text-lg">
+                    {gathering.outro}
+                  </p>
+                </Reveal>
+              </div>
+
+              {/* RIGHT · portrait food animation — bare, controls-free, muted
+                  autoplay loop; fills the column at its native 9:16 ratio
+                  (never distorted) so it balances the copy on the left */}
+              <div className="lg:col-span-5">
+                <Reveal variant="blur" delay={0.12}>
+                  {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                  <video
+                    className="mx-auto block w-full max-w-[360px] rounded-2xl sm:max-w-[420px] lg:max-w-none"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    aria-label="A ChillVille cookie, enjoyed"
+                  >
+                    <source src="/videos/cookie-in-mouth.mp4" type="video/mp4" />
+                  </video>
+                </Reveal>
+              </div>
+            </div>
           </section>
 
           <Divider />
