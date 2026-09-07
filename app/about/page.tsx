@@ -186,25 +186,14 @@ export default function AboutPage() {
           id="welcome"
           className="relative flex min-h-[82vh] items-end scroll-mt-24"
         >
-          {/* backdrop video + cinematic overlays — the food animation plays as a
-              full-bleed hero background (like the homepage kunafa/boba hero). The
-              cookies.jpg poster shows instantly and stays as the fallback if the
-              video is slow to load, unsupported, or on reduced-motion. */}
-          <div className="absolute inset-0 -z-10 bg-charcoal">
-            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-            <video
+          {/* backdrop image + cinematic overlays */}
+          <div className="absolute inset-0 -z-10">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/cookies.jpg"
+              alt="A freshly baked ChillVille cookie"
               className="h-full w-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              poster="/images/cookies.jpg"
-              aria-hidden="true"
-              tabIndex={-1}
-            >
-              <source src="/videos/about-dessert-shop.mp4" type="video/mp4" />
-            </video>
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/70 to-charcoal/40" />
             <div className="absolute inset-0 bg-gradient-to-r from-charcoal/80 to-transparent" />
           </div>

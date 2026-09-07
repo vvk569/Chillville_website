@@ -12,7 +12,29 @@ import { Tilt3D } from "@/components/ui/Tilt3D";
 export function Visit() {
   return (
     <section id="visit" className="relative bg-charcoal-800 py-28 sm:py-40">
-      <div className="mx-auto max-w-content px-6 sm:px-10">
+      {/* subtle food-animation backdrop — heavily darkened so it reads as a
+          faint moving texture behind the store info, never competing with it.
+          Purely decorative; the section's size, layout and content are unchanged. */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden>
+        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+        <video
+          className="absolute inset-0 h-full w-full object-cover opacity-60"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/images/shake.jpg"
+          tabIndex={-1}
+        >
+          <source src="/videos/about-dessert-shop.mp4" type="video/mp4" />
+        </video>
+        {/* blend into the dark section: solid dim + edge fades to neighbours */}
+        <div className="absolute inset-0 bg-charcoal-800/65" />
+        <div className="absolute inset-0 bg-gradient-to-b from-charcoal-800 via-transparent to-charcoal-800" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-content px-6 sm:px-10">
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
           {/* storefront photo */}
           <Reveal variant="blur">
