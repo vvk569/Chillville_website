@@ -208,16 +208,16 @@ export const testimonials: Testimonial[] = [
 ];
 
 export const store = {
-  address: "27 Marigold Lane, Arts District",
-  city: "Los Angeles, CA 90013",
+  address: "1243 Rossview Rd, Suite #102",
+  city: "Clarksville, TN 37043",
   hours: [
-    { day: "Mon — Thu", time: "08:00 — 21:00" },
-    { day: "Friday", time: "08:00 — 23:00" },
-    { day: "Saturday", time: "09:00 — 23:00" },
-    { day: "Sunday", time: "09:00 — 20:00" },
+    { day: "Mon — Thu", time: "09:00 — 21:00" },
+    { day: "Friday", time: "09:00 — 21:00" },
+    { day: "Saturday", time: "09:00 — 21:00" },
+    { day: "Sunday", time: "09:00 — 21:00" },
   ],
   phone: "+1 (213) 555-0147",
-  email: "hello@chillville.cafe",
+  email: "info@chillvilletreats.com",
 };
 
 export const socials = [
