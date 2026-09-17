@@ -15,7 +15,7 @@ const sans = Inter({
   display: "swap",
 });
 
-const siteUrl = "https://chillville.vercel.app";
+const siteUrl = "https://www.chillvilletreats.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
