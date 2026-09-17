@@ -12,7 +12,7 @@ export const nav = [
 /** About Us — the ethos statement + a short founding note. */
 export const about = {
   eyebrow: "About Us",
-  lead: "Started in the Arts District, Chillville set out to prove everyday indulgence deserves the same reverence as couture — one slow-poured boba and one molten cookie at a time.",
+  lead: "Started in Clarksville, Chillville set out to prove everyday indulgence deserves the same reverence as couture — one slow-poured boba and one molten cookie at a time.",
 };
 
 /** Our Menu — section intro copy for the full lineup grid. */
@@ -216,7 +216,7 @@ export const store = {
     { day: "Saturday", time: "09:00 — 21:00" },
     { day: "Sunday", time: "09:00 — 21:00" },
   ],
-  phone: "+1 (213) 555-0147",
+  phone: "+1 (931) 677-2664",
   email: "info@chillvilletreats.com",
 };
 

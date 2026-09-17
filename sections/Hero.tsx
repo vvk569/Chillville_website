@@ -62,7 +62,7 @@ export function Hero() {
           <motion.div variants={rise} className="mb-6 flex items-center gap-4">
             <span className="h-px w-12 bg-caramel/70" />
             <span className="text-[11px] uppercase tracking-luxe text-caramel">
-              Arts District · Los Angeles
+              Clarksville · Tennessee
             </span>
           </motion.div>
 

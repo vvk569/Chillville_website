@@ -103,7 +103,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-[11px] uppercase tracking-wide2 text-cream/35 sm:flex-row">
           <p>© {new Date().getFullYear()} Chillville Bakery &amp; Boba</p>
-          <p>Crafted with obsession in Los Angeles</p>
+          <p>Crafted with obsession in Clarksville, TN</p>
         </div>
       </div>
     </footer>

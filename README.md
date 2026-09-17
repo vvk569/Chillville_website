@@ -147,4 +147,4 @@ vercel --prod    # production
 
 ---
 
-Crafted with obsession in Los Angeles.
+Crafted with obsession in Clarksville, TN.

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: "%s · Chillville",
   },
   description:
-    "Handcrafted boba and small-batch bakery in the LA Arts District. Brown-sugar boba, molten Valrhona cookies, donuts, croissants and Dubai chocolate — a cinematic, luxury experience.",
+    "Handcrafted boba and small-batch bakery in Clarksville, TN. Brown-sugar boba, molten Valrhona cookies, donuts, croissants and Dubai chocolate — a cinematic, luxury experience.",
   keywords: [
     "boba",
     "bubble tea",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     "Dubai chocolate",
     "donuts",
     "croissants",
-    "Los Angeles cafe",
+    "Clarksville cafe",
     "luxury bakery",
   ],
   authors: [{ name: "Chillville Bakery & Boba" }],
@@ -65,17 +65,17 @@ const jsonLd = {
   "@type": "Bakery",
   name: "Chillville Bakery & Boba",
   description:
-    "Handcrafted boba and small-batch bakery in the LA Arts District — brown-sugar boba, molten Valrhona cookies, donuts, croissants and Dubai chocolate.",
+    "Handcrafted boba and small-batch bakery in Clarksville, TN — brown-sugar boba, molten Valrhona cookies, donuts, croissants and Dubai chocolate.",
   servesCuisine: ["Bakery", "Bubble Tea", "Dessert"],
   priceRange: "$$",
   url: siteUrl,
-  telephone: "+1-213-555-0147",
+  telephone: "+1-931-677-2664",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "27 Marigold Lane, Arts District",
-    addressLocality: "Los Angeles",
-    addressRegion: "CA",
-    postalCode: "90013",
+    streetAddress: "1243 Rossview Rd, Suite #102",
+    addressLocality: "Clarksville",
+    addressRegion: "TN",
+    postalCode: "37043",
     addressCountry: "US",
   },
   openingHoursSpecification: [

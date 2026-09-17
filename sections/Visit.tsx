@@ -50,7 +50,7 @@ export function Visit() {
                   Chillville
                 </span>
                 <div className="text-[10px] uppercase tracking-luxe text-caramel">
-                  Flagship · Arts District
+                  Flagship · Clarksville
                 </div>
               </div>
               {/* location pill */}
