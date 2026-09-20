@@ -56,10 +56,10 @@ export function Visit() {
               {/* location pill */}
               <div className="absolute inset-x-4 bottom-4 z-10 flex items-center justify-between rounded-2xl border border-white/10 bg-black/50 px-5 py-4 backdrop-blur-xl">
                 <span className="flex items-center gap-2 text-sm text-cream/80">
-                  <FiMapPin className="text-caramel" /> {store.address}
+                  <FiMapPin className="text-caramel" /> {store.address}, {store.city}
                 </span>
                 <a
-                  href="https://maps.google.com"
+                  href="https://www.google.com/maps/place/Chillville/@36.555782,-87.2564177,17z/data=!3m1!4b1!4m6!3m5!1s0x8864df78cb1e6633:0xb8ac1362c53b5155!8m2!3d36.555782!4d-87.2564177!16s%2Fg%2F11nvddsrjd!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDkxNi4wIKXMDSoASAFQAw%3D%3D"
                   target="_blank"
                   rel="noreferrer"
                   className="text-[11px] uppercase tracking-wide2 text-caramel"
@@ -108,7 +108,12 @@ export function Visit() {
                 <MagneticButton href={`tel:${store.phone.replace(/[^+\d]/g, "")}`}>
                   <FiPhone /> {store.phone}
                 </MagneticButton>
-                <MagneticButton href="https://maps.google.com" variant="outline">
+                <MagneticButton
+                  href="https://www.google.com/maps/place/Chillville/@36.555782,-87.2564177,17z/data=!3m1!4b1!4m6!3m5!1s0x8864df78cb1e6633:0xb8ac1362c53b5155!8m2!3d36.555782!4d-87.2564177!16s%2Fg%2F11nvddsrjd!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDkxNi4wIKXMDSoASAFQAw%3D%3D"
+                  variant="outline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Get Directions
                 </MagneticButton>
               </div>

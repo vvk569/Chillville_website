@@ -18,7 +18,7 @@ export const about = {
 /** Our Menu — section intro copy for the full lineup grid. */
 export const menuIntro = {
   eyebrow: "Our Menu",
-  title: "Seven cravings,\none obsession.",
+  title: "Six cravings,\none obsession.",
   body: "From hand-shaken boba to laminated pastry and 24k chocolate — everything is made from scratch, to order, every single day.",
 };
 
@@ -87,11 +87,10 @@ export type LineupItem = {
 export const lineup: LineupItem[] = [
   { id: "boba", index: "01", name: "Boba", tag: "Hand-shaken", note: "Brown-sugar pearls, cooked hourly, poured over a cold oat-milk cloud.", accent: "#c9a26b", img: "boba" },
   { id: "cookies", index: "02", name: "Cookies", tag: "Molten centre", note: "72-hour dough, browned butter, shards of 64% Valrhona.", accent: "#a4713f", img: "cookies" },
-  { id: "icecream", index: "03", name: "Ice Cream", tag: "Slow-churned", note: "Overnight custard bases, churned to order. Dense, glossy, seasonal.", accent: "#d9b486", img: "iceCream" },
-  { id: "shakes", index: "04", name: "Shakes", tag: "Thick & loaded", note: "House ice cream blended thick, crowned with a cookie or donut.", accent: "#c58f6a", img: "shake" },
-  { id: "donuts", index: "05", name: "Donuts", tag: "Glazed to glass", note: "Brioche rings, fried to order, lacquered in seasonal glazes.", accent: "#d9b486", img: "donuts" },
-  { id: "croissants", index: "06", name: "Croissants", tag: "108 layers", note: "French T55, cultured butter, a three-day lamination.", accent: "#c7a978", img: "croissants" },
-  { id: "dubai", index: "07", name: "Dubai Chocolate", tag: "24k finish", note: "Crisp kunafa and pistachio cream in single-origin couverture.", accent: "#8fae7b", img: "dubai" },
+  { id: "donuts", index: "03", name: "Donuts", tag: "Glazed to glass", note: "Brioche rings, fried to order, lacquered in seasonal glazes.", accent: "#d9b486", img: "donuts" },
+  { id: "muffins", index: "04", name: "Muffins", tag: "Bakery-fresh", note: "Soft-baked muffins in rotating flavours — blueberry, nutella chocochip and more.", accent: "#c7a978", img: "muffins" },
+  { id: "shakes", index: "05", name: "Ice Cream Shakes", tag: "Thick & loaded", note: "House ice cream churned to order, blended thick and crowned with a cookie or donut.", accent: "#c58f6a", img: "shake" },
+  { id: "dubai", index: "06", name: "Dubai Chocolate", tag: "24k finish", note: "Crisp kunafa and pistachio cream in single-origin couverture.", accent: "#8fae7b", img: "dubai" },
 ];
 
 export const iceCream = {

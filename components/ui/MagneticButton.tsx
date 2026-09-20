@@ -9,13 +9,15 @@ type Props = {
   children: ReactNode;
   variant?: "solid" | "outline";
   className?: string;
+  target?: string;
+  rel?: string;
 };
 
 /**
  * A tactile, magnetic button. It eases toward the cursor within its bounds and
  * fills on hover — premium but restrained (no bounce).
  */
-export function MagneticButton({ href, children, variant = "solid", className }: Props) {
+export function MagneticButton({ href, children, variant = "solid", className, target, rel }: Props) {
   const ref = useRef<HTMLAnchorElement>(null);
 
   const onMove = (e: React.MouseEvent) => {
@@ -34,6 +36,8 @@ export function MagneticButton({ href, children, variant = "solid", className }:
     <motion.a
       ref={ref}
       href={href}
+      target={target}
+      rel={rel}
       onMouseMove={onMove}
       onMouseLeave={reset}
       className={cn(

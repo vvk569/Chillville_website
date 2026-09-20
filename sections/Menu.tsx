@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { lineup, menuIntro } from "@/lib/data";
 import { IMG } from "@/lib/images";
 import { Heading } from "@/components/ui/Heading";
@@ -11,14 +12,23 @@ const spanById: Record<string, string> = {
   dubai: "col-span-2 row-span-2",
   boba: "col-span-2 row-span-1",
   cookies: "col-span-1 row-span-1",
-  icecream: "col-span-1 row-span-1",
+  muffins: "col-span-1 row-span-1",
   shakes: "col-span-2 row-span-1",
-  donuts: "col-span-1 row-span-1",
-  croissants: "col-span-1 row-span-1",
+  donuts: "col-span-2 row-span-1",
 };
 
 // render order tuned for visual rhythm, independent of the lineup's data order
-const order = ["dubai", "boba", "cookies", "icecream", "shakes", "donuts", "croissants"];
+const order = ["dubai", "boba", "cookies", "muffins", "shakes", "donuts"];
+
+// each card links to its category page — the same routes the header MENU uses.
+// Dubai Chocolate has no dedicated page, so its card stays non-navigating.
+const routeById: Record<string, string> = {
+  boba: "/menu/boba",
+  cookies: "/menu/cookies",
+  donuts: "/menu/donuts",
+  muffins: "/menu/muffins",
+  shakes: "/menu/ice-cream-shakes",
+};
 const tiles = order
   .map((id) => lineup.find((i) => i.id === id))
   .filter((i): i is (typeof lineup)[number] => Boolean(i));
@@ -49,36 +59,45 @@ export function Menu() {
               item.id === "dubai"
                 ? IMG.dubai.filter((s) => !s.includes("kunafa"))
                 : IMG[item.img as keyof typeof IMG];
+            const href = routeById[item.id];
+            const cardClass =
+              "group relative block h-full w-full overflow-hidden rounded-[1.5rem] border border-white/10 shadow-card";
+            const cardInner = (
+              <>
+                <Photo
+                  sources={sources}
+                  accent={item.accent}
+                  alt={`${item.name} — ${item.tag}`}
+                  className="absolute inset-0 h-full w-full"
+                  imgClassName="group-hover:scale-[1.06]"
+                />
+
+                <span className="pointer-events-none absolute -right-2 -top-4 z-10 select-none font-display text-6xl leading-none text-white/10 sm:text-7xl">
+                  {item.index}
+                </span>
+
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 p-5">
+                  <span
+                    className="text-[9px] uppercase tracking-luxe"
+                    style={{ color: item.accent }}
+                  >
+                    {item.tag}
+                  </span>
+                  <h3 className="mt-2 font-display text-xl font-bold leading-tight text-cream sm:text-2xl">
+                    {item.name}
+                  </h3>
+                </div>
+              </>
+            );
             return (
               <Reveal key={item.id} variant="blur" delay={(i % 4) * 0.06} className={spanById[item.id]}>
-                <a
-                  href="#specials"
-                  className="group relative block h-full w-full overflow-hidden rounded-[1.5rem] border border-white/10 shadow-card"
-                >
-                  <Photo
-                    sources={sources}
-                    accent={item.accent}
-                    alt={`${item.name} — ${item.tag}`}
-                    className="absolute inset-0 h-full w-full"
-                    imgClassName="group-hover:scale-[1.06]"
-                  />
-
-                  <span className="pointer-events-none absolute -right-2 -top-4 z-10 select-none font-display text-6xl leading-none text-white/10 sm:text-7xl">
-                    {item.index}
-                  </span>
-
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 p-5">
-                    <span
-                      className="text-[9px] uppercase tracking-luxe"
-                      style={{ color: item.accent }}
-                    >
-                      {item.tag}
-                    </span>
-                    <h3 className="mt-2 font-display text-xl font-bold leading-tight text-cream sm:text-2xl">
-                      {item.name}
-                    </h3>
-                  </div>
-                </a>
+                {href ? (
+                  <Link href={href} className={cardClass}>
+                    {cardInner}
+                  </Link>
+                ) : (
+                  <div className={cardClass}>{cardInner}</div>
+                )}
               </Reveal>
             );
           })}

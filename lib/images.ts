@@ -25,6 +25,7 @@ export const IMG = {
   iceCream: exts("icecream"),
   shake: exts("shake"),
   donuts: exts("donuts"),
+  muffins: exts("muffins"),
   croissants: exts("croissants"),
   // the Dubai/kunafa bar — looks for kunafa.* first, then dubai.*
   dubai: [...exts("kunafa"), ...exts("dubai")],
@@ -51,6 +52,7 @@ export const IMG_ACCENT: Record<keyof typeof IMG, string> = {
   iceCream: "#d9b486",
   shake: "#ff7a59",
   donuts: "#e3ab6b",
+  muffins: "#c7a978",
   croissants: "#c7a978",
   dubai: "#8fce74",
   storefront: "#ff7a59",

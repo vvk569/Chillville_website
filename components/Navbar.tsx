@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { nav } from "@/lib/data";
-import { menuCategories, menuFavorites } from "@/lib/menu";
+import { menuCategories } from "@/lib/menu";
 import { cn } from "@/lib/utils";
 import { EASE_EXPO } from "@/lib/motion";
 
@@ -19,15 +19,6 @@ function Chevron({ className }: { className?: string }) {
       className={className}
     >
       <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-/** Small star used to mark the featured "Chillville Favorites" row. */
-function Star({ className }: { className?: string }) {
-  return (
-    <svg aria-hidden viewBox="0 0 14 14" fill="currentColor" className={className}>
-      <path d="M7 1l1.8 3.65 4.03.59-2.92 2.84.69 4.02L7 10.85 3.4 12.1l.69-4.02L1.17 5.24l4.03-.59L7 1z" />
     </svg>
   );
 }
@@ -151,34 +142,6 @@ export function Navbar() {
                       className="absolute left-1/2 top-full z-[80] mt-4 w-[min(90vw,34rem)] origin-top"
                     >
                       <div className="overflow-hidden rounded-2xl border border-cream/10 bg-charcoal/95 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.75)] backdrop-blur-2xl">
-                        {/* Chillville Favorites — featured/popular picks */}
-                        <div className="border-b border-cream/10 bg-gradient-to-r from-caramel/[0.09] to-transparent px-5 py-4">
-                          <div className="flex items-center gap-1.5">
-                            <Star className="h-2.5 w-2.5 text-caramel" />
-                            <span className="text-[10px] uppercase tracking-luxe text-caramel">
-                              Chillville Favorites
-                            </span>
-                          </div>
-                          <div className="mt-3 grid grid-cols-3 gap-2">
-                            {menuFavorites.map((f) => (
-                              <Link
-                                key={f.name}
-                                role="menuitem"
-                                href={`/menu/${f.slug}`}
-                                onClick={() => setMenuOpen(false)}
-                                className="group/fav rounded-xl border border-cream/10 bg-cream/[0.03] px-3 py-2.5 transition-colors hover:border-caramel/40 hover:bg-cream/[0.06] focus-visible:border-caramel/40 focus-visible:outline-none"
-                              >
-                                <span className="block text-[13px] font-medium leading-tight text-cream/90 transition-colors group-hover/fav:text-cream">
-                                  {f.name}
-                                </span>
-                                <span className="mt-1 block text-[10px] uppercase tracking-wide2 text-cream/40">
-                                  {f.note}
-                                </span>
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-
                         {/* All categories */}
                         <div className="flex items-center justify-between px-5 pt-3.5 pb-1">
                           <span className="text-[10px] uppercase tracking-luxe text-cream/45">
@@ -296,30 +259,6 @@ export function Navbar() {
                           transition={{ duration: 0.4, ease: EASE_EXPO }}
                           className="overflow-hidden"
                         >
-                          <li className="pt-3 pb-1">
-                            <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-luxe text-caramel">
-                              <Star className="h-2.5 w-2.5" />
-                              Chillville Favorites
-                            </span>
-                          </li>
-                          {menuFavorites.map((f) => (
-                            <li key={f.name}>
-                              <Link
-                                href={`/menu/${f.slug}`}
-                                onClick={() => {
-                                  setOpen(false);
-                                  setMobileMenuOpen(false);
-                                }}
-                                className="flex items-center gap-3 border-b border-cream/5 py-3 pl-1 text-cream/80 transition-colors hover:text-cream"
-                              >
-                                <Star aria-hidden className="h-3 w-3 shrink-0 text-caramel" />
-                                <span className="text-base">{f.name}</span>
-                                <span className="ml-auto text-[10px] uppercase tracking-wide2 text-cream/30">
-                                  {f.note}
-                                </span>
-                              </Link>
-                            </li>
-                          ))}
                           <li className="pt-4 pb-1">
                             <span className="text-[10px] uppercase tracking-luxe text-cream/45">
                               All categories

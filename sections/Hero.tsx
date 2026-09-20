@@ -40,7 +40,7 @@ export function Hero() {
           aria-hidden="true"
           tabIndex={-1}
         >
-          <source src="/videos/kunafa_boba.mp4" type="video/mp4" />
+          <source src="/videos/Kunafa_boba_main_page.mp4" type="video/mp4" />
         </video>
       </div>
 
