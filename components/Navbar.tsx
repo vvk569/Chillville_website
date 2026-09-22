@@ -198,12 +198,12 @@ export function Navbar() {
           )}
         </ul>
 
-        <a
-          href="#visit"
+        <Link
+          href="/order"
           className="hidden rounded-full border border-cream/20 px-5 py-2 text-xs uppercase tracking-wide2 text-cream transition-colors duration-500 hover:border-caramel hover:text-caramel md:inline-block"
         >
           Order Online
-        </a>
+        </Link>
 
         <button
           aria-label="Menu"
@@ -309,6 +309,20 @@ export function Navbar() {
                   </motion.li>
                 )
               )}
+              <motion.li
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.08 * (nav.length + 1), duration: 0.6, ease: EASE_EXPO }}
+                className="pt-6"
+              >
+                <Link
+                  href="/order"
+                  onClick={() => setOpen(false)}
+                  className="block rounded-full bg-caramel py-4 text-center font-display text-lg uppercase tracking-wide2 text-charcoal"
+                >
+                  Order for pickup
+                </Link>
+              </motion.li>
             </ul>
           </motion.div>
         )}
