@@ -104,7 +104,7 @@ export default async function CategoryPage({
                 <div className="flex flex-1 flex-col px-1 pt-4">
                   <h2 className="font-display text-lg text-cream">{p.name}</h2>
                   <p className="mt-auto pt-4 text-[11px] uppercase tracking-wide2 text-cream/35">
-                    Ingredients coming soon
+                    {p.ingredients ?? "Ingredients coming soon"}
                   </p>
                 </div>
               </article>

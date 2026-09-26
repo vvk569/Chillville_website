@@ -15,6 +15,7 @@ export type MenuProduct = {
   image?: string; // path under /public to an existing product photo, when available
   matched?: boolean; // true = has a final menu photo; rendered in the top group above the divider
   fit?: "cover" | "contain"; // image fit inside the card; defaults to "cover". "contain" shows the whole image (letterboxed)
+  ingredients?: string; // short ingredients line shown under the image (replaces the placeholder when set)
 };
 
 export type MenuCategory = {
@@ -31,33 +32,33 @@ export const menuCategories: MenuCategory[] = [
     accent: "#c9a26b",
     products: [
       // --- Matched: items with final menu photos (public/menu pics/Boba). ---
-      { name: "Royal Milk Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_RoyalMilkTea_Menu.jpg", matched: true },
-      { name: "Jasmin milk tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_JasmineMilkTea_Menu.jpg", matched: true },
-      { name: "Osmanthus Oolong", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_OsmanthusOolangMilkTea_menu.jpg", matched: true },
-      { name: "Brown Sugar Boba", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_BrownSugar_Menu.jpg", matched: true },
-      { name: "Taro Milk Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_TaroMilkTea_Menu.jpg", matched: true },
-      { name: "cookies and cream milk Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_Cookies%26Cream_Menu.jpg", matched: true },
-      { name: "Black sesame milk Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_BlackSesame_Menu.jpg", matched: true },
-      { name: "Blue Pea Butterfly Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_BluePeaButterfly_Menu.jpg", matched: true },
+      { name: "Royal Milk Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_RoyalMilkTea_Menu.jpg", matched: true, ingredients: "Black tea · milk · brown sugar · tapioca pearls" },
+      { name: "Jasmin milk tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_JasmineMilkTea_Menu.jpg", matched: true, ingredients: "Jasmine green tea · milk · sweetener · tapioca pearls" },
+      { name: "Osmanthus Oolong", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_OsmanthusOolangMilkTea_menu.jpg", matched: true, ingredients: "Osmanthus oolong tea · milk · sweetener · tapioca pearls" },
+      { name: "Brown Sugar Boba", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_BrownSugar_Menu.jpg", matched: true, ingredients: "Black tea · milk · brown sugar syrup · tapioca pearls" },
+      { name: "Taro Milk Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_TaroMilkTea_Menu.jpg", matched: true, ingredients: "Taro · milk · tea · sweetener · tapioca pearls" },
+      { name: "cookies and cream milk Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_Cookies%26Cream_Menu.jpg", matched: true, ingredients: "Milk tea · milk · crushed chocolate cookies · sweetener · tapioca pearls" },
+      { name: "Black sesame milk Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_BlackSesame_Menu.jpg", matched: true, ingredients: "Black sesame · milk · tea · sweetener · tapioca pearls" },
+      { name: "Blue Pea Butterfly Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_BluePeaButterfly_Menu.jpg", matched: true, ingredients: "Butterfly pea tea · milk · sweetener · tapioca pearls" },
       // --- Unmatched: kept for now, shown below the divider, images unchanged. ---
-      { name: "Badam milk Tea", subCategory: "Milk Teas", image: "/images/Boba/milk_tea/Badam_Milk_Tea.jpg" },
-      { name: "Fruit Flavored juice", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/fruit_flavored_juice.jpg" },
-      { name: "Fruit flavored Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/fruit_flavored_tea.jpg" },
-      { name: "Tropical Fruit Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/tropical_fruit_tea.jpg" },
-      { name: "Strawberry Fruit Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/strawberry_fruit_tea.jpg" },
-      { name: "Mango Fruit Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/mango_fruit_tea.jpg" },
-      { name: "Pineapple Fruit Tea", subCategory: "Fruit Teas", image: "/menu%20pics/Boba/pineapple_fruit_tea.png" },
-      { name: "Matcha Latte", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Matcha%20Latte.jpg" },
-      { name: "Double Matcha Cloud", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Double%20Matcha%20Cloud.jpg" },
-      { name: "Strawberry Matcha Latte", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Strawberry%20Matcha%20Latte.jpg" },
-      { name: "Matcha Cheese Latte", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Matcha%20Cheese%20Latte.jpg" },
-      { name: "Matcha Red Bean Smoothie", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Matcha%20Red%20Bean%20Smoothie.jpg" },
-      { name: "Coconut Matcha Cloud", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Coconut%20Matcha%20Cloud.jpg" },
-      { name: "Mango Coco Pomelo", subCategory: "Pomelo Sago", image: "/menu%20pics/Boba/Mango%20Coco%20Pomelo.jpg" },
-      { name: "Strawberry Kiwi Sago", subCategory: "Pomelo Sago", image: "/menu%20pics/Boba/Strawberry%20Kiwi%20Sago.jpg" },
-      { name: "Berry Slush", subCategory: "Slushies", image: "/menu%20pics/Boba/Berry%20Slush.jpg" },
-      { name: "Tropical Slush", subCategory: "Slushies", image: "/menu%20pics/Boba/Tropical%20Slush.jpg" },
-      { name: "Watermelon Slush", subCategory: "Slushies", image: "/menu%20pics/Boba/Watermelon%20Slush.png" },
+      { name: "Badam milk Tea", subCategory: "Milk Teas", image: "/images/Boba/milk_tea/Badam_Milk_Tea.jpg", ingredients: "Almond (badam) · milk · tea · sweetener · tapioca pearls" },
+      { name: "Fruit Flavored juice", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/fruit_flavored_juice.jpg", ingredients: "Fruit flavor · fruit juice · water · sweetener · ice" },
+      { name: "Fruit flavored Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/fruit_flavored_tea.jpg", ingredients: "Fruit flavor · brewed tea · sweetener · ice" },
+      { name: "Tropical Fruit Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/tropical_fruit_tea.jpg", ingredients: "Tropical fruit flavors · black tea · sweetener · fresh fruit · ice" },
+      { name: "Strawberry Fruit Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/strawberry_fruit_tea.jpg", ingredients: "Strawberry · fruit tea · sweetener · ice" },
+      { name: "Mango Fruit Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/mango_fruit_tea.jpg", ingredients: "Mango · fruit tea · sweetener · ice" },
+      { name: "Pineapple Fruit Tea", subCategory: "Fruit Teas", image: "/menu%20pics/Boba/pineapple_fruit_tea.png", ingredients: "Pineapple · fruit tea · sweetener · ice" },
+      { name: "Matcha Latte", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Matcha%20Latte.jpg", ingredients: "Matcha · milk · sweetener · ice" },
+      { name: "Double Matcha Cloud", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Double%20Matcha%20Cloud.jpg", ingredients: "Matcha · milk · matcha cream foam · sweetener · ice" },
+      { name: "Strawberry Matcha Latte", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Strawberry%20Matcha%20Latte.jpg", ingredients: "Strawberry · matcha · milk · sweetener · ice" },
+      { name: "Matcha Cheese Latte", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Matcha%20Cheese%20Latte.jpg", ingredients: "Matcha · milk · cheese cream foam · sweetener · ice" },
+      { name: "Matcha Red Bean Smoothie", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Matcha%20Red%20Bean%20Smoothie.jpg", ingredients: "Matcha · milk · red beans · sweetener · ice" },
+      { name: "Coconut Matcha Cloud", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Coconut%20Matcha%20Cloud.jpg", ingredients: "Matcha · milk · coconut cream · coconut flakes · sweetener · ice" },
+      { name: "Mango Coco Pomelo", subCategory: "Pomelo Sago", image: "/menu%20pics/Boba/Mango%20Coco%20Pomelo.jpg", ingredients: "Mango · coconut milk · pomelo · sago pearls · sweetener" },
+      { name: "Strawberry Kiwi Sago", subCategory: "Pomelo Sago", image: "/menu%20pics/Boba/Strawberry%20Kiwi%20Sago.jpg", ingredients: "Strawberry · kiwi · sago pearls · fruit juice · sweetener" },
+      { name: "Berry Slush", subCategory: "Slushies", image: "/menu%20pics/Boba/Berry%20Slush.jpg", ingredients: "Mixed berries · fruit syrup · ice · sweetener" },
+      { name: "Tropical Slush", subCategory: "Slushies", image: "/menu%20pics/Boba/Tropical%20Slush.jpg", ingredients: "Mango · pineapple · passion fruit · ice · sweetener" },
+      { name: "Watermelon Slush", subCategory: "Slushies", image: "/menu%20pics/Boba/Watermelon%20Slush.png", ingredients: "Watermelon · ice · sweetener" },
     ],
   },
   {

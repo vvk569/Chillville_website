@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -27,6 +28,9 @@ function Chevron({ className }: { className?: string }) {
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  // The mobile overlay is portaled to <body>; only render it after mount so
+  // server and first client render match (document is unavailable on the server).
+  const [mounted, setMounted] = useState(false);
   // Desktop MENU dropdown + mobile MENU accordion. Only the MENU item uses these.
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -51,6 +55,8 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     document.documentElement.style.overflow = open ? "hidden" : "";
@@ -82,6 +88,7 @@ export function Navbar() {
   };
 
   return (
+    <>
     <motion.header
       initial={{ y: -40, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -244,19 +251,25 @@ export function Navbar() {
           <span className={cn("h-0.5 w-6 rounded-full bg-cream transition-all duration-300", open && "-translate-y-[7px] -rotate-45")} />
         </button>
       </nav>
+    </motion.header>
 
-      {/* Mobile nav overlay — visibility is driven by CSS (opacity +
-          pointer-events), not a mount/exit animation, so it opens and closes
-          reliably on every tap. It stays mounted and is hidden + inert when
-          closed. Desktop is unaffected (md:hidden). */}
-      <div
-        id="mobile-nav"
-        aria-hidden={!open}
-        className={cn(
-          "fixed inset-0 top-[68px] z-[60] overflow-y-auto bg-charcoal/95 backdrop-blur-2xl transition-opacity duration-500 ease-expo md:hidden",
-          open ? "opacity-100" : "pointer-events-none opacity-0"
-        )}
-      >
+      {/* Mobile nav overlay — portaled to <body> so its position:fixed resolves
+          against the viewport, not the header. Nested in the header it gets
+          trapped once the header gains its scrolled backdrop-blur (a
+          backdrop-filter, like transform, becomes the containing block for
+          fixed children), which collapsed the panel after any scroll. CSS-driven
+          visibility keeps open/close reliable on every tap and at any scroll
+          position. Desktop is unaffected (md:hidden). */}
+      {mounted &&
+        createPortal(
+          <div
+            id="mobile-nav"
+            aria-hidden={!open}
+            className={cn(
+              "fixed inset-0 top-[68px] z-[60] overflow-y-auto bg-charcoal/95 backdrop-blur-2xl transition-opacity duration-500 ease-expo md:hidden",
+              open ? "opacity-100" : "pointer-events-none opacity-0"
+            )}
+          >
             <ul className="flex flex-col gap-1 px-8 py-10">
               {nav.map((l) =>
                 l.href === "#menu" ? (
@@ -338,7 +351,9 @@ export function Navbar() {
                 </Link>
               </li>
             </ul>
-      </div>
-    </motion.header>
+          </div>,
+          document.body,
+        )}
+    </>
   );
 }
