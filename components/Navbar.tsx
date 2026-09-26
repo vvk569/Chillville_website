@@ -245,24 +245,22 @@ export function Navbar() {
         </button>
       </nav>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="fixed inset-0 top-[68px] z-[60] overflow-y-auto bg-charcoal/95 backdrop-blur-2xl md:hidden"
-          >
+      {/* Mobile nav overlay — visibility is driven by CSS (opacity +
+          pointer-events), not a mount/exit animation, so it opens and closes
+          reliably on every tap. It stays mounted and is hidden + inert when
+          closed. Desktop is unaffected (md:hidden). */}
+      <div
+        id="mobile-nav"
+        aria-hidden={!open}
+        className={cn(
+          "fixed inset-0 top-[68px] z-[60] overflow-y-auto bg-charcoal/95 backdrop-blur-2xl transition-opacity duration-500 ease-expo md:hidden",
+          open ? "opacity-100" : "pointer-events-none opacity-0"
+        )}
+      >
             <ul className="flex flex-col gap-1 px-8 py-10">
-              {nav.map((l, i) =>
+              {nav.map((l) =>
                 l.href === "#menu" ? (
-                  <motion.li
-                    key={l.href}
-                    initial={{ y: 30, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.08 * i, duration: 0.6, ease: EASE_EXPO }}
-                  >
+                  <li key={l.href}>
                     <button
                       type="button"
                       aria-expanded={mobileMenuOpen}
@@ -278,17 +276,15 @@ export function Navbar() {
                         )}
                       />
                     </button>
-                    <AnimatePresence initial={false}>
-                      {mobileMenuOpen && (
-                        <motion.ul
-                          id="menu-accordion"
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.4, ease: EASE_EXPO }}
-                          className="overflow-hidden"
-                        >
-                          <li className="pt-4 pb-1">
+                    <div
+                      id="menu-accordion"
+                      className={cn(
+                        "grid overflow-hidden transition-[grid-template-rows] duration-500 ease-expo",
+                        mobileMenuOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                      )}
+                    >
+                      <ul className="min-h-0 overflow-hidden">
+                        <li className="pt-4 pb-1">
                             <span className="text-[10px] uppercase tracking-luxe text-cream/45">
                               All categories
                             </span>
@@ -317,17 +313,11 @@ export function Navbar() {
                               </Link>
                             </li>
                           ))}
-                        </motion.ul>
-                      )}
-                    </AnimatePresence>
-                  </motion.li>
+                      </ul>
+                    </div>
+                  </li>
                 ) : (
-                  <motion.li
-                    key={l.href}
-                    initial={{ y: 30, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.08 * i, duration: 0.6, ease: EASE_EXPO }}
-                  >
+                  <li key={l.href}>
                     <a
                       href={linkHref(l.href)}
                       onClick={() => setOpen(false)}
@@ -335,15 +325,10 @@ export function Navbar() {
                     >
                       {l.label}
                     </a>
-                  </motion.li>
+                  </li>
                 )
               )}
-              <motion.li
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.08 * (nav.length + 1), duration: 0.6, ease: EASE_EXPO }}
-                className="pt-6"
-              >
+              <li className="pt-6">
                 <Link
                   href="/order"
                   onClick={() => setOpen(false)}
@@ -351,11 +336,9 @@ export function Navbar() {
                 >
                   Order for pickup
                 </Link>
-              </motion.li>
+              </li>
             </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      </div>
     </motion.header>
   );
 }
