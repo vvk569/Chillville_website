@@ -1,68 +1,84 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { EASE_EXPO } from "@/lib/motion";
 
 /**
- * A quiet, editorial preloader. A counter fills, the wordmark settles, then the
- * whole panel lifts away to reveal the hero.
+ * Opening brand intro. On the first load of a session it plays the Chillville
+ * logo animation once (~3s) over the dark background, then dissolves into the
+ * homepage. A session flag keeps it from replaying while navigating the site;
+ * a safety timeout guarantees the page is revealed even if the clip stalls.
+ *
+ * Every state below starts the same on the server and the first client render
+ * (a bare dark panel, no video), so hydration always matches. The session
+ * decision — play, or skip for a returning visitor — is taken in a passive
+ * effect that runs only after hydration is complete.
  */
+const SEEN_KEY = "cv_intro_seen";
+
 export function Preloader() {
-  const [count, setCount] = useState(0);
-  const [done, setDone] = useState(false);
+  const [play, setPlay] = useState(false); // mount + play the clip (first view only)
+  const [done, setDone] = useState(false); // clip finished → fade the panel away
+  const [skip, setSkip] = useState(false); // returning visitor → remove instantly
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
-    const start = performance.now();
-    const duration = 1800;
-    let raf = 0;
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - t, 3);
-      setCount(Math.round(eased * 100));
-      if (t < 1) raf = requestAnimationFrame(tick);
-      else setTimeout(() => setDone(true), 250);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    let seen = false;
+    try {
+      seen = !!sessionStorage.getItem(SEEN_KEY);
+    } catch {
+      /* storage blocked (private mode) — treat as a fresh view */
+    }
+
+    // Returning within the session: don't replay — remove the panel.
+    if (seen) {
+      setSkip(true);
+      return;
+    }
+
+    try {
+      sessionStorage.setItem(SEEN_KEY, "1");
+    } catch {
+      /* ignore — the timeout below still reveals the page */
+    }
+
+    setPlay(true);
+    // Reveal the homepage when the clip ends; the timeout is a safety net for
+    // blocked autoplay or an `ended` event that never fires (~3.2s clip).
+    const timeout = setTimeout(() => setDone(true), 4200);
+    return () => clearTimeout(timeout);
   }, []);
+
+  if (skip) return null;
 
   return (
     <AnimatePresence>
       {!done && (
         <motion.div
-          exit={{ y: "-100%" }}
-          transition={{ duration: 1, ease: EASE_EXPO }}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-charcoal"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.8, ease: EASE_EXPO }}
+          // near-black to match the clip's own backdrop, so the contained
+          // video letterboxes seamlessly on any aspect ratio
+          className="fixed inset-0 z-[100] bg-[#050505]"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: EASE_EXPO }}
-            className="text-center"
-          >
-            <div className="font-display text-3xl tracking-wide2 text-cream">Chillville</div>
-            <div className="mt-2 text-[10px] uppercase tracking-luxe text-caramel">
-              Bakery &amp; Boba
-            </div>
-          </motion.div>
-
-          <div className="absolute bottom-10 left-0 right-0 px-10">
-            <div className="mx-auto flex max-w-content items-end justify-between">
-              <span className="text-[10px] uppercase tracking-luxe text-cream/40">
-                Loading the experience
-              </span>
-              <span className="font-display text-2xl tabular-nums text-cream/80">
-                {count}
-              </span>
-            </div>
-            <div className="mx-auto mt-4 h-px max-w-content overflow-hidden bg-cream/10">
-              <div
-                className="h-full bg-caramel transition-[width] duration-100 ease-linear"
-                style={{ width: `${count}%` }}
-              />
-            </div>
-          </div>
+          {play && (
+            <video
+              ref={videoRef}
+              className="absolute inset-0 h-full w-full object-contain"
+              autoPlay
+              muted
+              playsInline
+              preload="auto"
+              aria-hidden
+              tabIndex={-1}
+              onEnded={() => setDone(true)}
+              onError={() => setDone(true)}
+            >
+              <source src="/videos/chillville_brand_intro.mp4" type="video/mp4" />
+            </video>
+          )}
         </motion.div>
       )}
     </AnimatePresence>

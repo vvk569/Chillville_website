@@ -92,11 +92,39 @@ export function Navbar() {
       )}
     >
       <nav className="mx-auto flex max-w-content items-center justify-between px-6 py-5 sm:px-10">
-        <a href="#top" className="flex flex-col leading-none" data-cursor>
-          <span className="font-display text-lg tracking-wide2 text-cream">Chillville</span>
-          <span className="mt-0.5 text-[9px] uppercase tracking-luxe text-caramel">
-            Bakery &amp; Boba
-          </span>
+        <a
+          // On the homepage, smooth-scroll to the top; from any other page,
+          // navigate back to the main homepage.
+          href={pathname === "/" ? "#top" : "/"}
+          className="flex cursor-pointer items-center"
+          data-cursor
+          aria-label="Chillville — Bakery & Boba, back to homepage"
+        >
+          {/* Animated brand logo — a true-alpha (transparent) WebM, so nothing
+              sits behind it. Autoplays muted, inline and loops; the logo stays
+              on screen because the clip holds the finished mark. The transparent
+              PNG serves as poster and as the static fallback for browsers that
+              don't support transparent WebM (e.g. Safari / iOS). */}
+          <video
+            className="h-9 w-auto select-none sm:h-10"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            poster="/images/chillville-logo.png"
+            aria-hidden
+            tabIndex={-1}
+            draggable={false}
+          >
+            <source src="/videos/chillville-logo.webm" type="video/webm" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/chillville-logo.png"
+              alt="Chillville — Bakery & Boba"
+              className="h-9 w-auto sm:h-10"
+            />
+          </video>
         </a>
 
         <ul className="hidden items-center gap-6 lg:gap-9 md:flex">
