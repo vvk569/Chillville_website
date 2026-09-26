@@ -36,7 +36,7 @@ export function Hero() {
           loop
           playsInline
           preload="auto"
-          poster="/images/dubai.jpg"
+          poster="/images/hero-poster.jpg"
           aria-hidden="true"
           tabIndex={-1}
         >
