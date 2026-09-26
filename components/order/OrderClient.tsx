@@ -259,8 +259,8 @@ export function OrderClient() {
       </header>
 
       {/* Category tabs */}
-      <div className="sticky top-[68px] z-30 -mx-6 mt-10 overflow-x-auto bg-charcoal/70 px-6 py-3 backdrop-blur-md sm:-mx-10 sm:px-10">
-        <div className="flex gap-2">
+      <div className="no-scrollbar sticky top-[68px] z-30 -mx-6 mt-10 overflow-x-auto overscroll-x-contain bg-charcoal/70 px-6 py-3 backdrop-blur-md sm:-mx-10 sm:px-10">
+        <div className="flex w-max gap-2">
           {orderCategories.map((c) => {
             const active = c.slug === activeCat;
             const inCat = c.items.reduce((n, i) => n + (cart[i.id] ?? 0), 0);
@@ -268,7 +268,7 @@ export function OrderClient() {
               <button
                 key={c.slug}
                 onClick={() => setActiveCat(c.slug)}
-                className={`relative whitespace-nowrap rounded-full border px-4 py-2 text-xs uppercase tracking-wide2 transition-colors ${
+                className={`relative shrink-0 whitespace-nowrap rounded-full border px-4 py-2 text-xs uppercase tracking-wide2 transition-colors ${
                   active
                     ? "border-caramel/60 bg-caramel/10 text-cream"
                     : "border-cream/12 text-cream/60 hover:border-cream/30 hover:text-cream"

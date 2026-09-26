@@ -50,6 +50,16 @@ body {
   background: var(--caramel);
 }
 
+/* Opt-out for horizontal strips (e.g. the order category tabs) that scroll
+   on their own — hides the bar without disabling the scroll itself. */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* Lenis */
 html.lenis,
 html.lenis body {

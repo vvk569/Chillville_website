@@ -1,14 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { FiInstagram, FiFacebook, FiArrowRight } from "react-icons/fi";
-import { FaTiktok } from "react-icons/fa";
+import { FiInstagram, FiArrowRight } from "react-icons/fi";
 import { nav, socials, store } from "@/lib/data";
 
 const iconMap: Record<string, React.ReactNode> = {
   instagram: <FiInstagram />,
-  facebook: <FiFacebook />,
-  tiktok: <FaTiktok />,
 };
 
 export function Footer() {

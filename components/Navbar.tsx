@@ -206,13 +206,14 @@ export function Navbar() {
         </Link>
 
         <button
-          aria-label="Menu"
+          aria-label={open ? "Close menu" : "Menu"}
+          aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="flex h-8 w-8 flex-col items-center justify-center gap-[5px] md:hidden"
+          className="relative z-[80] flex h-8 w-8 flex-col items-center justify-center gap-[5px] md:hidden"
         >
-          <span className={cn("h-px w-6 bg-cream transition-all duration-300", open && "translate-y-[6px] rotate-45")} />
-          <span className={cn("h-px w-6 bg-cream transition-all duration-300", open && "opacity-0")} />
-          <span className={cn("h-px w-6 bg-cream transition-all duration-300", open && "-translate-y-[6px] -rotate-45")} />
+          <span className={cn("h-0.5 w-6 rounded-full bg-cream transition-all duration-300", open && "translate-y-[7px] rotate-45")} />
+          <span className={cn("h-0.5 w-6 rounded-full bg-cream transition-all duration-300", open && "opacity-0")} />
+          <span className={cn("h-0.5 w-6 rounded-full bg-cream transition-all duration-300", open && "-translate-y-[7px] -rotate-45")} />
         </button>
       </nav>
 

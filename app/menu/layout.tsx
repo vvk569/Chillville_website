@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/Navbar";
+import { BackToChillville } from "@/components/menu/BackToChillville";
 
 /**
  * Shared shell for every /menu/* category page: the existing Chillville header
@@ -14,6 +15,9 @@ export default function MenuLayout({ children }: { children: React.ReactNode }) 
       <div className="film-grain" aria-hidden />
 
       <main className="relative min-h-screen">{children}</main>
+
+      {/* mobile-only floating return control for long category pages */}
+      <BackToChillville />
     </>
   );
 }

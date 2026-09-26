@@ -220,7 +220,10 @@ export const store = {
 };
 
 export const socials = [
-  { label: "Instagram", handle: "@chillville", href: "https://instagram.com", icon: "instagram" },
-  { label: "TikTok", handle: "@chillville", href: "https://tiktok.com", icon: "tiktok" },
-  { label: "Facebook", handle: "/chillvillecafe", href: "https://facebook.com", icon: "facebook" },
+  {
+    label: "Instagram",
+    handle: "@chillville_clarksville",
+    href: "https://www.instagram.com/chillville_clarksville/",
+    icon: "instagram",
+  },
 ];
