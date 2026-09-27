@@ -85,7 +85,7 @@ const jsonLd = {
     { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "09:00", closes: "23:00" },
     { "@type": "OpeningHoursSpecification", dayOfWeek: "Sunday", opens: "09:00", closes: "20:00" },
   ],
-  sameAs: ["https://instagram.com", "https://tiktok.com", "https://facebook.com"],
+  sameAs: ["https://www.instagram.com/chillville_clarksville/"],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
