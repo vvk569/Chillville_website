@@ -54,15 +54,13 @@ export function Preloader() {
         >
           {play && (
             <>
-              {/* Mobile-only ambient fill. A 16:9 clip can't fill a tall phone
-                  screen and show its full-width logo at once: `cover` crops the
-                  logo sides, `contain` leaves black bars. So a blurred, zoomed
-                  copy of the same clip fills the screen edge-to-edge (no black
-                  bars), and the sharp foreground below shows the whole logo on
-                  top of it. Hidden on desktop (md+), where the contained clip
-                  already fills the ~16:9 viewport — desktop is unchanged. */}
+              {/* MOBILE — ambient fill. A 16:9 clip can't fill a tall phone
+                  screen at cover scale without cropping the centred logo. So a
+                  zoomed copy of the same clip fills the screen edge-to-edge (no
+                  black bars, no rectangular boundary), and the sharp foreground
+                  below rides on top of it. Hidden on desktop (md+). */}
               <video
-                className="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl brightness-[0.55] md:hidden"
+                className="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl brightness-[0.72] md:hidden"
                 autoPlay
                 muted
                 playsInline
@@ -72,11 +70,36 @@ export function Preloader() {
               >
                 <source src="/videos/chillville-intro.mp4" type="video/mp4" />
               </video>
-              {/* Sharp foreground: `object-contain` keeps the ENTIRE logo (and
-                  the full food scene) visible and undistorted on every screen. */}
+              {/* MOBILE — sharp foreground sized to the clip's own 16:9 box and
+                  centred, so the complete "Chillville / BAKERY & BOBA" wording
+                  shows smaller with comfortable side margins. The box edges are
+                  feathered so the sharp scene melts into the full-screen fill
+                  with no visible rectangle. Hidden on desktop. */}
+              <video
+                className="absolute inset-0 m-auto h-auto w-[90vw] max-w-[620px] object-cover md:hidden"
+                style={{
+                  aspectRatio: "16 / 9",
+                  WebkitMaskImage:
+                    "radial-gradient(closest-side, #000 80%, transparent 100%)",
+                  maskImage:
+                    "radial-gradient(closest-side, #000 80%, transparent 100%)",
+                }}
+                autoPlay
+                muted
+                playsInline
+                preload="auto"
+                aria-hidden
+                tabIndex={-1}
+                onEnded={() => setDone(true)}
+                onError={() => setDone(true)}
+              >
+                <source src="/videos/chillville-intro.mp4" type="video/mp4" />
+              </video>
+              {/* DESKTOP — unchanged: the contained clip already fills the
+                  ~16:9 viewport, no fill layer, no scaling, no mask. */}
               <video
                 ref={videoRef}
-                className="absolute inset-0 h-full w-full object-contain"
+                className="absolute inset-0 hidden h-full w-full object-contain md:block"
                 autoPlay
                 muted
                 playsInline
