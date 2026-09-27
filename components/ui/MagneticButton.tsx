@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 type Props = {
   href: string;
   children: ReactNode;
-  variant?: "solid" | "outline";
+  variant?: "solid" | "outline" | "highlight";
   className?: string;
   target?: string;
   rel?: string;
@@ -56,9 +56,12 @@ export function MagneticButton({ href, children, variant = "solid", className, t
       onMouseLeave={reset}
       className={cn(
         "group relative inline-flex items-center gap-3 overflow-hidden rounded-full px-8 py-4 text-sm tracking-wide2 transition-[transform] duration-500 ease-expo",
-        variant === "solid"
-          ? "bg-gradient-to-r from-coral to-caramel text-charcoal font-semibold"
-          : "border border-cream/25 text-cream",
+        variant === "solid" && "bg-gradient-to-r from-coral to-caramel text-charcoal font-semibold",
+        // Distinct, highlighted CTA: a dark/transparent pill with a clear
+        // caramel accent — set apart from the solid gradient and the plain
+        // cream outline without competing with either.
+        variant === "highlight" && "border border-caramel/55 bg-caramel/[0.08] text-caramel",
+        variant === "outline" && "border border-cream/25 text-cream",
         className
       )}
     >
@@ -67,7 +70,7 @@ export function MagneticButton({ href, children, variant = "solid", className, t
       <span
         className={cn(
           "absolute inset-0 z-0 origin-bottom scale-y-0 transition-transform duration-500 ease-expo group-hover:scale-y-100",
-          variant === "solid" ? "bg-cream" : "bg-cream/[0.06]"
+          variant === "solid" ? "bg-cream" : variant === "highlight" ? "bg-caramel/[0.16]" : "bg-cream/[0.06]"
         )}
       />
     </motion.a>

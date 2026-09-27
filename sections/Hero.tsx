@@ -89,7 +89,11 @@ export function Hero() {
             to feel like the unveiling of something rare.
           </motion.p>
 
-          <motion.div variants={rise} className="mt-9 max-w-md">
+          {/* w-fit shrinks the group to the combined width of the two buttons,
+              so the pickup button below lines up to the exact same left and
+              right edges; max-w-full keeps it from overflowing on narrow phones
+              (where the two buttons wrap). */}
+          <motion.div variants={rise} className="mt-9 flex w-fit max-w-full flex-col gap-4">
             <div className="flex flex-wrap items-center gap-4">
               <MagneticButton href="#menu">
                 Explore Menu <FiArrowDownRight />
@@ -98,10 +102,10 @@ export function Hero() {
                 Visit Store
               </MagneticButton>
             </div>
-            {/* Primary conversion CTA — a large, full-width pickup button below
-                the two hero buttons, on both mobile and desktop. Same order
-                destination and MagneticButton styling as the rest of the site. */}
-            <MagneticButton href="/order" className="mt-4 w-full justify-center">
+            {/* Primary conversion CTA — spans the width of the two buttons above,
+                with a distinct highlighted (caramel-accent) treatment so it
+                doesn't blend into the gradient button. Same /order destination. */}
+            <MagneticButton href="/order" variant="highlight" className="w-full justify-center">
               Order for Pickup
             </MagneticButton>
           </motion.div>
