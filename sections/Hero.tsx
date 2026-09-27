@@ -89,12 +89,20 @@ export function Hero() {
             to feel like the unveiling of something rare.
           </motion.p>
 
-          <motion.div variants={rise} className="mt-9 flex flex-wrap items-center gap-4">
-            <MagneticButton href="#menu">
-              Explore Menu <FiArrowDownRight />
-            </MagneticButton>
-            <MagneticButton href="#visit" variant="outline">
-              Visit Store
+          <motion.div variants={rise} className="mt-9 max-w-md">
+            <div className="flex flex-wrap items-center gap-4">
+              <MagneticButton href="#menu">
+                Explore Menu <FiArrowDownRight />
+              </MagneticButton>
+              <MagneticButton href="#visit" variant="outline">
+                Visit Store
+              </MagneticButton>
+            </div>
+            {/* Primary conversion CTA — a large, full-width pickup button below
+                the two hero buttons, on both mobile and desktop. Same order
+                destination and MagneticButton styling as the rest of the site. */}
+            <MagneticButton href="/order" className="mt-4 w-full justify-center">
+              Order for Pickup
             </MagneticButton>
           </motion.div>
         </div>

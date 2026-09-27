@@ -328,15 +328,6 @@ export function Navbar() {
                   </li>
                 )
               )}
-              <li className="pt-6">
-                <Link
-                  href="/order"
-                  onClick={() => setOpen(false)}
-                  className="block rounded-full bg-caramel py-4 text-center font-display text-lg uppercase tracking-wide2 text-charcoal"
-                >
-                  Order for pickup
-                </Link>
-              </li>
             </ul>
           </div>,
           document.body,
