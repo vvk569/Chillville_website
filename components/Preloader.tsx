@@ -53,25 +53,42 @@ export function Preloader() {
           className="fixed inset-0 z-[100] bg-black"
         >
           {play && (
-            <video
-              ref={videoRef}
-              // Mobile portrait is far taller than the 16:9 clip, so `contain`
-              // left black bars top and bottom. `object-cover` fills the whole
-              // phone screen edge-to-edge (cropping the outer sides; the centred
-              // logo stays visible). Desktop is ~16:9, so it keeps `contain` and
-              // is unchanged.
-              className="absolute inset-0 h-full w-full object-cover md:object-contain"
-              autoPlay
-              muted
-              playsInline
-              preload="auto"
-              aria-hidden
-              tabIndex={-1}
-              onEnded={() => setDone(true)}
-              onError={() => setDone(true)}
-            >
-              <source src="/videos/chillville-intro.mp4" type="video/mp4" />
-            </video>
+            <>
+              {/* Mobile-only ambient fill. A 16:9 clip can't fill a tall phone
+                  screen and show its full-width logo at once: `cover` crops the
+                  logo sides, `contain` leaves black bars. So a blurred, zoomed
+                  copy of the same clip fills the screen edge-to-edge (no black
+                  bars), and the sharp foreground below shows the whole logo on
+                  top of it. Hidden on desktop (md+), where the contained clip
+                  already fills the ~16:9 viewport — desktop is unchanged. */}
+              <video
+                className="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl brightness-[0.55] md:hidden"
+                autoPlay
+                muted
+                playsInline
+                preload="auto"
+                aria-hidden
+                tabIndex={-1}
+              >
+                <source src="/videos/chillville-intro.mp4" type="video/mp4" />
+              </video>
+              {/* Sharp foreground: `object-contain` keeps the ENTIRE logo (and
+                  the full food scene) visible and undistorted on every screen. */}
+              <video
+                ref={videoRef}
+                className="absolute inset-0 h-full w-full object-contain"
+                autoPlay
+                muted
+                playsInline
+                preload="auto"
+                aria-hidden
+                tabIndex={-1}
+                onEnded={() => setDone(true)}
+                onError={() => setDone(true)}
+              >
+                <source src="/videos/chillville-intro.mp4" type="video/mp4" />
+              </video>
+            </>
           )}
         </motion.div>
       )}
