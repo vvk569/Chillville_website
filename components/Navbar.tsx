@@ -31,11 +31,6 @@ export function Navbar() {
   // The mobile overlay is portaled to <body>; only render it after mount so
   // server and first client render match (document is unavailable on the server).
   const [mounted, setMounted] = useState(false);
-  // Apple WebKit (iOS / Safari) decodes the VP9 logo clip but ignores its alpha,
-  // showing the mark on an opaque black box. Start with the transparent PNG
-  // (matches SSR everywhere, no black box) and upgrade to the animated WebM only
-  // where transparent WebM is actually supported.
-  const [animatedLogo, setAnimatedLogo] = useState(false);
   // Desktop MENU dropdown + mobile MENU accordion. Only the MENU item uses these.
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -62,16 +57,6 @@ export function Navbar() {
   }, []);
 
   useEffect(() => setMounted(true), []);
-
-  useEffect(() => {
-    const ua = navigator.userAgent || "";
-    const isIOS =
-      /iPad|iPhone|iPod/.test(ua) ||
-      (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1); // iPadOS
-    const isSafari =
-      /Safari/.test(ua) && !/Chrome|Chromium|CriOS|FxiOS|Edg|OPR|Android/.test(ua);
-    if (!isIOS && !isSafari) setAnimatedLogo(true);
-  }, []);
 
   useEffect(() => {
     document.documentElement.style.overflow = open ? "hidden" : "";
@@ -122,40 +107,18 @@ export function Navbar() {
           data-cursor
           aria-label="Chillville — Bakery & Boba, back to homepage"
         >
-          {/* Brand logo. Transparent PNG by default (correct on every browser,
-              incl. iOS/Safari where transparent WebM isn't honoured); the
-              animated true-alpha WebM is used only where it renders with real
-              transparency, so there is never a black box behind the mark. */}
-          {animatedLogo ? (
-            <video
-              className="h-9 w-auto select-none sm:h-10"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              poster="/images/chillville-logo.png"
-              aria-hidden
-              tabIndex={-1}
-              draggable={false}
-            >
-              <source src="/videos/chillville-logo.webm" type="video/webm" />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/chillville-logo.png"
-                alt="Chillville — Bakery & Boba"
-                className="h-9 w-auto sm:h-10"
-              />
-            </video>
-          ) : (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src="/images/chillville-logo.png"
-              alt="Chillville — Bakery & Boba"
-              className="h-9 w-auto select-none sm:h-10"
-              draggable={false}
-            />
-          )}
+          {/* Brand logo as a transparent PNG — the only form that renders with
+              real transparency on every browser and device. A <video> logo was
+              tried, but Apple WebKit (and stale caches of the clip) painted the
+              mark on an opaque black box, so the still PNG is used everywhere to
+              guarantee there is never a rectangle behind the logo. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/chillville-logo.png"
+            alt="Chillville — Bakery & Boba"
+            className="h-9 w-auto select-none sm:h-10"
+            draggable={false}
+          />
         </a>
 
         <ul className="hidden items-center gap-6 lg:gap-9 md:flex">
