@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { menuCategories, getCategory, type MenuProduct } from "@/lib/menu";
+import { BackToChillvilleLink } from "@/components/BackToChillvilleLink";
 
 type Params = { category: string };
 
@@ -117,12 +117,9 @@ export default async function CategoryPage({
   return (
     <div className="mx-auto max-w-content px-6 pb-28 pt-32 sm:px-10 sm:pt-40">
       {/* Breadcrumb / back to home */}
-      <Link
-        href="/"
-        className="inline-flex items-center gap-2 text-[11px] uppercase tracking-wide2 text-cream/50 transition-colors hover:text-caramel"
-      >
+      <BackToChillvilleLink className="inline-flex items-center gap-2 text-[11px] uppercase tracking-wide2 text-cream/50 transition-colors hover:text-caramel">
         <span aria-hidden>&larr;</span> Back to Chillville
-      </Link>
+      </BackToChillvilleLink>
 
       {/* Category title */}
       <header className="mt-8 max-w-2xl">

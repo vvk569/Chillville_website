@@ -2,6 +2,7 @@
 
 import { useRef, ReactNode } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -19,6 +20,18 @@ type Props = {
  */
 export function MagneticButton({ href, children, variant = "solid", className, target, rel }: Props) {
   const ref = useRef<HTMLAnchorElement>(null);
+  const router = useRouter();
+
+  // Client-side navigate for internal routes (e.g. "/about") so Next keeps its
+  // scroll memory and "Back to Chillville" can restore the previous position.
+  // Anchors ("#…") and external / new-tab links stay as native anchors.
+  const isInternalRoute = href.startsWith("/") && !href.startsWith("//");
+  const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!isInternalRoute || target === "_blank") return;
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    router.push(href);
+  };
 
   const onMove = (e: React.MouseEvent) => {
     const el = ref.current;
@@ -38,6 +51,7 @@ export function MagneticButton({ href, children, variant = "solid", className, t
       href={href}
       target={target}
       rel={rel}
+      onClick={onClick}
       onMouseMove={onMove}
       onMouseLeave={reset}
       className={cn(

@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { BackToChillvilleLink } from "@/components/BackToChillvilleLink";
 
 /**
  * Mobile-only floating "Back to Chillville" control for the category pages.
@@ -23,8 +23,7 @@ export function BackToChillville() {
   }, []);
 
   return (
-    <Link
-      href="/"
+    <BackToChillvilleLink
       aria-label="Back to Chillville"
       className={cn(
         "fixed bottom-5 left-5 z-50 flex items-center gap-2 rounded-full border border-cream/15 bg-charcoal/80 px-4 py-2.5 text-[11px] uppercase tracking-wide2 text-cream/80 shadow-card backdrop-blur-xl transition-all duration-300 ease-expo hover:border-caramel hover:text-caramel md:hidden",
@@ -34,6 +33,6 @@ export function BackToChillville() {
       )}
     >
       <span aria-hidden>&larr;</span> Back to Chillville
-    </Link>
+    </BackToChillvilleLink>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BackToChillvilleLink } from "@/components/BackToChillvilleLink";
 import {
   FiShield,
   FiFeather,
@@ -200,12 +201,9 @@ export default function AboutPage() {
 
           <div className="mx-auto w-full max-w-content px-6 pb-16 pt-36 sm:px-10 sm:pb-24 sm:pt-44">
             <Reveal>
-              <Link
-                href="/"
-                className="inline-flex items-center gap-2 text-[11px] uppercase tracking-wide2 text-cream/60 transition-colors hover:text-caramel"
-              >
+              <BackToChillvilleLink className="inline-flex items-center gap-2 text-[11px] uppercase tracking-wide2 text-cream/60 transition-colors hover:text-caramel">
                 <span aria-hidden>&larr;</span> Back to Chillville
-              </Link>
+              </BackToChillvilleLink>
             </Reveal>
             <Reveal delay={0.05}>
               <span className="mt-8 block text-[11px] uppercase tracking-luxe text-caramel">

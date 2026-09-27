@@ -22,6 +22,10 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
 
     lenis.on("scroll", ScrollTrigger.update);
 
+    // Exposed so the route-level scroll handler can snap Lenis to the top on a
+    // forward navigation into the home page.
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+
     const raf = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
@@ -29,6 +33,8 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     return () => {
       gsap.ticker.remove(raf);
       lenis.destroy();
+      const w = window as unknown as { __lenis?: Lenis };
+      if (w.__lenis === lenis) w.__lenis = undefined;
     };
   }, []);
 

@@ -1,9 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import { orderCategories, orderItemsById, type OrderItem } from "@/lib/order";
 import { store } from "@/lib/data";
+import { BackToChillvilleLink } from "@/components/BackToChillvilleLink";
 
 /** Relative pickup-time choices. Kept simple; the store confirms by text. */
 const PICKUP_TIMES = [
@@ -245,9 +245,9 @@ export function OrderClient() {
   // ---------- BROWSE ----------
   return (
     <Shell wide>
-      <Link href="/" className="text-[11px] uppercase tracking-wide2 text-cream/50 transition-colors hover:text-caramel">
+      <BackToChillvilleLink className="text-[11px] uppercase tracking-wide2 text-cream/50 transition-colors hover:text-caramel">
         ‹ Back to Chillville
-      </Link>
+      </BackToChillvilleLink>
       <header className="mt-6 max-w-2xl">
         <span className="text-[11px] uppercase tracking-luxe text-caramel">Order for pickup</span>
         <h1 className="mt-3 font-display text-4xl font-extrabold leading-[1.05] text-cream sm:text-6xl">

@@ -5,48 +5,39 @@ import { motion, AnimatePresence } from "framer-motion";
 import { EASE_EXPO } from "@/lib/motion";
 
 /**
- * Opening brand intro. On the first load of a session it plays the Chillville
- * logo animation once (~3s) over the dark background, then dissolves into the
- * homepage. A session flag keeps it from replaying while navigating the site;
- * a safety timeout guarantees the page is revealed even if the clip stalls.
+ * Full-screen entry intro. It plays the ~1.8s Chillville animation once per
+ * fresh page load, then dissolves into the site — which is already rendered
+ * underneath, so nothing waits on it and the hand-off is seamless. A module
+ * flag survives client-side (SPA) navigation, so the intro never replays while
+ * moving around the site; a safety timeout guarantees the page is revealed even
+ * if the clip stalls or autoplay is blocked.
  *
- * Every state below starts the same on the server and the first client render
- * (a bare dark panel, no video), so hydration always matches. The session
- * decision — play, or skip for a returning visitor — is taken in a passive
- * effect that runs only after hydration is complete.
+ * Every state starts identical on the server and the first client render (a
+ * bare dark panel, no video), so hydration always matches; the play / skip
+ * decision is taken in a passive effect that runs after hydration.
  */
-const SEEN_KEY = "cv_intro_seen";
+
+// Resets on every full page load; persists across in-app navigation.
+let hasPlayed = false;
 
 export function Preloader() {
-  const [play, setPlay] = useState(false); // mount + play the clip (first view only)
+  const [play, setPlay] = useState(false); // mount + play the clip
   const [done, setDone] = useState(false); // clip finished → fade the panel away
-  const [skip, setSkip] = useState(false); // returning visitor → remove instantly
+  const [skip, setSkip] = useState(false); // internal navigation → remove instantly
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
-    let seen = false;
-    try {
-      seen = !!sessionStorage.getItem(SEEN_KEY);
-    } catch {
-      /* storage blocked (private mode) — treat as a fresh view */
-    }
-
-    // Returning within the session: don't replay — remove the panel.
-    if (seen) {
+    // Already shown this page load (an internal navigation) — don't replay.
+    if (hasPlayed) {
       setSkip(true);
       return;
     }
-
-    try {
-      sessionStorage.setItem(SEEN_KEY, "1");
-    } catch {
-      /* ignore — the timeout below still reveals the page */
-    }
+    hasPlayed = true;
 
     setPlay(true);
-    // Reveal the homepage when the clip ends; the timeout is a safety net for
-    // blocked autoplay or an `ended` event that never fires (~3.2s clip).
-    const timeout = setTimeout(() => setDone(true), 4200);
+    // Reveal the site when the clip ends; the timeout is a safety net for
+    // blocked autoplay or an `ended` event that never fires (~1.8s clip).
+    const timeout = setTimeout(() => setDone(true), 2500);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -58,10 +49,8 @@ export function Preloader() {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: EASE_EXPO }}
-          // near-black to match the clip's own backdrop, so the contained
-          // video letterboxes seamlessly on any aspect ratio
-          className="fixed inset-0 z-[100] bg-[#050505]"
+          transition={{ duration: 0.6, ease: EASE_EXPO }}
+          className="fixed inset-0 z-[100] bg-black"
         >
           {play && (
             <video
@@ -76,7 +65,7 @@ export function Preloader() {
               onEnded={() => setDone(true)}
               onError={() => setDone(true)}
             >
-              <source src="/videos/chillville_brand_intro.mp4" type="video/mp4" />
+              <source src="/videos/chillville-intro.mp4" type="video/mp4" />
             </video>
           )}
         </motion.div>

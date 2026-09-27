@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Inter } from "next/font/google";
 import "./globals.css";
+import { ScrollTopOnRouteChange } from "@/components/ScrollTopOnRouteChange";
 
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -95,6 +96,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <ScrollTopOnRouteChange />
         {children}
       </body>
     </html>
