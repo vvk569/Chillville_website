@@ -55,7 +55,12 @@ export function Preloader() {
           {play && (
             <video
               ref={videoRef}
-              className="absolute inset-0 h-full w-full object-contain"
+              // Mobile portrait is far taller than the 16:9 clip, so `contain`
+              // left black bars top and bottom. `object-cover` fills the whole
+              // phone screen edge-to-edge (cropping the outer sides; the centred
+              // logo stays visible). Desktop is ~16:9, so it keeps `contain` and
+              // is unchanged.
+              className="absolute inset-0 h-full w-full object-cover md:object-contain"
               autoPlay
               muted
               playsInline
