@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { menuCategories, getCategory, type MenuProduct } from "@/lib/menu";
 import { BackToChillvilleLink } from "@/components/BackToChillvilleLink";
@@ -84,12 +85,12 @@ export default async function CategoryPage({
                   }}
                 >
                   {p.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Image
                       src={p.image}
                       alt={p.name}
-                      loading="lazy"
-                      className={`absolute inset-0 h-full w-full ${
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className={`${
                         p.fit === "contain" ? "object-contain p-2" : "object-cover"
                       }`}
                     />

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import { orderCategories, orderItemsById, type OrderItem } from "@/lib/order";
 import { store } from "@/lib/data";
 import { BackToChillvilleLink } from "@/components/BackToChillvilleLink";
@@ -298,8 +299,14 @@ export function OrderClient() {
                   style={{ backgroundImage: `linear-gradient(135deg, ${category.accent}22, transparent 60%)` }}
                 >
                   {item.image && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={item.image} alt="" loading="lazy" className="h-full w-full object-cover" />
+                    <Image
+                      src={item.image}
+                      alt=""
+                      width={56}
+                      height={56}
+                      sizes="56px"
+                      className="h-full w-full object-cover"
+                    />
                   )}
                 </div>
                 <span className="flex-1 text-sm text-cream">{item.name}</span>
