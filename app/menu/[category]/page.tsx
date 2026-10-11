@@ -103,7 +103,14 @@ export default async function CategoryPage({
 
                 {/* Details */}
                 <div className="flex flex-1 flex-col px-1 pt-4">
-                  <h2 className="font-display text-lg text-cream">{p.name}</h2>
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h2 className="font-display text-lg text-cream">{p.name}</h2>
+                    {p.price != null && (
+                      <span className="shrink-0 font-display text-base font-semibold text-caramel tabular-nums">
+                        ${p.price.toFixed(2)}
+                      </span>
+                    )}
+                  </div>
                   <p className="mt-auto pt-4 text-[11px] uppercase tracking-wide2 text-cream/35">
                     {p.ingredients ?? "Ingredients coming soon"}
                   </p>

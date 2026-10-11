@@ -3,10 +3,12 @@
  * `/menu/[category]` pages.
  *
  * Product NAMES are taken verbatim from the client's Excel
- * ("Menu List for Website & App.xlsx") and are the only real data we have.
- * The Excel has no prices, descriptions or ingredients, so the pages show the
- * name plus a placeholder ingredients line and a placeholder image; real
- * ingredients/photos will be supplied later. Prices are intentionally omitted.
+ * ("Menu List for Website & App.xlsx"). Prices come from the in-store menu
+ * board and are filled in via the optional `price` field where a product maps
+ * cleanly to a board item. Boba and Ice Cream Shakes carry no prices yet (not
+ * listed on the board we have); some Cookie/Donut/Muffin items are likewise
+ * left price-less where the board has no matching line. Ingredients/photos for
+ * placeholder items will be supplied later.
  */
 
 export type MenuProduct = {
@@ -16,6 +18,7 @@ export type MenuProduct = {
   matched?: boolean; // true = has a final menu photo; rendered in the top group above the divider
   fit?: "cover" | "contain"; // image fit inside the card; defaults to "cover". "contain" shows the whole image (letterboxed)
   ingredients?: string; // short ingredients line shown under the image (replaces the placeholder when set)
+  price?: number; // menu price in USD, when known (from the in-store board)
 };
 
 export type MenuCategory = {
@@ -69,16 +72,17 @@ export const menuCategories: MenuCategory[] = [
       // One card per cookie, using the polished _cookie_menu render. The square
       // duplicate shots and the marketing images (logo, social poster) are left
       // out of the menu but remain on disk. Display names cleaned from filenames.
-      { name: "Biscoff Lava", image: "/menu%20pics/Cookies/Biscoff-lava_R_cookie_menu.jpg", matched: true, ingredients: "Biscoff cookie · Biscoff spread · butter · brown sugar" },
-      { name: "Chocolate Chip", image: "/menu%20pics/Cookies/chocolate-chip_cookie_menu.jpg", matched: true, ingredients: "chocolate chips · butter · brown sugar · vanilla" },
-      { name: "Cookies & Cream", image: "/menu%20pics/Cookies/cookie%26creame_cookie_menu.jpg", matched: true, ingredients: "crushed Oreo cookies · white chocolate · butter · cream" },
-      { name: "Dubai", image: "/menu%20pics/Cookies/dubai_R_cookie_menu.jpg", matched: true, ingredients: "pistachio cream · kataifi pastry · chocolate · butter" },
-      { name: "M&M", image: "/menu%20pics/Cookies/m%26m_cookie_menu.jpg", matched: true, ingredients: "M&M candies · chocolate chips · butter · brown sugar" },
-      { name: "Nutella Lava Burst", image: "/menu%20pics/Cookies/nutella-lava-burst_R_cookie_menu.jpg", matched: true, ingredients: "Nutella · chocolate chips · butter · brown sugar" },
+      // Prices: Regular Cookies $3.99, ChillVille Royale $5.25 (in-store board).
+      { name: "Biscoff Lava", image: "/menu%20pics/Cookies/Biscoff-lava_R_cookie_menu.jpg", matched: true, ingredients: "Biscoff cookie · Biscoff spread · butter · brown sugar", price: 5.25 },
+      { name: "Chocolate Chip", image: "/menu%20pics/Cookies/chocolate-chip_cookie_menu.jpg", matched: true, ingredients: "chocolate chips · butter · brown sugar · vanilla", price: 3.99 },
+      { name: "Cookies & Cream", image: "/menu%20pics/Cookies/cookie%26creame_cookie_menu.jpg", matched: true, ingredients: "crushed Oreo cookies · white chocolate · butter · cream", price: 3.99 },
+      { name: "Dubai", image: "/menu%20pics/Cookies/dubai_R_cookie_menu.jpg", matched: true, ingredients: "pistachio cream · kataifi pastry · chocolate · butter", price: 5.25 },
+      { name: "M&M", image: "/menu%20pics/Cookies/m%26m_cookie_menu.jpg", matched: true, ingredients: "M&M candies · chocolate chips · butter · brown sugar", price: 3.99 },
+      { name: "Nutella Lava Burst", image: "/menu%20pics/Cookies/nutella-lava-burst_R_cookie_menu.jpg", matched: true, ingredients: "Nutella · chocolate chips · butter · brown sugar", price: 5.25 },
       { name: "Oreo Cream Bliss", image: "/menu%20pics/Cookies/oreo-cream-bliss_R_cookie_menu.jpg", matched: true, ingredients: "crushed Oreo cookies · Oreo cream · white chocolate · butter" },
-      { name: "Pistachio", image: "/menu%20pics/Cookies/pistachio_cookie_menu.jpg", matched: true, ingredients: "pistachios · pistachio cream · butter · brown sugar" },
-      { name: "Rainbow Sprinkle", image: "/menu%20pics/Cookies/rainbow-sprinkle_cookie_menu.jpg", matched: true, ingredients: "rainbow sprinkles · white chocolate · butter · brown sugar" },
-      { name: "Red Velvet", image: "/menu%20pics/Cookies/redvelvet_cookie_menu.jpg", matched: true, ingredients: "red velvet · white chocolate chips · cocoa · butter · cream cheese" },
+      { name: "Pistachio", image: "/menu%20pics/Cookies/pistachio_cookie_menu.jpg", matched: true, ingredients: "pistachios · pistachio cream · butter · brown sugar", price: 3.99 },
+      { name: "Rainbow Sprinkle", image: "/menu%20pics/Cookies/rainbow-sprinkle_cookie_menu.jpg", matched: true, ingredients: "rainbow sprinkles · white chocolate · butter · brown sugar", price: 3.99 },
+      { name: "Red Velvet", image: "/menu%20pics/Cookies/redvelvet_cookie_menu.jpg", matched: true, ingredients: "red velvet · white chocolate chips · cocoa · butter · cream cheese", price: 3.99 },
       { name: "Red Velvet Cream Bliss", image: "/menu%20pics/Cookies/redvelvel-creame-bliss_R_cookie_menu.jpg", matched: true, ingredients: "red velvet · cream cheese filling · white chocolate · cocoa · butter" },
       { name: "Walnut Luxe", image: "/menu%20pics/Cookies/walnut-Luxe_R_cookie_menu.jpg", matched: true, ingredients: "walnuts · brown sugar · butter · vanilla" },
     ],
@@ -89,21 +93,33 @@ export const menuCategories: MenuCategory[] = [
     accent: "#d9b486",
     products: [
       // --- Matched: items with final menu photos (public/menu pics/Donut). ---
-      { name: "Rainbow Sprinkles", image: "/menu%20pics/Donut/Donut_Sprinkle_Menu.jpg", matched: true, ingredients: "vanilla glaze · rainbow sprinkles" },
+      // Prices: Regular Donuts $1.89 (Classic $0.99), Premium Donuts $2.19.
+      { name: "Rainbow Sprinkles", image: "/menu%20pics/Donut/Donut_Sprinkle_Menu.jpg", matched: true, ingredients: "vanilla glaze · rainbow sprinkles", price: 1.89 },
       { name: "Coconut Flakes", image: "/menu%20pics/Donut/Donut_Coconut-Flakes_Menu.jpg", matched: true, ingredients: "vanilla glaze · toasted coconut flakes" },
-      { name: "M & M", image: "/menu%20pics/Donut/Donut_M%26M_Menu.jpg", matched: true, ingredients: "chocolate glaze · M&M candies" },
-      { name: "Oreo", image: "/menu%20pics/Donut/Donut_Oreo_Menu.jpg", matched: true, ingredients: "vanilla glaze · crushed Oreo cookies" },
-      { name: "Marshmallow", image: "/menu%20pics/Donut/Donut_Marshmellow_Menu.jpg", matched: true, ingredients: "vanilla glaze · marshmallows · chocolate drizzle" },
+      { name: "M & M", image: "/menu%20pics/Donut/Donut_M%26M_Menu.jpg", matched: true, ingredients: "chocolate glaze · M&M candies", price: 1.89 },
+      { name: "Oreo", image: "/menu%20pics/Donut/Donut_Oreo_Menu.jpg", matched: true, ingredients: "vanilla glaze · crushed Oreo cookies", price: 2.19 },
+      { name: "Marshmallow", image: "/menu%20pics/Donut/Donut_Marshmellow_Menu.jpg", matched: true, ingredients: "vanilla glaze · marshmallows · chocolate drizzle", price: 1.89 },
       { name: "S'mores", image: "/menu%20pics/Donut/Donut_Smores_Menu.jpg", matched: true, ingredients: "chocolate glaze · graham crackers · marshmallows" },
-      { name: "Pretzel", image: "/menu%20pics/Donut/Donut_Pretzel_Menu.jpg", matched: true, ingredients: "chocolate glaze · pretzel pieces · caramel drizzle · sea salt" },
+      { name: "Pretzel", image: "/menu%20pics/Donut/Donut_Pretzel_Menu.jpg", matched: true, ingredients: "chocolate glaze · pretzel pieces · caramel drizzle · sea salt", price: 1.89 },
       { name: "Birthday cake", image: "/menu%20pics/Donut/Donut_Birthdaycake_Menu.jpg", matched: true, ingredients: "vanilla glaze · rainbow sprinkles · cake crumbs" },
-      { name: "Strawberry Short cake", image: "/menu%20pics/Donut/Donut_StrawberryShortcake_Menu.jpg", matched: true, ingredients: "strawberry glaze · strawberries · shortcake crumbs · cream" },
+      { name: "Strawberry Short cake", image: "/menu%20pics/Donut/Donut_StrawberryShortcake_Menu.jpg", matched: true, ingredients: "strawberry glaze · strawberries · shortcake crumbs · cream", price: 2.19 },
       { name: "Blueberry Glaze", image: "/menu%20pics/Donut/Donut_BlueberryGlaze_Menu.jpg", matched: true, ingredients: "blueberry glaze · blueberry pieces" },
       { name: "Cherry Glaze", image: "/menu%20pics/Donut/Donut_CherryGlaze_Menu.jpg", matched: true, ingredients: "cherry glaze · cherry pieces" },
-      { name: "Gummy bears", image: "/menu%20pics/Donut/Donut_Gummybear_Menu.jpg", matched: true, ingredients: "vanilla glaze · gummy bears · rainbow sprinkles" },
+      { name: "Gummy bears", image: "/menu%20pics/Donut/Donut_Gummybear_Menu.jpg", matched: true, ingredients: "vanilla glaze · gummy bears · rainbow sprinkles", price: 1.89 },
       // --- Unmatched: kept for now, shown below the divider. ---
-      { name: "Classic", image: "/menu%20pics/Donut/classic_donut.png", ingredients: "vanilla glaze · powdered sugar" },
+      { name: "Classic", image: "/menu%20pics/Donut/classic_donut.png", ingredients: "vanilla glaze · powdered sugar", price: 0.99 },
       { name: "Cinammon Sugar", image: "/menu%20pics/Donut/CINNAMON%20SUGAR%20DONUT.png", ingredients: "cinnamon · sugar · butter" },
+      // Board flavors not yet photographed (added from the in-store menu board).
+      // Regular $1.89, Premium $2.19. Ingredient lines inferred from the flavor.
+      { name: "Fruity Pebbles", ingredients: "vanilla glaze · Fruity Pebbles cereal", price: 1.89 },
+      { name: "Strawberry Glaze", ingredients: "strawberry glaze", price: 1.89 },
+      { name: "Honey Glaze", ingredients: "honey glaze", price: 1.89 },
+      { name: "Biscoff", ingredients: "Biscoff glaze · Biscoff spread · Biscoff crumbs", price: 2.19 },
+      { name: "Pistachio", ingredients: "pistachio glaze · pistachio cream · chopped pistachios", price: 2.19 },
+      // Donut boxes (bundles) — board pricing. Shown as a labelled sub-section.
+      { name: "6 Count Box", subCategory: "Donut Boxes", ingredients: "6 donuts · mix & match", price: 9.99 },
+      { name: "12 Count Box", subCategory: "Donut Boxes", ingredients: "12 donuts · mix & match", price: 17.99 },
+      { name: "12 Count Half & Half", subCategory: "Donut Boxes", ingredients: "6 regular + 6 premium", price: 19.99 },
     ],
   },
   {
@@ -135,15 +151,42 @@ export const menuCategories: MenuCategory[] = [
       // Every image in public/menu pics/Muffin, one card each (regular + Jumbo
       // per flavor). Display names cleaned from filenames (extension/underscores
       // dropped, filler words like "Muffin"/"Menu" removed, "Creame" -> "Cream").
+      // Prices: Regular Muffins $3.99 (board lists Lemon Poppy Seed only),
+      // Jumbo Muffins $5.69. Regular Nutella/Triple Choc/Blueberry not on board.
       { name: "Blueberry Cream Cheese", image: "/menu%20pics/Muffin/Blueberry-creame-cheese_Muffin_Menu.jpg", matched: true, ingredients: "blueberries · cream cheese · butter · vanilla" },
-      { name: "Blueberry Cream Cheese Jumbo", image: "/menu%20pics/Muffin/BlueBerryCreameCheese_Jumbo_Muffin_Menu.jpg", matched: true, ingredients: "blueberries · cream cheese · butter · vanilla" },
+      { name: "Blueberry Cream Cheese Jumbo", image: "/menu%20pics/Muffin/BlueBerryCreameCheese_Jumbo_Muffin_Menu.jpg", matched: true, ingredients: "blueberries · cream cheese · butter · vanilla", price: 5.69 },
       { name: "Brown Butter Chocochip", image: "/menu%20pics/Muffin/BrownButterchocoChip_Muffin_Menu.jpg", matched: true, ingredients: "brown butter · chocolate chips · brown sugar · vanilla" },
       { name: "Brown Butter Chocochip Jumbo", image: "/menu%20pics/Muffin/BrownButterChocochip_Jumbo_Muffin.jpg", matched: true, ingredients: "brown butter · chocolate chips · brown sugar · vanilla" },
-      { name: "Lemon Poppy Seed", image: "/menu%20pics/Muffin/Lemon-poppy-seed_Muffin_Menu.jpg", matched: true, ingredients: "lemon zest · lemon juice · poppy seeds · butter" },
+      { name: "Lemon Poppy Seed", image: "/menu%20pics/Muffin/Lemon-poppy-seed_Muffin_Menu.jpg", matched: true, ingredients: "lemon zest · lemon juice · poppy seeds · butter", price: 3.99 },
       { name: "Nutella Chocochip", image: "/menu%20pics/Muffin/Nutella_chocochip_Muffin_Menu.jpg", matched: true, ingredients: "Nutella · chocolate chips · butter · brown sugar" },
-      { name: "Nutella Chocochip Jumbo", image: "/menu%20pics/Muffin/NutellaChocoChip_Jumbo_Muffin_menu.jpg", matched: true, ingredients: "Nutella · chocolate chips · butter · brown sugar" },
+      { name: "Nutella Chocochip Jumbo", image: "/menu%20pics/Muffin/NutellaChocoChip_Jumbo_Muffin_menu.jpg", matched: true, ingredients: "Nutella · chocolate chips · butter · brown sugar", price: 5.69 },
       { name: "Triple Chocolate Fudge", image: "/menu%20pics/Muffin/TripleChocolate-Fudge_Muffiin_Menu.jpg", matched: true, ingredients: "cocoa · chocolate chips · chocolate chunks · butter" },
-      { name: "Triple Chocolate Fudge Jumbo", image: "/menu%20pics/Muffin/TripleChocolateFudge_Jumbo_Menu.jpg", matched: true, ingredients: "cocoa · chocolate chips · chocolate chunks · butter" },
+      { name: "Triple Chocolate Fudge Jumbo", image: "/menu%20pics/Muffin/TripleChocolateFudge_Jumbo_Menu.jpg", matched: true, ingredients: "cocoa · chocolate chips · chocolate chunks · butter", price: 5.69 },
+    ],
+  },
+  {
+    slug: "cheesecakes",
+    name: "Cheesecakes",
+    accent: "#cf9f66",
+    products: [
+      // From the in-store menu board. No photos on disk yet, so cards show the
+      // "Photo coming soon" placeholder. Ingredient lines inferred from the flavor.
+      { name: "Plain", ingredients: "cream cheese · graham cracker crust · vanilla", price: 6.49 },
+      { name: "Biscoff", ingredients: "cream cheese · Biscoff spread · Biscoff crumbs · graham crust", price: 7.99 },
+      { name: "Pistachio", ingredients: "cream cheese · pistachio · graham crust", price: 7.99 },
+      { name: "Blueberry", ingredients: "cream cheese · blueberries · graham crust", price: 7.19 },
+      { name: "Strawberry", ingredients: "cream cheese · strawberries · graham crust", price: 7.19 },
+    ],
+  },
+  {
+    slug: "chocolates",
+    name: "Chocolates",
+    accent: "#9d6b3f",
+    products: [
+      // From the in-store menu board. No photos on disk yet, so cards show the
+      // "Photo coming soon" placeholder. Ingredient lines inferred from the flavor.
+      { name: "Dubai Chocolate Large", ingredients: "pistachio cream · kataifi pastry · milk chocolate", price: 20.00 },
+      { name: "Dubai Chocolate Small", ingredients: "pistachio cream · kataifi pastry · milk chocolate", price: 10.00 },
     ],
   },
 ];
