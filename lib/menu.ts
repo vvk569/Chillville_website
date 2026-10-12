@@ -2,18 +2,18 @@
  * Menu categories — the single source of truth for the MENU dropdown and the
  * `/menu/[category]` pages.
  *
- * Product NAMES are taken verbatim from the client's Excel
- * ("Menu List for Website & App.xlsx"). Prices come from the in-store menu
- * board and are filled in via the optional `price` field where a product maps
- * cleanly to a board item. Boba and Ice Cream Shakes carry no prices yet (not
- * listed on the board we have); some Cookie/Donut/Muffin items are likewise
- * left price-less where the board has no matching line. Ingredients/photos for
+ * The lineup mirrors the two in-store menu boards (Cookies/Donuts/Muffins/
+ * Cheesecakes/Chocolates and Boba/Ice Cream/Milkshakes). Prices come from those
+ * boards via the optional `price` field. Items that were on the site but not on
+ * either board have been removed so the website matches what the store sells.
+ * A few items carry no price where the board prices them another way (e.g. ice
+ * cream is priced by scoop size, not per flavor). Photos/ingredients for
  * placeholder items will be supplied later.
  */
 
 export type MenuProduct = {
-  name: string; // exact product name from the Excel
-  subCategory?: string; // real Excel sub-group (e.g. "Milk Teas"), when present
+  name: string; // exact product name from the Excel / board
+  subCategory?: string; // real sub-group (e.g. "Milk Teas"), when present
   image?: string; // path under /public to an existing product photo, when available
   matched?: boolean; // true = has a final menu photo; rendered in the top group above the divider
   fit?: "cover" | "contain"; // image fit inside the card; defaults to "cover". "contain" shows the whole image (letterboxed)
@@ -34,34 +34,39 @@ export const menuCategories: MenuCategory[] = [
     name: "Boba",
     accent: "#c9a26b",
     products: [
-      // --- Matched: items with final menu photos (public/menu pics/Boba). ---
-      { name: "Royal Milk Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_RoyalMilkTea_Menu.jpg", matched: true, ingredients: "Black tea · milk · brown sugar · tapioca pearls" },
-      { name: "Jasmin milk tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_JasmineMilkTea_Menu.jpg", matched: true, ingredients: "Jasmine green tea · milk · sweetener · tapioca pearls" },
-      { name: "Osmanthus Oolong", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_OsmanthusOolangMilkTea_menu.jpg", matched: true, ingredients: "Osmanthus oolong tea · milk · sweetener · tapioca pearls" },
-      { name: "Brown Sugar Boba", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_BrownSugar_Menu.jpg", matched: true, ingredients: "Black tea · milk · brown sugar syrup · tapioca pearls" },
-      { name: "Taro Milk Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_TaroMilkTea_Menu.jpg", matched: true, ingredients: "Taro · milk · tea · sweetener · tapioca pearls" },
-      { name: "cookies and cream milk Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_Cookies%26Cream_Menu.jpg", matched: true, ingredients: "Milk tea · milk · crushed chocolate cookies · sweetener · tapioca pearls" },
-      { name: "Black sesame milk Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_BlackSesame_Menu.jpg", matched: true, ingredients: "Black sesame · milk · tea · sweetener · tapioca pearls" },
-      { name: "Blue Pea Butterfly Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_BluePeaButterfly_Menu.jpg", matched: true, ingredients: "Butterfly pea tea · milk · sweetener · tapioca pearls" },
-      // --- Unmatched: kept for now, shown below the divider, images unchanged. ---
-      { name: "Badam milk Tea", subCategory: "Milk Teas", image: "/images/Boba/milk_tea/Badam_Milk_Tea.jpg", ingredients: "Almond (badam) · milk · tea · sweetener · tapioca pearls" },
-      { name: "Fruit Flavored juice", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/fruit_flavored_juice.jpg", ingredients: "Fruit flavor · fruit juice · water · sweetener · ice" },
-      { name: "Fruit flavored Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/fruit_flavored_tea.jpg", ingredients: "Fruit flavor · brewed tea · sweetener · ice" },
-      { name: "Tropical Fruit Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/tropical_fruit_tea.jpg", ingredients: "Tropical fruit flavors · black tea · sweetener · fresh fruit · ice" },
-      { name: "Strawberry Fruit Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/strawberry_fruit_tea.jpg", ingredients: "Strawberry · fruit tea · sweetener · ice" },
-      { name: "Mango Fruit Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/mango_fruit_tea.jpg", ingredients: "Mango · fruit tea · sweetener · ice" },
-      { name: "Pineapple Fruit Tea", subCategory: "Fruit Teas", image: "/menu%20pics/Boba/pineapple_fruit_tea.png", ingredients: "Pineapple · fruit tea · sweetener · ice" },
-      { name: "Matcha Latte", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Matcha%20Latte.jpg", ingredients: "Matcha · milk · sweetener · ice" },
-      { name: "Double Matcha Cloud", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Double%20Matcha%20Cloud.jpg", ingredients: "Matcha · milk · matcha cream foam · sweetener · ice" },
-      { name: "Strawberry Matcha Latte", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Strawberry%20Matcha%20Latte.jpg", ingredients: "Strawberry · matcha · milk · sweetener · ice" },
-      { name: "Matcha Cheese Latte", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Matcha%20Cheese%20Latte.jpg", ingredients: "Matcha · milk · cheese cream foam · sweetener · ice" },
-      { name: "Matcha Red Bean Smoothie", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Matcha%20Red%20Bean%20Smoothie.jpg", ingredients: "Matcha · milk · red beans · sweetener · ice" },
-      { name: "Coconut Matcha Cloud", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Coconut%20Matcha%20Cloud.jpg", ingredients: "Matcha · milk · coconut cream · coconut flakes · sweetener · ice" },
-      { name: "Mango Coco Pomelo", subCategory: "Pomelo Sago", image: "/menu%20pics/Boba/Mango%20Coco%20Pomelo.jpg", ingredients: "Mango · coconut milk · pomelo · sago pearls · sweetener" },
-      { name: "Strawberry Kiwi Sago", subCategory: "Pomelo Sago", image: "/menu%20pics/Boba/Strawberry%20Kiwi%20Sago.jpg", ingredients: "Strawberry · kiwi · sago pearls · fruit juice · sweetener" },
-      { name: "Berry Slush", subCategory: "Slushies", image: "/menu%20pics/Boba/Berry%20Slush.jpg", ingredients: "Mixed berries · fruit syrup · ice · sweetener" },
-      { name: "Tropical Slush", subCategory: "Slushies", image: "/menu%20pics/Boba/Tropical%20Slush.jpg", ingredients: "Mango · pineapple · passion fruit · ice · sweetener" },
-      { name: "Watermelon Slush", subCategory: "Slushies", image: "/menu%20pics/Boba/Watermelon%20Slush.png", ingredients: "Watermelon · ice · sweetener" },
+      // --- Matched: Classic Milk Teas with final menu photos. ---
+      // Board prices: Classic Milk Teas $5.99–$7.19.
+      { name: "Royal Milk Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_RoyalMilkTea_Menu.jpg", matched: true, ingredients: "Black tea · milk · brown sugar · tapioca pearls", price: 5.99 },
+      { name: "Jasmin milk tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_JasmineMilkTea_Menu.jpg", matched: true, ingredients: "Jasmine green tea · milk · sweetener · tapioca pearls", price: 5.99 },
+      { name: "Osmanthus Oolong", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_OsmanthusOolangMilkTea_menu.jpg", matched: true, ingredients: "Osmanthus oolong tea · milk · sweetener · tapioca pearls", price: 5.99 },
+      { name: "Brown Sugar Boba", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_BrownSugar_Menu.jpg", matched: true, ingredients: "Black tea · milk · brown sugar syrup · tapioca pearls", price: 7.19 },
+      { name: "Taro Milk Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_TaroMilkTea_Menu.jpg", matched: true, ingredients: "Taro · milk · tea · sweetener · tapioca pearls", price: 6.89 },
+      { name: "cookies and cream milk Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_Cookies%26Cream_Menu.jpg", matched: true, ingredients: "Milk tea · milk · crushed chocolate cookies · sweetener · tapioca pearls", price: 6.89 },
+      { name: "Black sesame milk Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_BlackSesame_Menu.jpg", matched: true, ingredients: "Black sesame · milk · tea · sweetener · tapioca pearls", price: 6.89 },
+      { name: "Blue Pea Butterfly Tea", subCategory: "Milk Teas", image: "/menu%20pics/Boba/Boba_BluePeaButterfly_Menu.jpg", matched: true, ingredients: "Butterfly pea tea · milk · sweetener · tapioca pearls", price: 6.89 },
+      // --- Unmatched: no final photo yet; shown below the divider. ---
+      // Thai Milk Tea added from the board (Classic Milk Teas $5.99).
+      { name: "Thai Milk Tea", subCategory: "Milk Teas", ingredients: "Thai tea · milk · sweetener · tapioca pearls", price: 5.99 },
+      // Fruit Tea $6.25 — Lychee/Passion Fruit/Peach added from the board.
+      { name: "Strawberry Fruit Tea", subCategory: "Fruit Teas", image: "/images/Boba/fruit_tea/strawberry_fruit_tea.jpg", ingredients: "Strawberry · fruit tea · sweetener · ice", price: 6.25 },
+      { name: "Pineapple Fruit Tea", subCategory: "Fruit Teas", image: "/menu%20pics/Boba/pineapple_fruit_tea.png", ingredients: "Pineapple · fruit tea · sweetener · ice", price: 6.25 },
+      { name: "Lychee Fruit Tea", subCategory: "Fruit Teas", ingredients: "Lychee · fruit tea · sweetener · ice", price: 6.25 },
+      { name: "Passion Fruit Tea", subCategory: "Fruit Teas", ingredients: "Passion fruit · fruit tea · sweetener · ice", price: 6.25 },
+      { name: "Peach Fruit Tea", subCategory: "Fruit Teas", ingredients: "Peach · fruit tea · sweetener · ice", price: 6.25 },
+      // Matcha Mood $7.29.
+      { name: "Matcha Latte", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Matcha%20Latte.jpg", ingredients: "Matcha · milk · sweetener · ice", price: 7.29 },
+      { name: "Double Matcha Cloud", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Double%20Matcha%20Cloud.jpg", ingredients: "Matcha · milk · matcha cream foam · sweetener · ice", price: 7.29 },
+      { name: "Strawberry Matcha Latte", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Strawberry%20Matcha%20Latte.jpg", ingredients: "Strawberry · matcha · milk · sweetener · ice", price: 7.29 },
+      { name: "Matcha Cheese Latte", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Matcha%20Cheese%20Latte.jpg", ingredients: "Matcha · milk · cheese cream foam · sweetener · ice", price: 7.29 },
+      { name: "Coconut Matcha Cloud", subCategory: "Matcha Varieties", image: "/menu%20pics/Boba/Coconut%20Matcha%20Cloud.jpg", ingredients: "Matcha · milk · coconut cream · coconut flakes · sweetener · ice", price: 7.29 },
+      // Premium Teas $7.89.
+      { name: "Mango Coco Pomelo", subCategory: "Pomelo Sago", image: "/menu%20pics/Boba/Mango%20Coco%20Pomelo.jpg", ingredients: "Mango · coconut milk · pomelo · sago pearls · sweetener", price: 7.89 },
+      { name: "Strawberry Kiwi Sago", subCategory: "Pomelo Sago", image: "/menu%20pics/Boba/Strawberry%20Kiwi%20Sago.jpg", ingredients: "Strawberry · kiwi · sago pearls · fruit juice · sweetener", price: 7.89 },
+      // Extras / toppings from the board.
+      { name: "Popping Boba", subCategory: "Extras", ingredients: "Mango · Passion Fruit · Orange · Peach · Strawberry", price: 1.19 },
+      { name: "Jelly", subCategory: "Extras", ingredients: "Mango · Coffee", price: 0.69 },
+      { name: "Crystal Boba", subCategory: "Extras", ingredients: "White Crystal · Brown Crystal", price: 0.99 },
+      { name: "Tapioca Pearls", subCategory: "Extras", ingredients: "classic chewy pearls", price: 0.89 },
     ],
   },
   {
@@ -69,22 +74,16 @@ export const menuCategories: MenuCategory[] = [
     name: "Cookies",
     accent: "#a4713f",
     products: [
-      // One card per cookie, using the polished _cookie_menu render. The square
-      // duplicate shots and the marketing images (logo, social poster) are left
-      // out of the menu but remain on disk. Display names cleaned from filenames.
-      // Prices: Regular Cookies $3.99, ChillVille Royale $5.25 (in-store board).
+      // Board: Regular Cookies $3.99, ChillVille Royale $5.25.
       { name: "Biscoff Lava", image: "/menu%20pics/Cookies/Biscoff-lava_R_cookie_menu.jpg", matched: true, ingredients: "Biscoff cookie · Biscoff spread · butter · brown sugar", price: 5.25 },
       { name: "Chocolate Chip", image: "/menu%20pics/Cookies/chocolate-chip_cookie_menu.jpg", matched: true, ingredients: "chocolate chips · butter · brown sugar · vanilla", price: 3.99 },
       { name: "Cookies & Cream", image: "/menu%20pics/Cookies/cookie%26creame_cookie_menu.jpg", matched: true, ingredients: "crushed Oreo cookies · white chocolate · butter · cream", price: 3.99 },
       { name: "Dubai", image: "/menu%20pics/Cookies/dubai_R_cookie_menu.jpg", matched: true, ingredients: "pistachio cream · kataifi pastry · chocolate · butter", price: 5.25 },
       { name: "M&M", image: "/menu%20pics/Cookies/m%26m_cookie_menu.jpg", matched: true, ingredients: "M&M candies · chocolate chips · butter · brown sugar", price: 3.99 },
       { name: "Nutella Lava Burst", image: "/menu%20pics/Cookies/nutella-lava-burst_R_cookie_menu.jpg", matched: true, ingredients: "Nutella · chocolate chips · butter · brown sugar", price: 5.25 },
-      { name: "Oreo Cream Bliss", image: "/menu%20pics/Cookies/oreo-cream-bliss_R_cookie_menu.jpg", matched: true, ingredients: "crushed Oreo cookies · Oreo cream · white chocolate · butter" },
       { name: "Pistachio", image: "/menu%20pics/Cookies/pistachio_cookie_menu.jpg", matched: true, ingredients: "pistachios · pistachio cream · butter · brown sugar", price: 3.99 },
       { name: "Rainbow Sprinkle", image: "/menu%20pics/Cookies/rainbow-sprinkle_cookie_menu.jpg", matched: true, ingredients: "rainbow sprinkles · white chocolate · butter · brown sugar", price: 3.99 },
       { name: "Red Velvet", image: "/menu%20pics/Cookies/redvelvet_cookie_menu.jpg", matched: true, ingredients: "red velvet · white chocolate chips · cocoa · butter · cream cheese", price: 3.99 },
-      { name: "Red Velvet Cream Bliss", image: "/menu%20pics/Cookies/redvelvel-creame-bliss_R_cookie_menu.jpg", matched: true, ingredients: "red velvet · cream cheese filling · white chocolate · cocoa · butter" },
-      { name: "Walnut Luxe", image: "/menu%20pics/Cookies/walnut-Luxe_R_cookie_menu.jpg", matched: true, ingredients: "walnuts · brown sugar · butter · vanilla" },
     ],
   },
   {
@@ -92,25 +91,17 @@ export const menuCategories: MenuCategory[] = [
     name: "Donuts",
     accent: "#d9b486",
     products: [
-      // --- Matched: items with final menu photos (public/menu pics/Donut). ---
-      // Prices: Regular Donuts $1.89 (Classic $0.99), Premium Donuts $2.19.
+      // --- Matched: items with final menu photos. ---
+      // Board: Regular Donuts $1.89 (Classic $0.99), Premium Donuts $2.19.
       { name: "Rainbow Sprinkles", image: "/menu%20pics/Donut/Donut_Sprinkle_Menu.jpg", matched: true, ingredients: "vanilla glaze · rainbow sprinkles", price: 1.89 },
-      { name: "Coconut Flakes", image: "/menu%20pics/Donut/Donut_Coconut-Flakes_Menu.jpg", matched: true, ingredients: "vanilla glaze · toasted coconut flakes" },
       { name: "M & M", image: "/menu%20pics/Donut/Donut_M%26M_Menu.jpg", matched: true, ingredients: "chocolate glaze · M&M candies", price: 1.89 },
       { name: "Oreo", image: "/menu%20pics/Donut/Donut_Oreo_Menu.jpg", matched: true, ingredients: "vanilla glaze · crushed Oreo cookies", price: 2.19 },
       { name: "Marshmallow", image: "/menu%20pics/Donut/Donut_Marshmellow_Menu.jpg", matched: true, ingredients: "vanilla glaze · marshmallows · chocolate drizzle", price: 1.89 },
-      { name: "S'mores", image: "/menu%20pics/Donut/Donut_Smores_Menu.jpg", matched: true, ingredients: "chocolate glaze · graham crackers · marshmallows" },
       { name: "Pretzel", image: "/menu%20pics/Donut/Donut_Pretzel_Menu.jpg", matched: true, ingredients: "chocolate glaze · pretzel pieces · caramel drizzle · sea salt", price: 1.89 },
-      { name: "Birthday cake", image: "/menu%20pics/Donut/Donut_Birthdaycake_Menu.jpg", matched: true, ingredients: "vanilla glaze · rainbow sprinkles · cake crumbs" },
       { name: "Strawberry Short cake", image: "/menu%20pics/Donut/Donut_StrawberryShortcake_Menu.jpg", matched: true, ingredients: "strawberry glaze · strawberries · shortcake crumbs · cream", price: 2.19 },
-      { name: "Blueberry Glaze", image: "/menu%20pics/Donut/Donut_BlueberryGlaze_Menu.jpg", matched: true, ingredients: "blueberry glaze · blueberry pieces" },
-      { name: "Cherry Glaze", image: "/menu%20pics/Donut/Donut_CherryGlaze_Menu.jpg", matched: true, ingredients: "cherry glaze · cherry pieces" },
       { name: "Gummy bears", image: "/menu%20pics/Donut/Donut_Gummybear_Menu.jpg", matched: true, ingredients: "vanilla glaze · gummy bears · rainbow sprinkles", price: 1.89 },
-      // --- Unmatched: kept for now, shown below the divider. ---
+      // --- Unmatched: board flavors without a final photo yet. ---
       { name: "Classic", image: "/menu%20pics/Donut/classic_donut.png", ingredients: "vanilla glaze · powdered sugar", price: 0.99 },
-      { name: "Cinammon Sugar", image: "/menu%20pics/Donut/CINNAMON%20SUGAR%20DONUT.png", ingredients: "cinnamon · sugar · butter" },
-      // Board flavors not yet photographed (added from the in-store menu board).
-      // Regular $1.89, Premium $2.19. Ingredient lines inferred from the flavor.
       { name: "Fruity Pebbles", ingredients: "vanilla glaze · Fruity Pebbles cereal", price: 1.89 },
       { name: "Strawberry Glaze", ingredients: "strawberry glaze", price: 1.89 },
       { name: "Honey Glaze", ingredients: "honey glaze", price: 1.89 },
@@ -124,23 +115,45 @@ export const menuCategories: MenuCategory[] = [
   },
   {
     slug: "ice-cream-shakes",
-    name: "Ice Cream Shakes",
+    name: "Milkshakes",
     accent: "#c58f6a",
     products: [
-      // --- Matched: items with final menu photos (public/menu pics/Icecream Shakes). ---
-      { name: "Cookies & Cream Dream", image: "/menu%20pics/Icecream%20Shakes/shake_cookie%26creame_menu.jpg", matched: true, ingredients: "Oreo cookies · white chocolate · cream" },
-      { name: "Nutella Hazelnut", image: "/menu%20pics/Icecream%20Shakes/shake_nutella-chocolate_menu.jpg", matched: true, ingredients: "Nutella · hazelnuts · chocolate · butter" },
-      { name: "Lotus Biscoff", image: "/menu%20pics/Icecream%20Shakes/shake_biscoff_menu.jpg", matched: true, ingredients: "Lotus Biscoff · Biscoff spread · brown sugar · butter" },
-      { name: "Strawberry Cheesecake", image: "/menu%20pics/Icecream%20Shakes/shake_strawberry-cheesecake_menu.jpg", matched: true, ingredients: "strawberries · cream cheese · graham crackers · white chocolate" },
-      { name: "Salted Caramel Pretzel", image: "/menu%20pics/Icecream%20Shakes/shake_salted-caramel_menu.jpg", matched: true, ingredients: "salted caramel · pretzels · chocolate · sea salt" },
-      { name: "Dubai Chocolate Pistachio", image: "/menu%20pics/Icecream%20Shakes/shake_pistachio_menu.jpg", matched: true, ingredients: "pistachio cream · kataifi pastry · chocolate · butter" },
-      // --- Unmatched: kept for now, shown below the divider. ---
-      { name: "Classic Vanilla Bean", image: "/menu%20pics/Icecream%20Shakes/classic_vanilla_bean_shake.png", ingredients: "vanilla bean · butter · brown sugar" },
-      { name: "Ultimate Chocolate Fudge", image: "/menu%20pics/Icecream%20Shakes/Ultimate%20Chocolate%20Fudge.png", ingredients: "cocoa · chocolate chips · chocolate chunks · butter" },
-      { name: "Brownie Explosion", image: "/menu%20pics/Icecream%20Shakes/Brownie%20Explosion.png", ingredients: "brownie pieces · chocolate chips · cocoa · butter" },
-      { name: "Peanut Butter Cup", image: "/menu%20pics/Icecream%20Shakes/Peanut%20Butter%20Cup.png", ingredients: "peanut butter · chocolate · chocolate chips · butter" },
-      { name: "Mint Cookies", image: "/menu%20pics/Icecream%20Shakes/Mint%20Cookies.png", ingredients: "mint flavor · chocolate chips · crushed cookies · butter" },
-      { name: "ChillVille Cookie Monster", image: "/menu%20pics/Icecream%20Shakes/ChillVille%20Cookie%20Monster.png", ingredients: "Oreo cookies · chocolate chips · cookie pieces · vanilla" },
+      // Board: MILKSHAKES — exactly the 8 listed, flat $8.49. Each mapped to an
+      // existing shake photo; ingredient lines are simple milkshake descriptions.
+      { name: "Classic Vanilla", image: "/menu%20pics/Icecream%20Shakes/classic_vanilla_bean_shake.png", matched: true, ingredients: "vanilla bean · milk · ice cream", price: 8.49 },
+      { name: "Oreo Cookies & Cream", image: "/menu%20pics/Icecream%20Shakes/shake_cookie%26creame_menu.jpg", matched: true, ingredients: "Oreo cookies · milk · ice cream · cream", price: 8.49 },
+      { name: "Chocolate", image: "/menu%20pics/Icecream%20Shakes/Ultimate%20Chocolate%20Fudge.png", matched: true, ingredients: "chocolate · cocoa · milk · ice cream", price: 8.49 },
+      { name: "Pistachio", image: "/menu%20pics/Icecream%20Shakes/shake_pistachio_menu.jpg", matched: true, ingredients: "pistachio · milk · ice cream", price: 8.49 },
+      { name: "Salted Caramel", image: "/menu%20pics/Icecream%20Shakes/shake_salted-caramel_menu.jpg", matched: true, ingredients: "salted caramel · milk · ice cream · sea salt", price: 8.49 },
+      { name: "Strawberry Cheesecake", image: "/menu%20pics/Icecream%20Shakes/shake_strawberry-cheesecake_menu.jpg", matched: true, ingredients: "strawberries · cream cheese · graham · milk · ice cream", price: 8.49 },
+      { name: "Nutella Chocolate", image: "/menu%20pics/Icecream%20Shakes/shake_nutella-chocolate_menu.jpg", matched: true, ingredients: "Nutella · chocolate · hazelnut · milk · ice cream", price: 8.49 },
+      { name: "Lotus Biscoff", image: "/menu%20pics/Icecream%20Shakes/shake_biscoff_menu.jpg", matched: true, ingredients: "Lotus Biscoff · Biscoff spread · milk · ice cream", price: 8.49 },
+    ],
+  },
+  {
+    slug: "ice-cream",
+    name: "Ice Cream",
+    accent: "#d6a07e",
+    products: [
+      // Scoop ice cream (board: ICE CREAM). Priced by cup size, not per flavor —
+      // the Scoops group carries the prices; flavors are a chooser. No photos yet.
+      { name: "Single Scoop", subCategory: "Scoops", ingredients: "small", price: 3.99 },
+      { name: "Double Scoop", subCategory: "Scoops", ingredients: "medium", price: 4.99 },
+      { name: "Triple Scoop", subCategory: "Scoops", ingredients: "large", price: 5.99 },
+      // Flavors — pick any, priced by the scoop above. (Peanut Butter Cup removed.)
+      { name: "Cotton Candy", subCategory: "Flavors", ingredients: "available by the scoop" },
+      { name: "Krazy Kolors", subCategory: "Flavors", ingredients: "available by the scoop" },
+      { name: "Birthday Cake", subCategory: "Flavors", ingredients: "available by the scoop" },
+      { name: "Cookies 'n Cream", subCategory: "Flavors", ingredients: "available by the scoop" },
+      { name: "Home Made Vanilla", subCategory: "Flavors", ingredients: "available by the scoop" },
+      { name: "Dutch Chocolate", subCategory: "Flavors", ingredients: "available by the scoop" },
+      { name: "Goey Butter Cake", subCategory: "Flavors", ingredients: "available by the scoop" },
+      { name: "Mint Chocolate Chip", subCategory: "Flavors", ingredients: "available by the scoop" },
+      { name: "Mocha Almond Fudge", subCategory: "Flavors", ingredients: "available by the scoop" },
+      { name: "Butter Pecan", subCategory: "Flavors", ingredients: "available by the scoop" },
+      { name: "Pistachio Almond", subCategory: "Flavors", ingredients: "available by the scoop" },
+      // Specials.
+      { name: "Banana Boat", subCategory: "Specials", ingredients: "bananas · three scoops · toppings · whipped cream · cherries", price: 10.99 },
     ],
   },
   {
@@ -148,20 +161,11 @@ export const menuCategories: MenuCategory[] = [
     name: "Muffins",
     accent: "#c7a978",
     products: [
-      // Every image in public/menu pics/Muffin, one card each (regular + Jumbo
-      // per flavor). Display names cleaned from filenames (extension/underscores
-      // dropped, filler words like "Muffin"/"Menu" removed, "Creame" -> "Cream").
-      // Prices: Regular Muffins $3.99 (board lists Lemon Poppy Seed only),
-      // Jumbo Muffins $5.69. Regular Nutella/Triple Choc/Blueberry not on board.
-      { name: "Blueberry Cream Cheese", image: "/menu%20pics/Muffin/Blueberry-creame-cheese_Muffin_Menu.jpg", matched: true, ingredients: "blueberries · cream cheese · butter · vanilla" },
-      { name: "Blueberry Cream Cheese Jumbo", image: "/menu%20pics/Muffin/BlueBerryCreameCheese_Jumbo_Muffin_Menu.jpg", matched: true, ingredients: "blueberries · cream cheese · butter · vanilla", price: 5.69 },
-      { name: "Brown Butter Chocochip", image: "/menu%20pics/Muffin/BrownButterchocoChip_Muffin_Menu.jpg", matched: true, ingredients: "brown butter · chocolate chips · brown sugar · vanilla" },
-      { name: "Brown Butter Chocochip Jumbo", image: "/menu%20pics/Muffin/BrownButterChocochip_Jumbo_Muffin.jpg", matched: true, ingredients: "brown butter · chocolate chips · brown sugar · vanilla" },
-      { name: "Lemon Poppy Seed", image: "/menu%20pics/Muffin/Lemon-poppy-seed_Muffin_Menu.jpg", matched: true, ingredients: "lemon zest · lemon juice · poppy seeds · butter", price: 3.99 },
-      { name: "Nutella Chocochip", image: "/menu%20pics/Muffin/Nutella_chocochip_Muffin_Menu.jpg", matched: true, ingredients: "Nutella · chocolate chips · butter · brown sugar" },
-      { name: "Nutella Chocochip Jumbo", image: "/menu%20pics/Muffin/NutellaChocoChip_Jumbo_Muffin_menu.jpg", matched: true, ingredients: "Nutella · chocolate chips · butter · brown sugar", price: 5.69 },
-      { name: "Triple Chocolate Fudge", image: "/menu%20pics/Muffin/TripleChocolate-Fudge_Muffiin_Menu.jpg", matched: true, ingredients: "cocoa · chocolate chips · chocolate chunks · butter" },
-      { name: "Triple Chocolate Fudge Jumbo", image: "/menu%20pics/Muffin/TripleChocolateFudge_Jumbo_Menu.jpg", matched: true, ingredients: "cocoa · chocolate chips · chocolate chunks · butter", price: 5.69 },
+      // Board: Regular Muffins $3.99 (Lemon Poppy Seed), Jumbo Muffins $5.69.
+      { name: "Lemon Poppy Seed", subCategory: "Regular", image: "/menu%20pics/Muffin/Lemon-poppy-seed_Muffin_Menu.jpg", matched: true, ingredients: "lemon zest · lemon juice · poppy seeds · butter", price: 3.99 },
+      { name: "Blueberry Cream Cheese Jumbo", subCategory: "Jumbo", image: "/menu%20pics/Muffin/BlueBerryCreameCheese_Jumbo_Muffin_Menu.jpg", matched: true, ingredients: "blueberries · cream cheese · butter · vanilla", price: 5.69 },
+      { name: "Nutella Chocochip Jumbo", subCategory: "Jumbo", image: "/menu%20pics/Muffin/NutellaChocoChip_Jumbo_Muffin_menu.jpg", matched: true, ingredients: "Nutella · chocolate chips · butter · brown sugar", price: 5.69 },
+      { name: "Triple Chocolate Fudge Jumbo", subCategory: "Jumbo", image: "/menu%20pics/Muffin/TripleChocolateFudge_Jumbo_Menu.jpg", matched: true, ingredients: "cocoa · chocolate chips · chocolate chunks · butter", price: 5.69 },
     ],
   },
   {
@@ -192,23 +196,21 @@ export const menuCategories: MenuCategory[] = [
 ];
 
 /**
- * "Chillville Favorites" — one signature pick per category, shown as a
- * highlighted band above the categories in the dropdown. Names are real Excel
- * items; Boba's pick ("Matcha Cheese Latte") was specified by the client, the
- * rest are the branded / signature items and can be swapped on request.
+ * "Chillville Favorites" — one signature pick per category. Currently an unused
+ * export (no component renders it), kept in sync with real products anyway.
  */
 export type MenuFavorite = {
-  name: string; // real Excel product name
+  name: string; // real product name
   note: string; // which category it belongs to
   slug: string; // category page it links to
 };
 
 export const menuFavorites: MenuFavorite[] = [
   { name: "Matcha Cheese Latte", note: "Boba", slug: "boba" },
-  { name: "ChillVille Walnut Luxe", note: "Cookies", slug: "cookies" },
-  { name: "S'mores", note: "Donuts", slug: "donuts" },
-  { name: "ChillVille Cookie Monster", note: "Ice Cream Shakes", slug: "ice-cream-shakes" },
-  { name: "Triple Chocolate Muffin", note: "Muffins", slug: "muffins" },
+  { name: "Nutella Lava Burst", note: "Cookies", slug: "cookies" },
+  { name: "Strawberry Short cake", note: "Donuts", slug: "donuts" },
+  { name: "Lotus Biscoff", note: "Milkshakes", slug: "ice-cream-shakes" },
+  { name: "Triple Chocolate Fudge Jumbo", note: "Muffins", slug: "muffins" },
 ];
 
 export function getCategory(slug: string): MenuCategory | undefined {
