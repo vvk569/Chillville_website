@@ -59,7 +59,8 @@ const ICE: ModifierGroup = {
 const BOBA: ModifierGroup = {
   id: "boba",
   label: "Boba",
-  options: ["Regular Tapioca Boba", "White Crystal Boba", "Brown Crystal Boba"],
+  options: ["No Boba", "Regular Tapioca Boba", "White Crystal Boba", "Brown Crystal Boba"],
+  default: "Regular Tapioca Boba",
   prices: {
     "Regular Tapioca Boba": 0.89,
     "White Crystal Boba": 0.99,
@@ -71,16 +72,24 @@ const MILK: ModifierGroup = {
   label: "Milk",
   options: ["Regular Whole Milk", "Almond Milk", "Oat Milk"],
 };
+// Cloud/foam is an optional add-on — "No Foam/Cloud" is the default; each foam is $1.19.
 const CLOUD: ModifierGroup = {
   id: "cloud",
-  label: "Cloud / Foam",
-  options: ["Cheese Foam/Cloud", "Matcha Cheese Foam/Cloud", "Non-Dairy Foam/Cloud"],
+  label: "Cloud / Foam (optional)",
+  options: ["No Foam/Cloud", "Cheese Foam/Cloud", "Matcha Cheese Foam/Cloud", "Non-Dairy Foam/Cloud"],
+  default: "No Foam/Cloud",
+  prices: {
+    "Cheese Foam/Cloud": 1.19,
+    "Matcha Cheese Foam/Cloud": 1.19,
+    "Non-Dairy Foam/Cloud": 1.19,
+  },
 };
-// Fruit Teas: boba is a paid add-on only — popping boba flavours or tapioca.
+// Fruit Teas: boba is a paid add-on only — defaults to no boba.
 const FRUIT_BOBA: ModifierGroup = {
   id: "boba",
   label: "Boba",
   options: [
+    "No Boba",
     "Mango Popping Boba",
     "Strawberry Popping Boba",
     "Passion Fruit Popping Boba",
@@ -96,7 +105,7 @@ const FRUIT_BOBA: ModifierGroup = {
     "Lychee Popping Boba": 1.19,
     "Regular Tapioca Boba": 0.89,
   },
-  default: "Regular Tapioca Boba",
+  default: "No Boba",
 };
 
 /**
