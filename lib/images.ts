@@ -29,6 +29,8 @@ export const IMG = {
   croissants: exts("croissants"),
   // the Dubai/kunafa bar — looks for kunafa.* first, then dubai.*
   dubai: [...exts("kunafa"), ...exts("dubai")],
+  // drop /public/images/cheesecake.jpg to show a real photo; else placeholder.
+  cheesecakes: exts("cheesecake"),
   storefront: exts("storefront"),
 };
 
@@ -55,5 +57,6 @@ export const IMG_ACCENT: Record<keyof typeof IMG, string> = {
   muffins: "#c7a978",
   croissants: "#c7a978",
   dubai: "#8fce74",
+  cheesecakes: "#cf9f66",
   storefront: "#ff7a59",
 };

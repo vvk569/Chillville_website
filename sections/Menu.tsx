@@ -15,19 +15,22 @@ const spanById: Record<string, string> = {
   muffins: "col-span-1 row-span-1",
   shakes: "col-span-2 row-span-1",
   donuts: "col-span-2 row-span-1",
+  cheesecakes: "col-span-2 row-span-1",
 };
 
 // render order tuned for visual rhythm, independent of the lineup's data order
-const order = ["dubai", "boba", "cookies", "muffins", "shakes", "donuts"];
+const order = ["dubai", "boba", "cookies", "muffins", "shakes", "donuts", "cheesecakes"];
 
 // each card links to its category page — the same routes the header MENU uses.
-// Dubai Chocolate has no dedicated page, so its card stays non-navigating.
+// The Dubai Chocolate tile leads to the Chocolates category page.
 const routeById: Record<string, string> = {
   boba: "/menu/boba",
   cookies: "/menu/cookies",
   donuts: "/menu/donuts",
   muffins: "/menu/muffins",
   shakes: "/menu/ice-cream-shakes",
+  dubai: "/menu/chocolates",
+  cheesecakes: "/menu/cheesecakes",
 };
 const tiles = order
   .map((id) => lineup.find((i) => i.id === id))

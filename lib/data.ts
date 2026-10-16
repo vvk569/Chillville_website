@@ -91,6 +91,7 @@ export const lineup: LineupItem[] = [
   { id: "muffins", index: "04", name: "Muffins", tag: "Bakery-fresh", note: "Soft-baked muffins in rotating flavours — blueberry, nutella chocochip and more.", accent: "#c7a978", img: "muffins" },
   { id: "shakes", index: "05", name: "Ice Cream Shakes", tag: "Thick & loaded", note: "House ice cream churned to order, blended thick and crowned with a cookie or donut.", accent: "#c58f6a", img: "shake" },
   { id: "dubai", index: "06", name: "Dubai Chocolate", tag: "24k finish", note: "Crisp kunafa and pistachio cream in single-origin couverture.", accent: "#8fae7b", img: "dubai" },
+  { id: "cheesecakes", index: "07", name: "Cheesecakes", tag: "Chilled & creamy", note: "Baked cheesecakes on a graham crust — plain, Biscoff, pistachio, blueberry, strawberry.", accent: "#cf9f66", img: "cheesecakes" },
 ];
 
 export const iceCream = {
