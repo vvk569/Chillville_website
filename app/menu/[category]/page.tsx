@@ -46,12 +46,10 @@ export default async function CategoryPage({
     return groups;
   };
 
-  // Split into items that already have a final menu photo (top) and the rest
-  // (below a divider). Only Boba flags `matched` today, so every other category
-  // keeps a single group and shows no divider.
-  const matchedGroups = groupBySub(cat.products.filter((p) => p.matched));
-  const unmatchedGroups = groupBySub(cat.products.filter((p) => !p.matched));
-  const showDivider = matchedGroups.length > 0 && unmatchedGroups.length > 0;
+  // One section per sub-category (a single unlabelled section when a category
+  // has none), so a sub-category is never split across a divider. Items keep
+  // their data order, which lists photographed items before placeholders.
+  const groups = groupBySub(cat.products);
 
   const renderGroups = (
     gs: { sub?: string; items: MenuProduct[] }[],
@@ -151,19 +149,9 @@ export default async function CategoryPage({
           </p>
         </div>
       ) : (
-        /* Products grouped by their Excel sub-section */
+        /* Products grouped by their sub-section — one section each */
         <div className="mt-14 space-y-16">
-          {renderGroups(matchedGroups, "matched")}
-
-          {showDivider && (
-            // Small divider between photographed items and the rest.
-            <hr
-              aria-hidden
-              className="mx-auto h-px w-24 border-0 bg-cream/15"
-            />
-          )}
-
-          {renderGroups(unmatchedGroups, "unmatched")}
+          {renderGroups(groups, "g")}
         </div>
       )}
     </div>

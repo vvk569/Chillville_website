@@ -117,6 +117,7 @@ function modifiersFor(slug: string, subCategory?: string): ModifierGroup[] | und
   if (slug !== "boba") return undefined;
   if (subCategory === "Milk Teas") return [SUGAR, ICE, BOBA, MILK];
   if (subCategory === "Matcha Varieties") return [SUGAR, ICE, BOBA, MILK, CLOUD];
+  if (subCategory === "Pomelo Sago") return [SUGAR, ICE, BOBA, MILK];
   if (subCategory === "Fruit Teas") return [FRUIT_BOBA];
   return undefined;
 }
