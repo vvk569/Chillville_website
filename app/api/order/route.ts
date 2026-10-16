@@ -68,7 +68,10 @@ export async function POST(req: Request) {
       if (item?.modifiers && l?.options && typeof l.options === "object") {
         for (const g of item.modifiers) {
           const v = (l.options as Record<string, unknown>)[g.id];
-          if (typeof v === "string" && g.options.includes(v)) opts.push(`${g.label}: ${v}`);
+          if (typeof v === "string" && g.options.includes(v)) {
+            const p = g.prices?.[v];
+            opts.push(`${g.label}: ${v}${p != null ? ` (+$${p.toFixed(2)})` : ""}`);
+          }
         }
       }
       return {

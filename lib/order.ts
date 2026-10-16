@@ -18,6 +18,7 @@ export type ModifierGroup = {
   label: string; // shown as the question heading, e.g. "Sugar level"
   options: string[]; // choices, shown in this order
   default?: string; // pre-selected choice; falls back to options[0]
+  prices?: Record<string, number>; // optional add-on price (USD) per option
 };
 
 export type OrderItem = {
@@ -59,22 +60,55 @@ const BOBA: ModifierGroup = {
   id: "boba",
   label: "Boba",
   options: ["Regular Tapioca Boba", "White Crystal Boba", "Brown Crystal Boba"],
+  prices: {
+    "Regular Tapioca Boba": 0.89,
+    "White Crystal Boba": 0.99,
+    "Brown Crystal Boba": 0.99,
+  },
 };
 const MILK: ModifierGroup = {
   id: "milk",
   label: "Milk",
   options: ["Regular Whole Milk", "Almond Milk", "Oat Milk"],
 };
+const CLOUD: ModifierGroup = {
+  id: "cloud",
+  label: "Cloud / Foam",
+  options: ["Cheese Foam/Cloud", "Matcha Cheese Foam/Cloud", "Non-Dairy Foam/Cloud"],
+};
+// Fruit Teas: boba is a paid add-on only — popping boba flavours or tapioca.
+const FRUIT_BOBA: ModifierGroup = {
+  id: "boba",
+  label: "Boba",
+  options: [
+    "Mango Popping Boba",
+    "Strawberry Popping Boba",
+    "Passion Fruit Popping Boba",
+    "Peach Popping Boba",
+    "Lychee Popping Boba",
+    "Regular Tapioca Boba",
+  ],
+  prices: {
+    "Mango Popping Boba": 1.19,
+    "Strawberry Popping Boba": 1.19,
+    "Passion Fruit Popping Boba": 1.19,
+    "Peach Popping Boba": 1.19,
+    "Lychee Popping Boba": 1.19,
+    "Regular Tapioca Boba": 0.89,
+  },
+  default: "Regular Tapioca Boba",
+};
 
 /**
  * Which drinks get a customization flow, keyed by category slug + sub-category.
- * Boba Milk Teas ask sugar → ice → boba → milk. Matcha and Fruit Teas can be
- * added here later with their own option sets.
+ * Boba Milk Teas ask sugar → ice → boba → milk; Matcha Mood adds a cloud/foam
+ * question; Fruit Teas ask only for a (paid) boba add-on.
  */
 function modifiersFor(slug: string, subCategory?: string): ModifierGroup[] | undefined {
-  if (slug === "boba" && subCategory === "Milk Teas") {
-    return [SUGAR, ICE, BOBA, MILK];
-  }
+  if (slug !== "boba") return undefined;
+  if (subCategory === "Milk Teas") return [SUGAR, ICE, BOBA, MILK];
+  if (subCategory === "Matcha Varieties") return [SUGAR, ICE, BOBA, MILK, CLOUD];
+  if (subCategory === "Fruit Teas") return [FRUIT_BOBA];
   return undefined;
 }
 

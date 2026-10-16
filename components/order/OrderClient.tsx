@@ -458,6 +458,7 @@ export function OrderClient() {
                   <div className="flex flex-wrap gap-2">
                     {g.options.map((opt) => {
                       const active = draft[g.id] === opt;
+                      const price = g.prices?.[opt];
                       return (
                         <button
                           key={opt}
@@ -470,6 +471,9 @@ export function OrderClient() {
                           )}
                         >
                           {opt}
+                          {price != null && (
+                            <span className="ml-1.5 text-[0.9em] text-caramel/80">+${price.toFixed(2)}</span>
+                          )}
                         </button>
                       );
                     })}
