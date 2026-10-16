@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import { orderCategories, orderItemsById, type OrderItem } from "@/lib/order";
 import { store } from "@/lib/data";
+import { cn } from "@/lib/utils";
 import { BackToChillvilleLink } from "@/components/BackToChillvilleLink";
 
 /** Relative pickup-time choices. Kept simple; the store confirms by text. */
@@ -16,12 +17,38 @@ const PICKUP_TIMES = [
 ];
 
 type View = "browse" | "checkout" | "done";
-type Cart = Record<string, number>;
+type Selections = Record<string, string>; // modifier groupId -> chosen option
+type CartLine = {
+  lineId: string; // unique per item + chosen options, so variants stack separately
+  itemId: string;
+  qty: number;
+  selections?: Selections;
+};
+
+/** A stable key for an item + its chosen options (same choices = same line). */
+function makeLineId(itemId: string, selections?: Selections): string {
+  const keys = selections ? Object.keys(selections) : [];
+  if (keys.length === 0) return itemId;
+  return `${itemId}#${keys.map((k) => `${k}:${selections![k]}`).join("|")}`;
+}
+
+/** One-line recap of the chosen options, in the item's own group order. */
+function selectionSummary(item: OrderItem, selections?: Selections): string {
+  if (!selections || !item.modifiers) return "";
+  return item.modifiers
+    .map((g) => selections[g.id])
+    .filter(Boolean)
+    .join(" · ");
+}
 
 export function OrderClient() {
-  const [cart, setCart] = useState<Cart>({});
+  const [cart, setCart] = useState<CartLine[]>([]);
   const [view, setView] = useState<View>("browse");
   const [activeCat, setActiveCat] = useState(orderCategories[0]?.slug ?? "");
+
+  // Customization sheet state.
+  const [customizing, setCustomizing] = useState<OrderItem | null>(null);
+  const [draft, setDraft] = useState<Selections>({});
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -36,27 +63,59 @@ export function OrderClient() {
 
   const category = orderCategories.find((c) => c.slug === activeCat) ?? orderCategories[0];
 
-  const totalCount = useMemo(
-    () => Object.values(cart).reduce((n, q) => n + q, 0),
-    [cart],
-  );
+  const totalCount = useMemo(() => cart.reduce((n, l) => n + l.qty, 0), [cart]);
   const cartLines = useMemo(
     () =>
-      Object.entries(cart)
-        .map(([id, qty]) => ({ item: orderItemsById[id] as OrderItem | undefined, qty }))
-        .filter((l): l is { item: OrderItem; qty: number } => Boolean(l.item)),
+      cart
+        .map((line) => ({ line, item: orderItemsById[line.itemId] as OrderItem | undefined }))
+        .filter((x): x is { line: CartLine; item: OrderItem } => Boolean(x.item)),
     [cart],
   );
 
-  const inc = (id: string) => setCart((c) => ({ ...c, [id]: (c[id] ?? 0) + 1 }));
-  const dec = (id: string) =>
+  const qtyForItem = (itemId: string) =>
+    cart.reduce((n, l) => (l.itemId === itemId ? n + l.qty : n), 0);
+
+  function addToCart(item: OrderItem, selections?: Selections) {
+    const lineId = makeLineId(item.id, selections);
     setCart((c) => {
-      const q = (c[id] ?? 0) - 1;
-      const next = { ...c };
-      if (q <= 0) delete next[id];
-      else next[id] = q;
-      return next;
+      const i = c.findIndex((l) => l.lineId === lineId);
+      if (i >= 0) {
+        const next = [...c];
+        next[i] = { ...next[i], qty: next[i].qty + 1 };
+        return next;
+      }
+      return [...c, { lineId, itemId: item.id, qty: 1, selections }];
     });
+  }
+  const incLine = (lineId: string) =>
+    setCart((c) => c.map((l) => (l.lineId === lineId ? { ...l, qty: l.qty + 1 } : l)));
+  const decLine = (lineId: string) =>
+    setCart((c) =>
+      c.flatMap((l) => {
+        if (l.lineId !== lineId) return [l];
+        const q = l.qty - 1;
+        return q <= 0 ? [] : [{ ...l, qty: q }];
+      }),
+    );
+
+  // ---- customization sheet ----
+  function openCustomizer(item: OrderItem) {
+    const init: Selections = {};
+    for (const g of item.modifiers ?? []) init[g.id] = g.default ?? g.options[0];
+    setDraft(init);
+    setCustomizing(item);
+  }
+  function confirmCustomizer() {
+    if (customizing) addToCart(customizing, draft);
+    setCustomizing(null);
+  }
+
+  // When the +/- control is used on a customizable item we tap it for a drink
+  // with its default choices; different combos are made via the sheet.
+  function quickAdd(item: OrderItem) {
+    if (item.modifiers?.length) openCustomizer(item);
+    else addToCart(item);
+  }
 
   async function placeOrder() {
     if (!name.trim() || !phone.trim() || totalCount === 0) {
@@ -76,7 +135,7 @@ export function OrderClient() {
           pickup,
           notes,
           company,
-          items: Object.entries(cart).map(([id, qty]) => ({ id, qty })),
+          items: cart.map((l) => ({ id: l.itemId, qty: l.qty, options: l.selections })),
         }),
       });
       const data = (await res.json().catch(() => ({}))) as {
@@ -102,7 +161,8 @@ export function OrderClient() {
   }
 
   function reset() {
-    setCart({});
+    setCart([]);
+    setCustomizing(null);
     setName("");
     setPhone("");
     setEmail("");
@@ -164,15 +224,19 @@ export function OrderClient() {
           <div>
             <h2 className="text-[11px] uppercase tracking-luxe text-caramel">Your order</h2>
             <ul className="mt-4 divide-y divide-cream/10 rounded-2xl border border-cream/10 bg-cream/[0.02] px-4">
-              {cartLines.map(({ item, qty }) => (
-                <li key={item.id} className="flex items-center gap-3 py-3">
-                  <div className="flex flex-1 flex-col">
-                    <span className="text-cream">{item.name}</span>
-                    <span className="text-[11px] uppercase tracking-wide2 text-cream/35">{item.category}</span>
-                  </div>
-                  <Stepper qty={qty} onDec={() => dec(item.id)} onInc={() => inc(item.id)} />
-                </li>
-              ))}
+              {cartLines.map(({ line, item }) => {
+                const sel = selectionSummary(item, line.selections);
+                return (
+                  <li key={line.lineId} className="flex items-center gap-3 py-3">
+                    <div className="flex flex-1 flex-col">
+                      <span className="text-cream">{item.name}</span>
+                      <span className="text-[11px] uppercase tracking-wide2 text-cream/35">{item.category}</span>
+                      {sel && <span className="mt-1 text-[11px] text-caramel/85">{sel}</span>}
+                    </div>
+                    <Stepper qty={line.qty} onDec={() => decLine(line.lineId)} onInc={() => incLine(line.lineId)} />
+                  </li>
+                );
+              })}
             </ul>
             <div className="mt-4 flex items-center justify-between rounded-xl border border-matcha/25 bg-matcha/[0.08] px-4 py-3 text-sm text-matcha">
               <span>{totalCount} item{totalCount !== 1 ? "s" : ""}</span>
@@ -264,7 +328,7 @@ export function OrderClient() {
         <div className="flex w-max gap-2">
           {orderCategories.map((c) => {
             const active = c.slug === activeCat;
-            const inCat = c.items.reduce((n, i) => n + (cart[i.id] ?? 0), 0);
+            const inCat = c.items.reduce((n, i) => n + qtyForItem(i.id), 0);
             return (
               <button
                 key={c.slug}
@@ -290,7 +354,8 @@ export function OrderClient() {
       {/* Items */}
       <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {category?.items.map((item) => {
-          const qty = cart[item.id] ?? 0;
+          const qty = qtyForItem(item.id);
+          const customizable = (item.modifiers?.length ?? 0) > 0;
           return (
             <li key={item.id}>
               <div className="flex h-full items-center gap-3 rounded-2xl border border-cream/10 bg-cream/[0.02] p-3 transition-colors hover:border-caramel/30">
@@ -309,12 +374,30 @@ export function OrderClient() {
                     />
                   )}
                 </div>
-                <span className="flex-1 text-sm text-cream">{item.name}</span>
-                {qty > 0 ? (
-                  <Stepper qty={qty} onDec={() => dec(item.id)} onInc={() => inc(item.id)} />
+                <div className="flex flex-1 flex-col">
+                  <span className="text-sm text-cream">{item.name}</span>
+                  {customizable && (
+                    <span className="mt-0.5 text-[10px] uppercase tracking-wide2 text-cream/35">Customizable</span>
+                  )}
+                </div>
+                {customizable ? (
+                  <button
+                    onClick={() => openCustomizer(item)}
+                    aria-label={`Customize ${item.name}`}
+                    className="relative flex h-9 min-w-9 shrink-0 items-center justify-center rounded-lg border border-cream/15 bg-cream/[0.03] px-2 text-lg text-cream transition-colors hover:border-caramel hover:bg-cream/[0.06]"
+                  >
+                    +
+                    {qty > 0 && (
+                      <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-caramel px-1 text-[10px] font-semibold text-charcoal">
+                        {qty}
+                      </span>
+                    )}
+                  </button>
+                ) : qty > 0 ? (
+                  <Stepper qty={qty} onDec={() => decLine(item.id)} onInc={() => quickAdd(item)} />
                 ) : (
                   <button
-                    onClick={() => inc(item.id)}
+                    onClick={() => quickAdd(item)}
                     aria-label={`Add ${item.name}`}
                     className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-cream/15 bg-cream/[0.03] text-lg text-cream transition-colors hover:border-caramel hover:bg-cream/[0.06]"
                   >
@@ -340,6 +423,70 @@ export function OrderClient() {
           Review order
         </button>
       </div>
+
+      {/* Customization sheet */}
+      {customizing && (
+        <div
+          className="fixed inset-0 z-[70] flex items-end justify-center bg-charcoal/70 backdrop-blur-sm sm:items-center sm:p-6"
+          onClick={() => setCustomizing(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Customize ${customizing.name}`}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[88vh] w-full max-w-md overflow-y-auto rounded-t-3xl border border-cream/12 bg-charcoal-800 p-6 sm:rounded-3xl"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h2 className="font-display text-2xl text-cream">{customizing.name}</h2>
+                <p className="mt-1 text-[11px] uppercase tracking-wide2 text-caramel">Make it yours</p>
+              </div>
+              <button
+                onClick={() => setCustomizing(null)}
+                aria-label="Close"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-cream/15 text-cream/70 transition-colors hover:border-cream/40 hover:text-cream"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="mt-6 flex flex-col gap-6">
+              {customizing.modifiers?.map((g) => (
+                <div key={g.id}>
+                  <h3 className="mb-2.5 text-xs uppercase tracking-wide2 text-cream/60">{g.label}</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {g.options.map((opt) => {
+                      const active = draft[g.id] === opt;
+                      return (
+                        <button
+                          key={opt}
+                          onClick={() => setDraft((s) => ({ ...s, [g.id]: opt }))}
+                          className={cn(
+                            "rounded-full border px-4 py-2 text-sm transition-colors",
+                            active
+                              ? "border-caramel bg-caramel/15 text-cream"
+                              : "border-cream/15 text-cream/70 hover:border-cream/35 hover:text-cream",
+                          )}
+                        >
+                          {opt}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={confirmCustomizer}
+              className="mt-7 w-full rounded-full bg-caramel px-6 py-3.5 text-sm font-semibold uppercase tracking-wide2 text-charcoal transition-[filter,transform] hover:brightness-105 active:translate-y-px"
+            >
+              Add to order
+            </button>
+          </div>
+        </div>
+      )}
     </Shell>
   );
 }

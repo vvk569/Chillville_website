@@ -20,7 +20,7 @@ import { orderItemsById } from "@/lib/order";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-type InLine = { id?: string; qty?: number };
+type InLine = { id?: string; qty?: number; options?: Record<string, unknown> };
 type Body = {
   name?: string;
   phone?: string;
@@ -60,10 +60,23 @@ export async function POST(req: Request) {
 
   const rawItems = Array.isArray(body.items) ? body.items.slice(0, 100) : [];
   const lines = rawItems
-    .map((l) => ({
-      item: l && typeof l.id === "string" ? orderItemsById[l.id] : undefined,
-      qty: Math.max(1, Math.min(50, Math.floor(Number(l?.qty) || 0))),
-    }))
+    .map((l) => {
+      const item = l && typeof l.id === "string" ? orderItemsById[l.id] : undefined;
+      // Validate each chosen option against the item's own modifier groups, so
+      // the ticket only ever shows real, server-known choices.
+      const opts: string[] = [];
+      if (item?.modifiers && l?.options && typeof l.options === "object") {
+        for (const g of item.modifiers) {
+          const v = (l.options as Record<string, unknown>)[g.id];
+          if (typeof v === "string" && g.options.includes(v)) opts.push(`${g.label}: ${v}`);
+        }
+      }
+      return {
+        item,
+        qty: Math.max(1, Math.min(50, Math.floor(Number(l?.qty) || 0))),
+        opts,
+      };
+    })
     .filter((l) => l.item);
 
   if (!name || !phone || lines.length === 0) {
@@ -72,7 +85,12 @@ export async function POST(req: Request) {
 
   const orderNo = makeOrderNo();
   const totalCount = lines.reduce((n, l) => n + l.qty, 0);
-  const itemText = lines.map((l) => `  ${l.qty} × ${l.item!.name}  (${l.item!.category})`).join("\n");
+  const itemText = lines
+    .map((l) => {
+      const head = `  ${l.qty} × ${l.item!.name}  (${l.item!.category})`;
+      return l.opts.length ? `${head}\n        ${l.opts.join(" · ")}` : head;
+    })
+    .join("\n");
 
   const text = [
     `NEW PICKUP ORDER   #${orderNo}`,
