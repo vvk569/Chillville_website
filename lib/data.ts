@@ -9,6 +9,14 @@ export const nav = [
   { label: "Visit", href: "#visit" },
 ];
 
+/**
+ * Toast Online Ordering — the live, always-accurate ordering page. The website
+ * links out to it so the menu, prices, modifiers and payment all come straight
+ * from Toast (the source of truth), with no drift between channels.
+ */
+export const orderUrl =
+  "https://order.toasttab.com/online/urban-indulge-llc-1243-rossview-road-suite-102";
+
 /** About Us — the ethos statement + a short founding note. */
 export const about = {
   eyebrow: "About Us",

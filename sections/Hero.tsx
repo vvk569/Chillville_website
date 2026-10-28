@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { FiArrowDownRight } from "react-icons/fi";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { EASE_EXPO } from "@/lib/motion";
+import { orderUrl } from "@/lib/data";
 
 // begin after the preloader lifts away
 const BASE = 2.5;
@@ -102,11 +103,18 @@ export function Hero() {
                 Visit Store
               </MagneticButton>
             </div>
-            {/* Primary conversion CTA — spans the width of the two buttons above,
-                with a distinct highlighted (caramel-accent) treatment so it
-                doesn't blend into the gradient button. Same /order destination. */}
-            <MagneticButton href="/order" variant="highlight" className="w-full justify-center">
-              Order for Pickup
+            {/* Primary conversion CTA — opens Toast Online Ordering (the live
+                ordering page) in a new tab, with a distinct highlighted
+                (caramel-accent) treatment so it doesn't blend into the gradient
+                button above. */}
+            <MagneticButton
+              href={orderUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="highlight"
+              className="w-full justify-center"
+            >
+              Order Online
             </MagneticButton>
           </motion.div>
         </div>

@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { nav } from "@/lib/data";
+import { nav, orderUrl } from "@/lib/data";
 import { menuCategories } from "@/lib/menu";
 import { cn } from "@/lib/utils";
 import { EASE_EXPO } from "@/lib/motion";
@@ -220,12 +220,14 @@ export function Navbar() {
           )}
         </ul>
 
-        <Link
-          href="/order"
+        <a
+          href={orderUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           className="hidden rounded-full border border-cream/20 px-5 py-2 text-xs uppercase tracking-wide2 text-cream transition-colors duration-500 hover:border-caramel hover:text-caramel md:inline-block"
         >
           Order Online
-        </Link>
+        </a>
 
         <button
           aria-label={open ? "Close menu" : "Menu"}
