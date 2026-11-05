@@ -2,7 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { menuCategories, getCategory, type MenuProduct } from "@/lib/menu";
+import { menuCategories, type MenuProduct } from "@/lib/menu";
+import { getCategoryAsync } from "@/lib/menu-server";
+
+// Re-render at most every 5 minutes so admin menu edits in Firestore show up
+// without a redeploy (ISR). Falls back to the static menu when Firestore is
+// not configured, in which case this simply serves the bundled content.
+export const revalidate = 300;
 
 type Params = { category: string };
 
@@ -17,7 +23,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { category } = await params;
-  const cat = getCategory(category);
+  const cat = await getCategoryAsync(category);
   if (!cat) return { title: "Menu" };
   return {
     title: cat.name,
@@ -31,7 +37,7 @@ export default async function CategoryPage({
   params: Promise<Params>;
 }) {
   const { category } = await params;
-  const cat = getCategory(category);
+  const cat = await getCategoryAsync(category);
   if (!cat) notFound();
 
   // Group products by their Excel sub-section, preserving order. Categories
