@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, Inter } from "next/font/google";
 import "./globals.css";
 import { ScrollTopOnRouteChange } from "@/components/ScrollTopOnRouteChange";
 import { Tracker } from "@/components/analytics/Tracker";
+import { LaunchBanner } from "@/components/LaunchBanner";
 
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -99,6 +100,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <ScrollTopOnRouteChange />
         <Tracker />
+        <LaunchBanner />
         {children}
       </body>
     </html>

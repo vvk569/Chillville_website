@@ -94,7 +94,7 @@ export function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 1, ease: EASE_EXPO, delay: 2.4 }}
       className={cn(
-        "fixed inset-x-0 top-0 z-[70] transition-colors duration-700",
+        "fixed inset-x-0 top-[var(--promo-top,0px)] z-[70] transition-colors duration-700",
         scrolled ? "bg-charcoal/60 backdrop-blur-xl" : "bg-transparent"
       )}
     >
