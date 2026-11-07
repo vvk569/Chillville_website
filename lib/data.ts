@@ -219,10 +219,8 @@ export const store = {
   address: "1243 Rossview Rd, Suite #102",
   city: "Clarksville, TN 37043",
   hours: [
-    { day: "Mon — Thu", time: "09:00 — 21:00" },
-    { day: "Friday", time: "09:00 — 21:00" },
-    { day: "Saturday", time: "09:00 — 21:00" },
-    { day: "Sunday", time: "09:00 — 21:00" },
+    { day: "Mon — Sat", time: "06:00 AM — 09:00 PM" },
+    { day: "Sunday", time: "06:00 AM — 08:00 PM" },
   ],
   phone: "+1 (931) 677-2664",
   email: "info@chillvilletreats.com",

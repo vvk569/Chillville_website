@@ -82,10 +82,8 @@ const jsonLd = {
     addressCountry: "US",
   },
   openingHoursSpecification: [
-    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday"], opens: "08:00", closes: "21:00" },
-    { "@type": "OpeningHoursSpecification", dayOfWeek: "Friday", opens: "08:00", closes: "23:00" },
-    { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "09:00", closes: "23:00" },
-    { "@type": "OpeningHoursSpecification", dayOfWeek: "Sunday", opens: "09:00", closes: "20:00" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], opens: "06:00", closes: "21:00" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: "Sunday", opens: "06:00", closes: "20:00" },
   ],
   sameAs: ["https://www.instagram.com/chillville_clarksville/"],
 };
