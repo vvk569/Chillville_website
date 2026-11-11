@@ -1,0 +1,39 @@
+name: Sync Toast menu
+
+# Pulls the live menu from the public Toast online-ordering page and upserts it
+# into Firestore (the collections the website reads). Runs every 2 hours, and
+# can be triggered by hand from the Actions tab.
+
+on:
+  schedule:
+    - cron: "0 */2 * * *" # every 2 hours, on the hour (UTC)
+  workflow_dispatch: {}
+
+concurrency:
+  group: sync-toast-menu
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npm i --no-save playwright@1.56.1 && npx playwright install --with-deps chromium
+
+      - name: Sync Toast menu to Firestore
+        env:
+          TOAST_ORDER_URL: ${{ vars.TOAST_ORDER_URL || 'https://order.toasttab.com/online/urban-indulge-llc-1243-rossview-road-suite-102' }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          MENU_COLLECTION_SUFFIX: ${{ vars.MENU_COLLECTION_SUFFIX }}
+        run: node scripts/sync-toast-menu.mjs
