@@ -67,8 +67,25 @@ async function scrapeToast() {
       userAgent:
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36",
     });
-    await page.goto(TOAST_URL, { waitUntil: "networkidle", timeout: 60000 });
-    await page.waitForTimeout(2500);
+    // The menu lives in an inline script in the initial HTML, so we only need
+    // the document — not "networkidle", which never settles on CI because Toast
+    // keeps background connections open (that was the CI timeout).
+    await page.goto(TOAST_URL, { waitUntil: "domcontentloaded", timeout: 90000 });
+    // Wait until the embedded menu state is actually populated with Menu groups.
+    await page
+      .waitForFunction(
+        () => {
+          const s = window.__OO_STATE__;
+          return (
+            s &&
+            Object.values(s).some(
+              (v) => v && v.__typename === "Menu" && Array.isArray(v.groups)
+            )
+          );
+        },
+        { timeout: 30000 }
+      )
+      .catch(() => {});
     const state = await page.evaluate(() => window.__OO_STATE__ || null);
     if (!state) throw new Error("window.__OO_STATE__ not found on the Toast page");
     return state;
