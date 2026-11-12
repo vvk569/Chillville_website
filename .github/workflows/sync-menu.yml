@@ -35,7 +35,8 @@ jobs:
         env:
           TOAST_ORDER_URL: ${{ vars.TOAST_ORDER_URL || 'https://order.toasttab.com/online/urban-indulge-llc-1243-rossview-road-suite-102' }}
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          # Defaults to the "_toast" staging collections so scheduled runs never
-          # touch the live menu until we flip this to '' (empty) to go live.
-          MENU_COLLECTION_SUFFIX: ${{ vars.MENU_COLLECTION_SUFFIX || '_toast' }}
+          # Live: writes the base collections (categories/menuItems) that the
+          # website reads. Set a repo variable MENU_COLLECTION_SUFFIX to redirect
+          # to a staging copy (e.g. "_toast") if ever needed again.
+          MENU_COLLECTION_SUFFIX: ${{ vars.MENU_COLLECTION_SUFFIX }}
         run: node scripts/sync-toast-menu.mjs
