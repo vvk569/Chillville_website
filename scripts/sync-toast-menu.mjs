@@ -65,7 +65,14 @@ async function scrapeToast() {
   try {
     const page = await browser.newPage({
       userAgent:
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      locale: "en-US",
+      viewport: { width: 1366, height: 900 },
+      extraHTTPHeaders: {
+        "Accept-Language": "en-US,en;q=0.9",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+      },
     });
     // The menu lives in an inline script in the initial HTML, so we only need
     // the document — not "networkidle", which never settles on CI because Toast
@@ -87,7 +94,16 @@ async function scrapeToast() {
       )
       .catch(() => {});
     const state = await page.evaluate(() => window.__OO_STATE__ || null);
-    if (!state) throw new Error("window.__OO_STATE__ not found on the Toast page");
+    if (!state) {
+      // Diagnostic: show what we actually got (likely a bot-challenge page).
+      const info = await page.evaluate(() => ({
+        title: document.title,
+        text: (document.body ? document.body.innerText : "").slice(0, 300),
+      }));
+      console.log("DIAGNOSTIC title:", JSON.stringify(info.title));
+      console.log("DIAGNOSTIC body:", JSON.stringify(info.text.replace(/\s+/g, " ")));
+      throw new Error("window.__OO_STATE__ not found on the Toast page");
+    }
     return state;
   } finally {
     await browser.close();
