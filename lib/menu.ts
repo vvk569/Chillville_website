@@ -193,6 +193,61 @@ export const menuCategories: MenuCategory[] = [
       { name: "Dubai Chocolate Small", ingredients: "pistachio cream · kataifi pastry · milk chocolate", price: 10.00 },
     ],
   },
+  {
+    // Seeded from the Toast board; kept fresh by the 2-hour Toast → Firestore sync.
+    slug: "brownies",
+    name: "Brownies",
+    accent: "#7a4a2b",
+    products: [
+      { name: "Manifesto", subCategory: "Gluten Free", price: 3.99 },
+      { name: "Brownie and icecream", subCategory: "Brownie combo", price: 6.99 },
+    ],
+  },
+  {
+    slug: "indian",
+    name: "Indian",
+    accent: "#b5793f",
+    products: [
+      { name: "Samosa", subCategory: "Snacks", price: 1.99 },
+      { name: "Butterscotch pastry", subCategory: "Snacks", price: 2.99 },
+      { name: "Mango Lassi", subCategory: "Drinks", price: 3.99 },
+      { name: "Masala Chai", subCategory: "Drinks", price: 3.99 },
+      { name: "Chikoo Shake", subCategory: "Drinks", price: 3.99 },
+    ],
+  },
+  {
+    slug: "croissant",
+    name: "Croissant",
+    accent: "#d9b486",
+    products: [
+      { name: "Pistachio", subCategory: "Specials", price: 4.99 },
+      { name: "Strawberry Nutella", subCategory: "Specials", price: 4.59 },
+    ],
+  },
+  {
+    slug: "breads",
+    name: "Breads",
+    accent: "#c7a978",
+    products: [
+      { name: "Sandwich", subCategory: "Sourdough", price: 7.99 },
+      { name: "Loaf", subCategory: "Sourdough", price: 7.99 },
+    ],
+  },
+  {
+    slug: "bakery",
+    name: "Bakery",
+    accent: "#cf9f66",
+    products: [
+      { name: "Cinnamon Roll", subCategory: "Cinnamon Roll", price: 5.99 },
+      { name: "Sausage", subCategory: "Braids", price: 4.99 },
+      { name: "Pesto", subCategory: "Braids", price: 3.99 },
+      { name: "Nutella", subCategory: "Braids", price: 3.99 },
+      { name: "Nutella Pan Pie", subCategory: "Pan Pie", price: 6.99 },
+      { name: "Biscoff Pan Pie", subCategory: "Pan Pie", price: 6.99 },
+      { name: "Pistachio Pan Pie", subCategory: "Pan Pie", price: 6.99 },
+      { name: "Brookie", subCategory: "Brookie", price: 5.99 },
+    ],
+  },
 ];
 
 /**

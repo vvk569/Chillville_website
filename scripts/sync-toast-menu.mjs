@@ -44,6 +44,11 @@ const CATEGORY_MAP = {
   Muffins: "muffins",
   "Cheese Cakes": "cheesecakes",
   Chocolates: "chocolates",
+  Brownies: "brownies",
+  Indian: "indian",
+  Croissant: "croissant",
+  Breads: "breads",
+  Bakery: "bakery",
 };
 
 // Accent + display name + order per slug, mirroring lib/menu.ts.
@@ -56,6 +61,11 @@ const CATEGORY_META = {
   muffins: { name: "Muffins", accent: "#c7a978", order: 6 },
   cheesecakes: { name: "Cheesecakes", accent: "#c9a26b", order: 7 },
   chocolates: { name: "Chocolates", accent: "#8fae7b", order: 8 },
+  brownies: { name: "Brownies", accent: "#7a4a2b", order: 9 },
+  indian: { name: "Indian", accent: "#b5793f", order: 10 },
+  croissant: { name: "Croissant", accent: "#d9b486", order: 11 },
+  breads: { name: "Breads", accent: "#c7a978", order: 12 },
+  bakery: { name: "Bakery", accent: "#cf9f66", order: 13 },
 };
 
 async function scrapeToast() {
