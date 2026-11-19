@@ -15,14 +15,16 @@ concurrency:
 
 jobs:
   sync:
-    runs-on: ubuntu-latest
+    # Pinned to 24.04: "ubuntu-latest" moved to 26.04, which Playwright 1.56.1
+    # cannot install the Chromium browser on (that was the install failure).
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: npm
 
       - name: Install dependencies
