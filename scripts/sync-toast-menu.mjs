@@ -68,7 +68,7 @@ const CATEGORY_META = {
   bakery: { name: "Bakery", accent: "#cf9f66", order: 13 },
 };
 
-async function scrapeToast() {
+async function scrapeOnce() {
   const launchOpts = { args: ["--no-sandbox"] };
   if (process.env.CHROMIUM_PATH) launchOpts.executablePath = process.env.CHROMIUM_PATH;
   const browser = await chromium.launch(launchOpts);
@@ -118,6 +118,30 @@ async function scrapeToast() {
   } finally {
     await browser.close();
   }
+}
+
+/**
+ * Scrape with retries + backoff. Toast occasionally serves a bot-challenge page
+ * to datacenter IPs (the menu state is then missing); a fresh attempt a few
+ * seconds later almost always gets the real page, so one blip no longer fails
+ * the whole run.
+ */
+async function scrapeToast() {
+  const attempts = 4;
+  let lastErr;
+  for (let i = 1; i <= attempts; i++) {
+    try {
+      return await scrapeOnce();
+    } catch (e) {
+      lastErr = e;
+      console.log(`Scrape attempt ${i}/${attempts} failed: ${e.message}`);
+      if (i < attempts) {
+        const waitMs = 5000 * i; // 5s, 10s, 15s
+        await new Promise((r) => setTimeout(r, waitMs));
+      }
+    }
+  }
+  throw lastErr;
 }
 
 /** Walk the Toast cache into flat category + item records. */
@@ -206,18 +230,27 @@ async function writeFirestore(db, { categories, items }) {
   }
 
   // Reconcile: anything in Firestore not in this Toast pull → mark unavailable.
-  const existing = await db.collection(itemCol).get();
-  const stale = existing.docs.filter(
-    (d) => (d.data().syncedFrom === "toast") && !liveIds.has(d.id)
-  );
-  for (let i = 0; i < stale.length; i += CHUNK) {
-    batch = db.batch();
-    for (const d of stale.slice(i, i + CHUNK)) {
-      batch.set(d.ref, { isAvailable: false }, { merge: true });
+  // This read is best-effort: the prices/availability writes above already
+  // succeeded, so a transient failure here (e.g. a Firestore quota blip) must
+  // NOT fail the whole run. We log it and move on; the next run reconciles.
+  let staleDisabled = 0;
+  try {
+    const existing = await db.collection(itemCol).get();
+    const stale = existing.docs.filter(
+      (d) => d.data().syncedFrom === "toast" && !liveIds.has(d.id)
+    );
+    for (let i = 0; i < stale.length; i += CHUNK) {
+      batch = db.batch();
+      for (const d of stale.slice(i, i + CHUNK)) {
+        batch.set(d.ref, { isAvailable: false }, { merge: true });
+      }
+      await batch.commit();
     }
-    await batch.commit();
+    staleDisabled = stale.length;
+  } catch (e) {
+    console.log(`Reconcile skipped (non-fatal): ${e.message}`);
   }
-  return { catCol, itemCol, staleDisabled: stale.length };
+  return { catCol, itemCol, staleDisabled };
 }
 
 async function main() {
