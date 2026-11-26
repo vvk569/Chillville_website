@@ -25,7 +25,13 @@ const getCachedMenu = unstable_cache(
 );
 
 export async function getMenu(): Promise<MenuCategory[]> {
-  return getCachedMenu();
+  // Never let a menu-fetch error fail a page render / build — fall back to the
+  // bundled static menu.
+  try {
+    return await getCachedMenu();
+  } catch {
+    return menuCategories;
+  }
 }
 
 export async function getCategoryAsync(slug: string): Promise<MenuCategory | undefined> {

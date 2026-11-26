@@ -35,9 +35,11 @@ type ItemDoc = {
 type CatDoc = { slug?: string; name?: string; accent?: string; order?: number; active?: boolean };
 
 export async function fetchMenuFromFirestore(): Promise<MenuCategory[] | null> {
-  const db = getDb();
-  if (!db) return null;
   try {
+    // getDb() is inside the try so a credential/init error also falls back to
+    // the static menu instead of throwing during the build's page prerender.
+    const db = getDb();
+    if (!db) return null;
     const [catsSnap, itemsSnap] = await Promise.all([
       db.collection(`categories${SUFFIX}`).get(),
       db.collection(`menuItems${SUFFIX}`).get(),
