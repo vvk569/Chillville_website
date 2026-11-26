@@ -1,5 +1,3 @@
-import { orderUrl } from "@/lib/data";
-
 /**
  * Site-wide promo ribbon config.
  *
@@ -11,15 +9,15 @@ import { orderUrl } from "@/lib/data";
  */
 export const PROMO = {
   /** Store-local day the promo is live, "YYYY-MM-DD" (America/Chicago). */
-  date: "2026-11-08",
+  date: "2026-11-26",
   /** Short eyebrow (uppercased in the UI). */
-  eyebrow: "Grand Launch",
+  eyebrow: "Holiday Hours",
   /** The headline shoppers read. */
-  message: "10% off everything — today only",
+  message: "Closed today for Thanksgiving 🦃 — reopening Friday at 6 AM. Happy Thanksgiving!",
   /** Promo code shoppers enter at Toast checkout (omit/"" to hide). */
-  code: "LAUNCH10",
+  code: "",
   /** Call-to-action button. */
-  cta: { label: "Order Online", href: orderUrl },
+  cta: { label: "Store Hours", href: "/#visit" },
 } as const;
 
 const STORE_TZ = "America/Chicago";
